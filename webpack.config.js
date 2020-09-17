@@ -1,6 +1,10 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+    output: {
+        publicPath: 'http://localhost:8080/',
+        chunkFilename: '[id].chunk.js'
+      },
     mode: 'development',
     resolve: {
         extensions: ['.js', '.vue']
@@ -29,6 +33,7 @@ module.exports = {
         // global app config object
         config: JSON.stringify({
             apiUrl: 'http://localhost:4000'
-        })
+        },
+        )
     }
 }

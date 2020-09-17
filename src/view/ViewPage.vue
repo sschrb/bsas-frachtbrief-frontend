@@ -1,5 +1,8 @@
 <template>
     <div>
+       
+
+
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
@@ -20,19 +23,27 @@
         </ul>
     </div>
 </nav>
+<p>
+            {{fbrief.items}}
+        </p>
+
+<p>
+            {{frachtbrief.wagenummer=fbrief.items.wagenummer}}
+        </p>
+
+        <p>
+            {{frachtbrief.adresse=fbrief.items.adresse}}
+        </p>
+       
 
 
+ <h1>Hi !</h1>
+        
 
-
-
-
-
-
-
- <form @submit.prevent="handleSubmit">
+<form @submit.prevent="handleSubmit">
             <div class="form-group">
                 <label for="adresse">Zieladresse</label>
-                <input type="text" v-model="frachtbrief.adresse" class="form-control"/>
+                <input type="text" v-model="frachtbrief.adresse" value="default value" class="form-control"/>
                 
             </div>
             <div class="form-group">
@@ -42,7 +53,7 @@
             </div>
 
             <div class="form-group">
-                <button class="btn btn-primary" >Speichern</button>
+                <button class="btn btn-primary" >Update</button>
               
             </div>
 
@@ -51,13 +62,6 @@
 </form>
 
 
-
-
-
-
-
-
-        
     </div>
 </template>
 
@@ -65,7 +69,6 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
-
     data () {
         return {
             frachtbrief: {
@@ -76,19 +79,24 @@ export default {
             
         }
     },
-computed: {
-        ...mapState('frachtbrief', ['status'])
+    computed: {
+        ...mapState({
+            
+            fbrief: state => state.frachtbrief.all
+        })
+    },
+    created () {
+        
+        this.getById(this.$route.params.id);
+        
+        
     },
     methods: {
-        ...mapActions('frachtbrief', ['create']),
-        handleSubmit(e) {
-            //this.submitted = true;
-            this.$validator.validate().then(valid => {
-                if (valid) {
-                    this.create(this.frachtbrief);
-                }
-            });
-        }
+        
+        
+        
+       ...mapActions( 'frachtbrief', ['getById']
+        ),
     }
 };
 </script>
