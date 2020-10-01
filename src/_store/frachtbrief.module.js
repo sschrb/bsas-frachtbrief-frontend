@@ -16,7 +16,15 @@ const actions = {
             );
     },
 
+    update({ commit }, frachtbrief) {
+        commit('getAllRequest');
 
+        frachtbriefService.update(frachtbrief)
+            .then(
+                frachtbrief => commit('getAllSuccess', frachtbrief),
+                error => commit('getAllFailure', error)
+            );
+    },
 
 
     getAll({ commit }) {

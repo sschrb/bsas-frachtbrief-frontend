@@ -45,14 +45,14 @@ function getById(id) {
     return fetch(`${config.apiUrl}/frachtbrief/${id}`, requestOptions).then(handleResponse);
 }
 
-function update(user) {
+function update(frachtbrief) {
     const requestOptions = {
         method: 'PUT',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
+        body: JSON.stringify(frachtbrief)
     };
 
-    return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/frachtbrief/${frachtbrief.id}`, requestOptions).then(handleResponse);
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript

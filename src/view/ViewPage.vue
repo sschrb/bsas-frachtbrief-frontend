@@ -23,23 +23,12 @@
         </ul>
     </div>
 </nav>
-<p>
-            {{fbrief.items}}
-        </p>
-
-<p>
-            {{frachtbrief.wagenummer=fbrief.items.wagenummer}}
-        </p>
-
-        <p>
-            {{frachtbrief.adresse=fbrief.items.adresse}}
-        </p>
-       
 
 
- <h1>Hi !</h1>
+
+ 
         
-
+<em v-if="frachtbrief.loading">Loading users...</em>
 <form @submit.prevent="handleSubmit">
             <div class="form-group">
                 <label for="adresse">Zieladresse</label>
@@ -71,32 +60,45 @@ import { mapState, mapActions } from 'vuex'
 export default {
     data () {
         return {
-            frachtbrief: {
-                adresse: '',
-                wagenummer: ''
-               
+            test: {
+            loading: null
             },
             
         }
+
     },
     computed: {
         ...mapState({
             
-            fbrief: state => state.frachtbrief.all
+            frachtbrief: state => state.frachtbrief.all.items
         })
     },
     created () {
         
-        this.getById(this.$route.params.id);
+        this.getById(this.$route.params.id)
         
         
     },
+    mounted() {
+
+       
+  
+},
     methods: {
         
         
         
        ...mapActions( 'frachtbrief', ['getById']
         ),
+        ...mapActions( 'frachtbrief', ['update']
+        ),
+        handleSubmit(e) {
+            
+                    this.update(this.frachtbrief);
+              
+        }
+
+        
     }
 };
 </script>
