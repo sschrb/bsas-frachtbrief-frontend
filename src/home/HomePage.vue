@@ -43,6 +43,7 @@
 
             <div class="form-group">
                 <button class="btn btn-primary" >Speichern</button>
+                
               
             </div>
 
@@ -86,6 +87,7 @@ computed: {
             this.$validator.validate().then(valid => {
                 if (valid) {
                     this.create(this.frachtbrief);
+                    this.$router.push('/history');
                 }
             });
         }
