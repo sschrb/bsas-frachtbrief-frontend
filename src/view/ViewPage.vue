@@ -25,26 +25,28 @@
 </nav>
 
 
-
+{{ this.frachtbrief }}
  
         
 <em v-if="frachtbrief.loading">Loading users...</em>
 <form @submit.prevent="handleSubmit">
             <div class="form-group">
                 <label for="adresse">Zieladresse</label>
-                <input type="text" v-model="frachtbrief.adresse" value="default value" class="form-control"/>
+                <input type="text" v-model="frachtbrief.adresse" value="default value" class="form-control" :disabled="frachtbrief.pdf_id != null"/>
                 
             </div>
             <div class="form-group">
                 <label for="wagenummer">Wagennummer</label>
-                <input type="text" v-model="frachtbrief.wagenummer" class="form-control"/>
+                <input type="text" v-model="frachtbrief.wagenummer" class="form-control" :disabled="frachtbrief.pdf_id != null"/>
                 
             </div>
 
             <div class="form-group">
-                <button class="btn btn-primary" >Update</button>
+                <button class="btn btn-primary" :disabled="frachtbrief.pdf_id != null" >Update</button>
               
             </div>
+            <em v-if="frachtbrief.pdf_id == null"><button class="btn btn-primary" >PDF generieren</button></em>
+            <em v-if="frachtbrief.pdf_id != null"><button class="btn btn-primary" >PDF anzeigen</button></em>
 
 
 
