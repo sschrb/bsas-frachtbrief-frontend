@@ -19,11 +19,18 @@ const actions = {
     createPDF({ dispatch, commit }, frachtbrief) {
         commit('createRequest');
 
+       frachtbriefService.update(frachtbrief)
+            .then(
+                frachtbrief => {commit('getAllSuccess', frachtbrief)},
+                error => commit('getAllFailure', error),
+                
+            ).then(
+
         frachtbriefService.createPDF(frachtbrief)
             .then(
-                //frachtbrief => commit('getAllSuccess', frachtbrief),
+                frachtbrief => commit('getAllSuccess', frachtbrief),
                 error => commit('getAllFailure', error)
-            );
+            ));
     },
 
     update({ commit }, frachtbrief) {
@@ -31,8 +38,9 @@ const actions = {
 
         frachtbriefService.update(frachtbrief)
             .then(
-                frachtbrief => commit('getAllSuccess', frachtbrief),
-                error => commit('getAllFailure', error)
+                frachtbrief => {commit('getAllSuccess', frachtbrief)},
+                error => commit('getAllFailure', error),
+                
             );
     },
 

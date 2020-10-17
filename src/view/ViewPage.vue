@@ -45,7 +45,7 @@
                 <button class="btn btn-primary" :disabled="frachtbrief.pdf_id != null" >Update</button>
               
             </div>
-            <em v-if="frachtbrief.pdf_id == null"><button class="btn btn-primary" >PDF generieren</button></em>
+            <em v-if="frachtbrief.pdf_id == null"><button class="btn btn-primary" v-on:click="generatePdfButton">PDF generieren</button></em>
             <em v-if="frachtbrief.pdf_id != null"><button class="btn btn-primary" >PDF anzeigen</button></em>
 
 
@@ -98,7 +98,17 @@ export default {
         ),
         handleSubmit(e) {
             
-                    this.createPDF(this.frachtbrief);
+                    this.update(this.frachtbrief);
+              
+        },
+    generatePdfButton() {
+            
+                   
+                  this.createPDF(this.frachtbrief).then(this.getById(this.$route.params.id));
+                   //.then((reslut) => {this.getById(this.$route.params.id);console.log('test')});
+                   
+                   
+                  
               
         }
 
