@@ -4,6 +4,7 @@ import { authHeader } from '../_helpers';
 export const frachtbriefService = {
     
     create,
+    createPDF,
     getAll,
     getById,
     update,
@@ -20,6 +21,16 @@ function create(frachtbrief) {
     };
 
     return fetch(`${config.apiUrl}/frachtbrief`, requestOptions).then(handleResponse);
+}
+
+function createPDF(frachtbrief) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(frachtbrief)
+    };
+
+    return fetch(`${config.apiUrl}/frachtbrief/pdf`, requestOptions).then(handleResponse);
 }
 
 
@@ -54,6 +65,8 @@ function update(frachtbrief) {
 
     return fetch(`${config.apiUrl}/frachtbrief/${frachtbrief.id}`, requestOptions).then(handleResponse);
 }
+
+
 
 // prefixed function name with underscore because delete is a reserved word in javascript
 function _delete(id) {

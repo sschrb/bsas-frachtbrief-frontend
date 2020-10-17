@@ -94,9 +94,11 @@ export default {
         ),
         ...mapActions( 'frachtbrief', ['update']
         ),
+        ...mapActions( 'frachtbrief', ['createPDF']
+        ),
         handleSubmit(e) {
             
-                    this.update(this.frachtbrief);
+                    this.createPDF(this.frachtbrief);
               
         }
 
