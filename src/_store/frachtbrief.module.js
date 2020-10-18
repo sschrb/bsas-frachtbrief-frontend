@@ -1,7 +1,8 @@
 import { frachtbriefService } from '../_services';
 
 const state = {
-    all: {}
+    all: {},
+    pdf: {test: 'test'}
 };
 
 const actions = {
@@ -65,6 +66,16 @@ const actions = {
             );
     },
 
+    getPdfById({ commit }, id) {
+        commit('getAllRequest');
+console.log(1)
+      return  frachtbriefService.getPdfById(id)
+            .then(
+                pdf => commit('getAllPdfSuccess', pdf),
+                error => commit('getAllFailure', error)
+            );
+    },
+
     delete({ commit }, id) {
         commit('deleteRequest', id);
 
@@ -84,9 +95,18 @@ const mutations = {
         state.all = { loading: true };
     },
     getAllSuccess(state, frachtbrief) {
+        console.log('pdf');
         state.all = { items: frachtbrief };
     },
+    getAllPdfSuccess(state, pdf) {
+        console.log(pdf);
+        console.log(state.pdf)
+        state.pdf = { items: pdf };
+        console.log(state.pdf)
+        
+    },
     getAllFailure(state, error) {
+        console.log('pdf');
         state.all = { error };
     },
     deleteRequest(state, id) {

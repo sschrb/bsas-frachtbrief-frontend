@@ -24,8 +24,9 @@
     </div>
 </nav>
 
-
 {{ this.frachtbrief }}
+
+
  
         
 <em v-if="frachtbrief.loading">Loading users...</em>
@@ -46,7 +47,7 @@
               
             </div>
             <em v-if="frachtbrief.pdf_id == null"><button class="btn btn-primary" v-on:click="generatePdfButton">PDF generieren</button></em>
-            <em v-if="frachtbrief.pdf_id != null"><button class="btn btn-primary" >PDF anzeigen</button></em>
+            <em v-if="frachtbrief.pdf_id != null"><button class="btn btn-primary" v-on:click="viewPdfButton">PDF anzeigen</button></em>
 
 
 
@@ -62,7 +63,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
     data () {
         return {
-            test: {
+            test1: {
             loading: null
             },
             
@@ -72,7 +73,8 @@ export default {
     computed: {
         ...mapState({
             
-            frachtbrief: state => state.frachtbrief.all.items
+            frachtbrief: state => state.frachtbrief.all.items,
+            pdf: state => state.frachtbrief.pdf.items
         })
     },
     created () {
@@ -96,6 +98,8 @@ export default {
         ),
         ...mapActions( 'frachtbrief', ['createPDF']
         ),
+        ...mapActions( 'frachtbrief', ['getPdfById']
+        ),
         handleSubmit(e) {
             
                     this.update(this.frachtbrief);
@@ -105,6 +109,27 @@ export default {
             
                    
                   this.createPDF(this.frachtbrief).then(this.getById(this.$route.params.id));
+                   //.then((reslut) => {this.getById(this.$route.params.id);console.log('test')});
+                   
+                   
+                  
+              
+        },
+    viewPdfButton() {
+            
+                   
+                  this.getPdfById(this.frachtbrief.pdf_id).then(() => {
+                      console.log(this.pdf.pdf)
+
+                      const file = new Blob(
+    [Uint8Array.from(this.pdf.pdf.data)], 
+    {type: 'application/pdf'});
+                      
+                      const fileURL = URL.createObjectURL(file);
+    //Open the URL on new Window
+    window.open(fileURL);})
+                  
+                  
                    //.then((reslut) => {this.getById(this.$route.params.id);console.log('test')});
                    
                    

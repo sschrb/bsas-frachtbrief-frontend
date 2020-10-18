@@ -7,6 +7,7 @@ export const frachtbriefService = {
     createPDF,
     getAll,
     getById,
+    getPdfById,
     update,
     delete: _delete
 };
@@ -56,6 +57,15 @@ function getById(id) {
     return fetch(`${config.apiUrl}/frachtbrief/${id}`, requestOptions).then(handleResponse);
 }
 
+function getPdfById(id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`${config.apiUrl}/frachtbrief/pdf/${id}`, requestOptions).then(handleResponse);
+}
+
 function update(frachtbrief) {
     const requestOptions = {
         method: 'PUT',
@@ -79,8 +89,10 @@ function _delete(id) {
 }
 
 function handleResponse(response) {
+    
     return response.text().then(text => {
         const data = text && JSON.parse(text);
+        console.log(data)
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
