@@ -12,7 +12,7 @@ const actions = {
 
         frachtbriefService.create(frachtbrief)
             .then(
-                frachtbrief => commit('getAllSuccess', frachtbrief),
+                //frachtbrief => commit('getAllSuccess', frachtbrief),
                 error => commit('getAllFailure', error)
             );
     },
@@ -67,7 +67,7 @@ const actions = {
     },
 
     getPdfById({ commit }, id) {
-        commit('getAllRequest');
+       // commit('getAllRequest');
 console.log(1)
       return  frachtbriefService.getPdfById(id)
             .then(
@@ -92,6 +92,7 @@ const mutations = {
         state.all = { loading: true };
     },
     getAllRequest(state) {
+        console.log('loading true')
         state.all = { loading: true };
     },
     getAllSuccess(state, frachtbrief) {
@@ -106,7 +107,7 @@ const mutations = {
         
     },
     getAllFailure(state, error) {
-        console.log('pdf');
+        
         state.all = { error };
     },
     deleteRequest(state, id) {

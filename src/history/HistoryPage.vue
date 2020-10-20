@@ -25,7 +25,7 @@
 </nav>
 
         <p>
-            hier kommt history
+            {{this.frachtbrief}}
         </p>
 
 

@@ -29,7 +29,8 @@
 
  
         
-<em v-if="frachtbrief.loading">Loading users...</em>
+<em v-if="brief.loading">Loading users...</em>
+<em v-if="frachtbrief">
 <form @submit.prevent="handleSubmit">
             <div class="form-group">
                 <label for="adresse">Zieladresse</label>
@@ -52,7 +53,7 @@
 
 
 </form>
-
+</em>
 
     </div>
 </template>
@@ -74,6 +75,7 @@ export default {
         ...mapState({
             
             frachtbrief: state => state.frachtbrief.all.items,
+            brief: state => state.frachtbrief.all,
             pdf: state => state.frachtbrief.pdf.items
         })
     },
