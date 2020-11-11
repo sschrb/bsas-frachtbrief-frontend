@@ -4,34 +4,14 @@
 
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="navbar-brand" href="#"><router-link to="/">Frachtbrief anlegen</router-link></a>
-            </li>
-            <li class="nav-item">
-                <a class="navbar-brand" href="#"><router-link to="/history">Historie</router-link></a>
-            </li>            
-        </ul>
-    </div>
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <router-link to="/login">Logout</router-link>
-            </li>
-        </ul>
-    </div>
-</nav>
 
-        <p>
-            {{this.frachtbrief}}
-        </p>
+
+      
 
 
  
         <h3>Frachtbriefe:</h3>
-        <em v-if="users.loading">Loading users...</em>
+        <em v-if="users.loading">Loading...</em>
         <span v-if="users.error" class="text-danger">ERROR: {{users.error}}</span>
         <ul v-if="frachtbrief.items">
             <li v-for="fbrief in frachtbrief.items" :key="fbrief.id">
@@ -51,6 +31,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+
 
 export default {
     computed: {

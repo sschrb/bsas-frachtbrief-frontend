@@ -12,6 +12,10 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.css$/i,
+                use: ['css-loader'],
+              },
+            {
                 test: /\.vue?$/,
                 exclude: /(node_modules)/,
                 use: 'vue-loader'

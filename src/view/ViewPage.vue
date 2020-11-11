@@ -4,42 +4,50 @@
 
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="navbar-brand" href="#"><router-link to="/">Frachtbrief anlegen</router-link></a>
-            </li>
-            <li class="nav-item">
-                <a class="navbar-brand" href="#"><router-link to="/history">Historie</router-link></a>
-            </li>            
-        </ul>
-    </div>
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <router-link to="/login">Logout</router-link>
-            </li>
-        </ul>
-    </div>
-</nav>
 
-{{ this.frachtbrief }}
+
+
 
 
  
         
-<em v-if="brief.loading">Loading users...</em>
+<em v-if="brief.loading">Loading ...</em>
 <em v-if="frachtbrief">
 <form @submit.prevent="handleSubmit">
             <div class="form-group">
-                <label for="adresse">Zieladresse</label>
+                <label for="adresse">Absender</label>
                 <input type="text" v-model="frachtbrief.adresse" value="default value" class="form-control" :disabled="frachtbrief.pdf_id != null"/>
                 
             </div>
             <div class="form-group">
                 <label for="wagenummer">Wagennummer</label>
                 <input type="text" v-model="frachtbrief.wagenummer" class="form-control" :disabled="frachtbrief.pdf_id != null"/>
+                
+            </div>
+
+            <div class="form-group">
+                <label for="wagenummer">Bahnhof</label>
+                <input type="text" v-model="frachtbrief.bahnhof" class="form-control" :disabled="frachtbrief.pdf_id != null"/>
+                
+            </div>
+
+             <div class="form-group">
+                <label for="wagenummer">Bahnhofscode</label>
+                <input type="text" v-model="frachtbrief.bahnhofscode" class="form-control" @change="bahnhofscodeChange" :disabled="frachtbrief.pdf_id != null"/>
+                
+            </div>
+
+      
+
+            <div class="form-group">
+                <label for="wagenummer">Land</label>
+                <input type="text" v-model="frachtbrief.land" class="form-control" :disabled="frachtbrief.pdf_id != null"/>
+                
+            </div>
+
+            <div class="form-group">
+                <label for="wagenummer">Ländercode</label>
+                <input type="text" v-model="frachtbrief.laendercode" class="form-control" :disabled="frachtbrief.pdf_id != null"/>
                 
             </div>
 
@@ -137,7 +145,18 @@ export default {
                    
                   
               
+        },
+    bahnhofscodeChange() {
+        if(this.frachtbrief.bahnhofscode.charAt(0).toUpperCase()=='O'){
+            this.frachtbrief.laendercode = '81';
+            this.frachtbrief.land = "Österreich";
+
+
+        } else {
+            this.frachtbrief.laendercode = '80';
+            this.frachtbrief.land = "Deutschland";
         }
+    }
 
         
     }

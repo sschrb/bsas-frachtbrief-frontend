@@ -10,55 +10,46 @@
 
  <form @submit.prevent="handleSubmit">
 
-<label for="adresse">Absender</label>
+<label for="adresse">Bahnhof</label>
 
 
 
-<select class="form-control" v-model="frachtbrief.adresseform" required @change="changeAdress">
-        <option selected>Adresse auswählen</option>
-        <option v-for="adresse in adressen" v-bind:key="adresse.name" >{{ adresse.name }}</option>
+<select class="form-control" v-model="bahnhof">
+        <option >neu anlegen</option>
+        <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.name">{{ bahnhof.name }}</option>
     </select>
 
 
-<em v-if="this.frachtbrief.adresseview">
+
+   
+
+
+
             <div class="form-group">
-                
-                <label for="adresse">Neue Adresse anlegen</label>
-                <input type="text" v-model="frachtbrief.adresse" class="form-control"/>
-                
-            </div>
-</em>
-            <div class="form-group">
-                <label for="wagenummer">Wagennummer</label>
-                <input type="text" v-model="frachtbrief.wagenummer" class="form-control"/>
+                <label for="wagenummer">Name</label>
+                <input type="text" v-model="bahnhof.name" class="form-control"/>
                 
             </div>
 
             <div class="form-group">
-                <label for="wagenummer">Bahnhof</label>
-                <input type="text" v-model="frachtbrief.bahnhof" class="form-control"/>
-                
-            </div>
-
-             <div class="form-group">
                 <label for="wagenummer">Bahnhofscode</label>
-                <input type="text" v-model="frachtbrief.bahnhofscode" @change="bahnhofscodeChange" class="form-control"/>
-                
-            </div>
-
-      
-
-            <div class="form-group">
-                <label for="wagenummer">Land</label>
-                <input type="text" v-model="frachtbrief.land" class="form-control"/>
+                <input type="text" v-model="bahnhof.bahnhofscode" class="form-control"/>
                 
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Ländercode</label>
-                <input type="text" v-model="frachtbrief.laendercode" class="form-control"/>
+                <input type="text" v-model="bahnhof.laendercode" class="form-control"/>
                 
             </div>
+
+            <div class="form-group">
+                <label for="wagenummer">Land</label>
+                <input type="text" v-model="bahnhof.land" class="form-control"/>
+                
+            </div>
+
+           
 
             <div class="form-group">
                 <button class="btn btn-primary" >Speichern</button>
@@ -90,28 +81,33 @@ export default {
 
     data () {
         return {
-            frachtbrief: {
-                adresse: '',
-                adresseview: false,
-                wagenummer: '',
-                bahnhof: '',
-                laendercode: '',
-                land: ''
+            bahnhof: {
+               
+               
                
             },
-            adressen: [
+            bahnhoefe: [
               {
                 id: "1",
-                name: "neu anlegen"
+                name: "neuHof",
+                bahnhofscode: '111',
+                laendercode: '',
+                land: ''
             },
                 
              {
                 id: "2",
-                name: "Teststr. 7, 12345 Dorf"
+                name: "Testbahnhof",
+                bahnhofscode: '222',
+                laendercode: '',
+                land: ''
             },
             {
                 id: "3",
-                name: "Weg. 5, 12345 Stadt"
+                name: "Bahnsteig",
+                bahnhofscode: '333',
+                laendercode: '',
+                land: ''
             }
             ]
             
