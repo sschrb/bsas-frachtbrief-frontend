@@ -10,21 +10,21 @@
 
  <button class="btn btn-primary" v-on:click="bahnhofview = !bahnhofview">Bahnhöfe</button>
  <em v-if="bahnhofview">
-            <Bahnhof />
+            <Bahnhof class="border border-primary p-2" style="border-width: medium !important"/>
 </em>
 <br>
 <br>
 <br>
  <button class="btn btn-primary" v-on:click="adresseview = !adresseview">Adressen</button>
  <em v-if="adresseview">
-            <Adresse class="border border-primary"/>
+            <Adresse class="border border-primary p-2" style="border-width: medium !important"/>
 </em>
 <br>
 <br>
 <br>
  <button class="btn btn-primary" v-on:click="erklarungview = !erklarungview">Erklärungen</button>
  <em v-if="erklarungview">
-            <Erklarung />
+            <Erklarung class="border border-primary p-2" style="border-width: medium !important"/>
 </em>
 
 

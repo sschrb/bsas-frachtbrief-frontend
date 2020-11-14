@@ -40,7 +40,7 @@
               
             </div>
             <em v-if="erklarung.id != null"><button class="btn btn-primary" v-on:click="updaten">Update</button></em>
-            <em v-if="erklarung.id != null"><button class="btn btn-primary" v-on:click="loeschen">Löschen</button></em>
+            <em v-if="erklarung.id != null"><button class="btn btn-danger" v-on:click="loeschen">Löschen</button></em>
 
 
 
