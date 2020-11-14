@@ -5,6 +5,9 @@ import { alert } from './alert.module';
 import { account } from './account.module';
 import { users } from './users.module';
 import { frachtbrief } from './frachtbrief.module';
+import { bahnhof } from './bahnhof.module';
+import { adresse } from './adresse.module';
+import { erklarung } from './erklarung.module';
 
 Vue.use(Vuex);
 
@@ -13,6 +16,9 @@ export const store = new Vuex.Store({
         alert,
         account,
         users,
-        frachtbrief
+        frachtbrief,
+        bahnhof,
+        adresse,
+        erklarung
     }
 });

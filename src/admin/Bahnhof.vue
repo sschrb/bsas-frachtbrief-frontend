@@ -15,8 +15,8 @@
 
 
 <select class="form-control" v-model="bahnhof">
-        <option >neu anlegen</option>
-        <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.name">{{ bahnhof.name }}</option>
+        <option v-bind:value="bahnhof_def">neu anlegen</option>
+        <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
     </select>
 
 
@@ -52,10 +52,12 @@
            
 
             <div class="form-group">
-                <button class="btn btn-primary" >Speichern</button>
+                <em v-if="bahnhof.id == null"><button class="btn btn-primary" v-on:click="anlegen">Anlegen</button></em>
                 
               
             </div>
+            <em v-if="bahnhof.id != null"><button class="btn btn-primary" v-on:click="updaten">Update</button></em>
+            <em v-if="bahnhof.id != null"><button class="btn btn-primary" v-on:click="loeschen">Löschen</button></em>
 
 
 
@@ -81,72 +83,85 @@ export default {
 
     data () {
         return {
+
+            bahnhof_def: {
+               name: "",
+                bahnhofscode: '',
+                laendercode: '',
+                land: '',
+               
+               
+            },
+            
             bahnhof: {
-               
+               name: "",
+                bahnhofscode: '',
+                laendercode: '',
+                land: '',
                
                
             },
-            bahnhoefe: [
-              {
-                id: "1",
-                name: "neuHof",
-                bahnhofscode: '111',
-                laendercode: '',
-                land: ''
-            },
-                
-             {
-                id: "2",
-                name: "Testbahnhof",
-                bahnhofscode: '222',
-                laendercode: '',
-                land: ''
-            },
-            {
-                id: "3",
-                name: "Bahnsteig",
-                bahnhofscode: '333',
-                laendercode: '',
-                land: ''
-            }
-            ]
+            
             
         }
     },
 computed: {
-        ...mapState('frachtbrief', ['status'])
+        ...mapState('bahnhof', ['status']),
+    
+     ...mapState({
+           
+            bahnhoefe: state => state.bahnhof.all.items,
+           message: state => state.bahnhof.message
+            
+        }),
+    
+  
+     
+    
+    },
+      mounted () {
+        this.getAll();
+        console.log('mount')
+    },
+    beforeUpdate () {
+        if(this.message){this.getAll();
+        console.log('update true')
+        }
+
+        console.log('update false')
     },
     methods: {
-        ...mapActions('frachtbrief', ['create']),
+        ...mapActions('bahnhof', ['create']),
+        ...mapActions('bahnhof', ['getAll']),
+         ...mapActions('bahnhof', ['delete']),
+         ...mapActions('bahnhof', ['update']),
+
         handleSubmit(e) {
             //this.submitted = true;
             this.$validator.validate().then(valid => {
                 if (valid) {
-                    this.create(this.frachtbrief);
-                    this.$router.push('/history');
-                }
-            });
-        },
-        changeAdress() {
-            if(this.frachtbrief.adresseform==this.adressen[0].name){
-                this.frachtbrief.adresseview=true;
-            } else {
-                this.frachtbrief.adresseview=false;
-            }
-            this.frachtbrief.adresse=this.frachtbrief.adresseform;
-
-        },
-        bahnhofscodeChange() {
-        if(this.frachtbrief.bahnhofscode.charAt(0).toUpperCase()=='O'){
-            this.frachtbrief.laendercode = '81';
-            this.frachtbrief.land = "Österreich";
-
-
-        } else {
-            this.frachtbrief.laendercode = '80';
-            this.frachtbrief.land = "Deutschland";
-        }
+                    
+                   
+                    
+                   // this.getAll();
     }
+                    
+                }
+            )
+        },
+        anlegen(){
+this.create(this.bahnhof)
+        },
+        updaten(){
+this.update(this.bahnhof)
+        },
+
+        loeschen(){
+this.delete(this.bahnhof.id).then(() => {this.bahnhof = this.bahnhof_def})
+        },
+
+       
+        
     }
 };
 </script>

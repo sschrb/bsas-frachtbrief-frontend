@@ -12,7 +12,20 @@
  <em v-if="bahnhofview">
             <Bahnhof />
 </em>
- 
+<br>
+<br>
+<br>
+ <button class="btn btn-primary" v-on:click="adresseview = !adresseview">Adressen</button>
+ <em v-if="adresseview">
+            <Adresse class="border border-primary"/>
+</em>
+<br>
+<br>
+<br>
+ <button class="btn btn-primary" v-on:click="erklarungview = !erklarungview">Erklärungen</button>
+ <em v-if="erklarungview">
+            <Erklarung />
+</em>
 
 
 
@@ -34,6 +47,8 @@ export default {
     data () {
         return {
             bahnhofview: false,
+            adresseview: false,
+            erklarungview: false,
             frachtbrief: {
                 adresse: '',
                 adresseview: false,
