@@ -26,6 +26,13 @@
  <em v-if="erklarungview">
             <Erklarung class="border border-primary p-2" style="border-width: medium !important"/>
 </em>
+<br>
+<br>
+<br>
+ <button class="btn btn-primary" v-on:click="evuview = !evuview">EVU</button>
+ <em v-if="evuview">
+            <Evu class="border border-primary p-2" style="border-width: medium !important"/>
+</em>
 
 
 
@@ -49,6 +56,7 @@ export default {
             bahnhofview: false,
             adresseview: false,
             erklarungview: false,
+            evuview: false,
             frachtbrief: {
                 adresse: '',
                 adresseview: false,

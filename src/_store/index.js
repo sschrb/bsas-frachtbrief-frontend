@@ -8,6 +8,7 @@ import { frachtbrief } from './frachtbrief.module';
 import { bahnhof } from './bahnhof.module';
 import { adresse } from './adresse.module';
 import { erklarung } from './erklarung.module';
+import { evu } from './evu.module';
 
 Vue.use(Vuex);
 
@@ -19,6 +20,7 @@ export const store = new Vuex.Store({
         frachtbrief,
         bahnhof,
         adresse,
-        erklarung
+        erklarung,
+        evu
     }
 });

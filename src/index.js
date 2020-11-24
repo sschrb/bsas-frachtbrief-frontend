@@ -6,6 +6,7 @@ import "vue-select/dist/vue-select.css";
 import Bahnhof from './admin/Bahnhof';
 import Adresse from './admin/Adresse';
 import Erklarung from './admin/Erklarung';
+import Evu from './admin/Evu';
 
 //import "vue-select/dist/vue-select.css";
 
@@ -19,6 +20,7 @@ Vue.component("v-select", vSelect);
 Vue.component("Bahnhof", Bahnhof);
 Vue.component("Adresse", Adresse);
 Vue.component("Erklarung", Erklarung);
+Vue.component("Evu", Evu);
 
 
 // setup fake backend
