@@ -3,7 +3,12 @@
 
 
 
-
+<label for="adresse">Referenz Nummer</label>
+<div class="form-group">
+               
+                <input type="text" v-model="frachtbrief.refnr" class="form-control" />
+                
+            </div>
 
 
 
@@ -839,6 +844,117 @@
 
 
 
+
+
+
+
+
+
+
+
+<div class="border border-primary p-2" style="border-width: medium !important">
+<label for="adresse">Übernahmeort</label>
+
+
+
+<select class="form-control" v-model="ubernahmeort">
+       <option v-bind:value="bahnhof_def"></option>
+        <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
+    </select>
+<button class="btn btn-primary" v-on:click="viewUbernahmeort=!viewUbernahmeort">Details anzeigen</button>
+ <em v-if="viewUbernahmeort">
+<div class="form-group">
+                <label for="wagenummer">Name</label>
+                <input type="text" v-model="ubernahmeort.name" class="form-control" :disabled=true />
+                
+            </div>
+
+            <div class="form-group">
+                <label for="wagenummer">Bahnhofscode</label>
+                <input type="text" v-model="ubernahmeort.bahnhofscode" class="form-control" :disabled=true />
+                
+            </div>
+
+            <div class="form-group">
+                <label for="wagenummer">Ländercode</label>
+                <input type="text" v-model="ubernahmeort.laendercode" class="form-control" :disabled=true />
+                
+            </div>
+
+            <div class="form-group">
+                <label for="wagenummer">Land</label>
+                <input type="text" v-model="ubernahmeort.land" class="form-control" :disabled=true />
+                
+            </div>
+
+
+
+ </em>
+ <br>
+ <br>
+ <label for="adresse">Übernahmedatum und Uhrzeit</label><datetime type="datetime" v-model="ubernahmeort.datum" value-zone="Europe/Berlin" ></datetime>
+</div>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+<div class="border border-primary p-2" style="border-width: medium !important">
+
+<p>Frachtbrief Typ:</p>
+  <div>
+    <input id="CIM" type="radio" name="type" value="CIM" v-model="frachtbrief.type"/>
+    <label for="CIM">CIM</label>
+  </div>
+  
+  <div>
+    <input id="CUV" type="radio" name="type" value="CUV" v-model="frachtbrief.type"/>
+    <label for="CUV">CUV</label>
+  </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+<div class="border border-primary p-2" style="border-width: medium !important">
+<label for="adresse">Ausstellungsort</label>
+<div class="form-group">
+               
+                <input type="text" v-model="ausstellung.ort" class="form-control" />
+                
+            </div>
+<label for="adresse">Ausstellungsdatum</label><datetime v-model="ausstellung.datum" value-zone="Europe/Berlin" ></datetime>
+
+</div>
+
+
+
+
+
+
 <br>
 <br>
              <div class="form-group">
@@ -862,6 +978,12 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import "vue-select/dist/vue-select.css";
+
+import { Datetime } from 'vue-datetime'
+// You need a specific loader for CSS files
+import 'vue-datetime/dist/vue-datetime.css'
+
+
 
 
 export default {
@@ -941,6 +1063,17 @@ export default {
                 bahnhofscode: '',
                 laendercode: '',
                 land: '',
+               
+               
+            },
+
+            viewUbernahmeort: false,
+            ubernahmeort: {
+               name: "",
+                bahnhofscode: '',
+                laendercode: '',
+                land: '',
+                datum: ''
                
                
             },
@@ -1042,9 +1175,17 @@ export default {
                
             },
 
+            ausstellung: {
+                ort: '',
+                datum: ''
+            },
+
 
 
             frachtbrief: {
+                refnr: '',
+                type: 'CIM',
+
                 adresse: '',
                 adresseview: false,
                 wagenummer: '',
@@ -1112,3 +1253,8 @@ computed: {
     }
 };
 </script>
+
+<style>
+@import '/node_modules/vue-datetime/dist/vue-datetime.css';
+
+</style>
