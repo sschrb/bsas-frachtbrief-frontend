@@ -9,6 +9,7 @@ import { bahnhof } from './bahnhof.module';
 import { adresse } from './adresse.module';
 import { erklarung } from './erklarung.module';
 import { evu } from './evu.module';
+import { wagendaten } from './wagendaten.module';
 
 Vue.use(Vuex);
 
@@ -21,6 +22,7 @@ export const store = new Vuex.Store({
         bahnhof,
         adresse,
         erklarung,
-        evu
+        evu,
+        wagendaten
     }
 });

@@ -6,7 +6,7 @@
 <label for="adresse">Referenz Nummer</label>
 <div class="form-group">
                
-                <input type="text" v-model="frachtbrief.refnr" class="form-control" />
+                <input type="text" v-model="refnr" class="form-control" />
                 
             </div>
 
@@ -909,12 +909,12 @@
 
 <p>Frachtbrief Typ:</p>
   <div>
-    <input id="CIM" type="radio" name="type" value="CIM" v-model="frachtbrief.type"/>
+    <input id="CIM" type="radio" name="type" value="CIM" v-model="type"/>
     <label for="CIM">CIM</label>
   </div>
   
   <div>
-    <input id="CUV" type="radio" name="type" value="CUV" v-model="frachtbrief.type"/>
+    <input id="CUV" type="radio" name="type" value="CUV" v-model="type"/>
     <label for="CUV">CUV</label>
   </div>
 
@@ -955,10 +955,91 @@
 
 
 
+
+
+
+
+
+
+
+<br>
+<br>
+<div class="border border-primary p-2" style="border-width: medium !important">
+<label for="adresse">Andere Beförderer</label>
+<br>
+<button class="btn btn-primary" v-on:click="aBefordererVorschlag()">Vorschlag generieren</button>
+<div class="row">
+    <div class="col-4">Name</div>
+    <div class="col-8">Strecke</div>
+
+    <div class="col-4"><input type="text" v-model="aBeforderer1.name" class="form-control" /></div>
+    <div class="col-8"><input type="text" v-model="aBeforderer1.strecke" class="form-control" /></div>
+
+    <div class="col-4"><input type="text" v-model="aBeforderer2.name" class="form-control" /></div>
+    <div class="col-8"><input type="text" v-model="aBeforderer2.strecke" class="form-control" /></div>
+
+    <div class="col-4"><input type="text" v-model="aBeforderer3.name" class="form-control" /></div>
+    <div class="col-8"><input type="text" v-model="aBeforderer3.strecke" class="form-control" /></div>
+
+    <div class="col-4"><input type="text" v-model="aBeforderer4.name" class="form-control" /></div>
+    <div class="col-8"><input type="text" v-model="aBeforderer4.strecke" class="form-control" /></div>
+
+    <div class="col-4"><input type="text" v-model="aBeforderer5.name" class="form-control" /></div>
+    <div class="col-8"><input type="text" v-model="aBeforderer5.strecke" class="form-control" /></div>
+
+    <div class="col-4"><input type="text" v-model="aBeforderer6.name" class="form-control" /></div>
+    <div class="col-8"><input type="text" v-model="aBeforderer6.strecke" class="form-control" /></div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+<div class="border border-primary p-2" style="border-width: medium !important">
+<label for="erklarung">Erklärungen</label>
+
+
+
+<select class="form-control" v-model="erklarung">
+        <option v-bind:value="erklarung_def">neu anlegen</option>
+        <option v-for="erklarung in erklarungen" v-bind:value="erklarung" v-bind:key="erklarung.id">{{ erklarung.code }}</option>
+    </select>
+
+
+
+   
+
+
+
+            <div class="form-group">
+                <label for="wagenummer">Code mit Erläuterung</label>
+                <textarea type="text" v-model="erklarung.code" class="form-control"/>
+                
+            </div>
+</div>
+<br>
+<br>
+
+
+
+
+
+
+
 <br>
 <br>
              <div class="form-group">
-                <button class="btn btn-primary" >Speichern</button>
+                <button class="btn btn-primary" v-on:click="saveFrachtbrief()" >Speichern</button>
                 
               
             </div>
@@ -1176,22 +1257,55 @@ export default {
             },
 
             ausstellung: {
-                ort: '',
+                ort: 'Mühlsen',
                 datum: ''
             },
 
 
 
-            frachtbrief: {
-                refnr: '',
-                type: 'CIM',
+            aBeforderer1: {
+                name: '',
+                strecke: ''
 
-                adresse: '',
-                adresseview: false,
-                wagenummer: '',
-                bahnhof: '',
-                laendercode: '',
-                land: ''
+            },
+            aBeforderer2: {
+                name: '',
+                strecke: ''
+
+            },
+            aBeforderer3: {
+                name: '',
+                strecke: ''
+
+            },
+            aBeforderer4: {
+                name: '',
+                strecke: ''
+
+            },
+            aBeforderer5: {
+                name: '',
+                strecke: ''
+
+            },
+            aBeforderer6: {
+                name: '',
+                strecke: ''
+
+            },
+
+            refnr: '',
+            type: 'CIM',
+
+            erklarung_def: {
+                code: ''
+               
+               
+            },
+            
+            erklarung: {
+                code: ''
+               
                
             },
             
@@ -1207,6 +1321,7 @@ computed: {
             bahnhoefe: state => state.bahnhof.all.items,
             evus: state => state.evu.all.items,
             adressen: state => state.adresse.all.items,
+            erklarungen: state => state.erklarung.all.items,
             message: state => state.bahnhof.message
             
         }),
@@ -1215,6 +1330,7 @@ computed: {
         this.getAllBahnhof();
         this.getAllEvu();
         this.getAllAdresse();
+        this.getAllErklarung();
         console.log('mount')
     },
     methods: {
@@ -1223,12 +1339,119 @@ computed: {
         ...mapActions('bahnhof', {getAllBahnhof: 'getAll'}),
         ...mapActions('evu', {getAllEvu: 'getAll'}),
         ...mapActions('adresse', {getAllAdresse: 'getAll'}),
+        ...mapActions('erklarung', {createErklarung: 'create'}),
+        ...mapActions('erklarung', {getAllErklarung: 'getAll'}),
+
          ...mapActions('bahnhof', ['delete']),
          ...mapActions('bahnhof', ['update']),
-        ...mapActions('frachtbrief', ['create']),
+        ...mapActions('frachtbrief', {createFrachtbrief: 'create'}),
         handleSubmit(e) {
             //this.submitted = true;
            
+        },
+saveFrachtbrief(){
+
+if(this.erklarung.id == null && this.erklarung.code != null){
+    this.createErklarung(this.erklarung);
+}
+
+var frachtbriefdata = JSON.parse('{"frachtbriefdata":' + JSON.stringify(this.$data) + '}')
+console.log(frachtbriefdata)
+
+this.createFrachtbrief(frachtbriefdata);
+
+
+setTimeout(() => this.$router.push('/history') , 3000);
+
+},
+
+        aBefordererVorschlag() {
+
+
+
+
+
+if(this.evu2.name==''){
+    this.aBeforderer1.name=this.evu1.name;
+    this.aBeforderer1.strecke=this.bahnhof1.name + ' - ' + this.bahnhof7.name;
+} 
+
+if(this.evu2.name!='' && this.evu3.name==''){
+    this.aBeforderer1.name=this.evu1.name;
+    this.aBeforderer1.strecke=this.bahnhof1.name + ' - ' + this.bahnhof2.name;
+
+    this.aBeforderer2.name=this.evu2.name;
+    this.aBeforderer2.strecke=this.bahnhof2.name + ' - ' + this.bahnhof7.name;
+
+}
+
+if(this.evu2.name!='' && this.evu3.name!='' && this.evu4.name==''){
+    this.aBeforderer1.name=this.evu1.name;
+    this.aBeforderer1.strecke=this.bahnhof1.name + ' - ' + this.bahnhof2.name;
+
+    this.aBeforderer2.name=this.evu2.name;
+    this.aBeforderer2.strecke=this.bahnhof2.name + ' - ' + this.bahnhof3.name;
+
+    this.aBeforderer3.name=this.evu3.name;
+    this.aBeforderer3.strecke=this.bahnhof3.name + ' - ' + this.bahnhof7.name;
+
+}
+
+if(this.evu2.name!='' && this.evu3.name!='' && this.evu4.name!='' && this.evu5.name==''){
+    this.aBeforderer1.name=this.evu1.name;
+    this.aBeforderer1.strecke=this.bahnhof1.name + ' - ' + this.bahnhof2.name;
+
+    this.aBeforderer2.name=this.evu2.name;
+    this.aBeforderer2.strecke=this.bahnhof2.name + ' - ' + this.bahnhof3.name;
+
+    this.aBeforderer3.name=this.evu3.name;
+    this.aBeforderer3.strecke=this.bahnhof3.name + ' - ' + this.bahnhof4.name;
+
+    this.aBeforderer4.name=this.evu4.name;
+    this.aBeforderer4.strecke=this.bahnhof4.name + ' - ' + this.bahnhof7.name;
+
+}
+
+if(this.evu2.name!='' && this.evu3.name!='' && this.evu4.name!='' && this.evu5.name!='' && this.evu6.name==''){
+    this.aBeforderer1.name=this.evu1.name;
+    this.aBeforderer1.strecke=this.bahnhof1.name + ' - ' + this.bahnhof2.name;
+
+    this.aBeforderer2.name=this.evu2.name;
+    this.aBeforderer2.strecke=this.bahnhof2.name + ' - ' + this.bahnhof3.name;
+
+    this.aBeforderer3.name=this.evu3.name;
+    this.aBeforderer3.strecke=this.bahnhof3.name + ' - ' + this.bahnhof4.name;
+
+    this.aBeforderer4.name=this.evu4.name;
+    this.aBeforderer4.strecke=this.bahnhof4.name + ' - ' + this.bahnhof5.name;
+
+    this.aBeforderer5.name=this.evu5.name;
+    this.aBeforderer5.strecke=this.bahnhof5.name + ' - ' + this.bahnhof7.name;
+
+}
+
+if(this.evu2.name!='' && this.evu3.name!='' && this.evu4.name!='' && this.evu5.name!='' && this.evu6.name!=''){
+    this.aBeforderer1.name=this.evu1.name;
+    this.aBeforderer1.strecke=this.bahnhof1.name + ' - ' + this.bahnhof2.name;
+
+    this.aBeforderer2.name=this.evu2.name;
+    this.aBeforderer2.strecke=this.bahnhof2.name + ' - ' + this.bahnhof3.name;
+
+    this.aBeforderer3.name=this.evu3.name;
+    this.aBeforderer3.strecke=this.bahnhof3.name + ' - ' + this.bahnhof4.name;
+
+    this.aBeforderer4.name=this.evu4.name;
+    this.aBeforderer4.strecke=this.bahnhof4.name + ' - ' + this.bahnhof5.name;
+
+    this.aBeforderer5.name=this.evu5.name;
+    this.aBeforderer5.strecke=this.bahnhof5.name + ' - ' + this.bahnhof6.name;
+
+    this.aBeforderer6.name=this.evu6.name;
+    this.aBeforderer6.strecke=this.bahnhof6.name + ' - ' + this.bahnhof7.name;
+
+}
+
+
         },
         changeAdress() {
             if(this.frachtbrief.adresseform==this.adressen[0].name){

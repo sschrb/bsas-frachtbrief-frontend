@@ -33,6 +33,13 @@
  <em v-if="evuview">
             <Evu class="border border-primary p-2" style="border-width: medium !important"/>
 </em>
+<br>
+<br>
+<br>
+ <button class="btn btn-primary" v-on:click="wagendatenview = !wagendatenview">Wagendaten</button>
+ <em v-if="wagendatenview">
+            <Wagendaten class="border border-primary p-2" style="border-width: medium !important"/>
+</em>
 
 
 
@@ -57,6 +64,7 @@ export default {
             adresseview: false,
             erklarungview: false,
             evuview: false,
+            wagendatenview: false,
             frachtbrief: {
                 adresse: '',
                 adresseview: false,

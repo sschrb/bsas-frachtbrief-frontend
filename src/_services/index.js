@@ -4,3 +4,4 @@ export * from './bahnhof.service';
 export * from './adresse.service';
 export * from './erklarung.service';
 export * from './evu.service';
+export * from './wagendaten.service';

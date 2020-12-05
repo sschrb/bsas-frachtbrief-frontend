@@ -7,6 +7,7 @@ import Bahnhof from './admin/Bahnhof';
 import Adresse from './admin/Adresse';
 import Erklarung from './admin/Erklarung';
 import Evu from './admin/Evu';
+import Wagendaten from './admin/Wagendaten';
 
 import { Datetime } from 'vue-datetime';
 
@@ -26,6 +27,7 @@ Vue.component("Bahnhof", Bahnhof);
 Vue.component("Adresse", Adresse);
 Vue.component("Erklarung", Erklarung);
 Vue.component("Evu", Evu);
+Vue.component("Wagendaten", Wagendaten);
 
 
 

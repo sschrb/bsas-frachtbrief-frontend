@@ -15,7 +15,7 @@
         <span v-if="users.error" class="text-danger">ERROR: {{users.error}}</span>
         <ul v-if="frachtbrief.items">
             <li v-for="fbrief in frachtbrief.items" :key="fbrief.id">
-                {{fbrief.adresse + ' ' + fbrief.wagenummer}}
+                {{fbrief.frachtbriefdata.refnr}}
                 <span v-if="fbrief.deleting"><em> - Deleting...</em></span>
                 <span v-else-if="fbrief.deleteError" class="text-danger"> - ERROR: {{fbrief.deleteError}}</span>
                 <span v-else> - <a class="text-danger"><router-link v-bind:to="'/frachtbrief/' + fbrief.id">Anzeigen</router-link></a></span>

@@ -1,7 +1,10 @@
 import { frachtbriefService } from '../_services';
 
 const state = {
-    all: {},
+    all: { items: {
+        frachtbriefdata : ''}
+    },
+    frachtbriefdata: {},
     pdf: {test: 'test'}
 };
 
@@ -10,7 +13,7 @@ const actions = {
     create({ dispatch, commit }, frachtbrief) {
         commit('createRequest');
 
-        frachtbriefService.create(frachtbrief)
+       return frachtbriefService.create(frachtbrief)
             .then(
                 //frachtbrief => commit('getAllSuccess', frachtbrief),
                 error => commit('getAllFailure', error)
@@ -61,7 +64,8 @@ const actions = {
 
         frachtbriefService.getById(id)
             .then(
-                frachtbrief => commit('getAllSuccess', frachtbrief),
+                frachtbrief => {commit('getAllSuccessD', frachtbrief);
+            return frachtbrief},
                 error => commit('getAllFailure', error)
             );
     },
@@ -97,7 +101,13 @@ const mutations = {
     },
     getAllSuccess(state, frachtbrief) {
         console.log('pdf');
+        console.log(frachtbrief)
         state.all = { items: frachtbrief };
+    },
+    getAllSuccessD(state, frachtbrief) {
+        console.log('DDD');
+        console.log(frachtbrief)
+        state.all = { items: frachtbrief.frachtbriefdata };
     },
     getAllPdfSuccess(state, pdf) {
         console.log(pdf);
