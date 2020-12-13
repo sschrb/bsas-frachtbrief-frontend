@@ -21,6 +21,20 @@
                 <span v-else> - <a class="text-danger"><router-link v-bind:to="'/frachtbrief/' + fbrief.id">Anzeigen</router-link></a></span>
             </li>
         </ul>
+
+
+<h3>Ladelisten:</h3>
+        <em v-if="users.loading">Loading...</em>
+        <span v-if="users.error" class="text-danger">ERROR: {{users.error}}</span>
+        <ul v-if="ladeliste.items">
+            <li v-for="fbrief in ladeliste.items" :key="fbrief.id">
+                {{fbrief.ladelistedata.refnr}}
+                <span v-if="fbrief.deleting"><em> - Deleting...</em></span>
+                <span v-else-if="fbrief.deleteError" class="text-danger"> - ERROR: {{fbrief.deleteError}}</span>
+                <span v-else> - <a class="text-danger"><router-link v-bind:to="'/frachtbrief/' + fbrief.id">Anzeigen</router-link></a></span>
+            </li>
+        </ul>
+
         <p>
             <router-link to="/login">Logout</router-link>
         </p>
@@ -38,12 +52,14 @@ export default {
         ...mapState({
             account: state => state.account,
             users: state => state.users.all,
-            frachtbrief: state => state.frachtbrief.all
+            frachtbrief: state => state.frachtbrief.all,
+            ladeliste: state => state.ladeliste.all
         })
     },
     created () {
         this.getAllUsers();
         this.getAllFrachtbrief();
+        this.getAllLadeliste();
     },
     methods: {
         ...mapActions('users', {
@@ -55,6 +71,11 @@ export default {
        ...mapActions( 'frachtbrief', {
             getAllFrachtbrief: 'getAll',
             deleteFrachtbrief: 'delete'
+        }),
+
+        ...mapActions( 'ladeliste', {
+            getAllLadeliste: 'getAll'
+            
         })
     }
 };

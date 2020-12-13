@@ -40,6 +40,13 @@
  <em v-if="wagendatenview">
             <Wagendaten class="border border-primary p-2" style="border-width: medium !important"/>
 </em>
+<br>
+<br>
+<br>
+ <button class="btn btn-primary" v-on:click="ladegutview = !ladegutview">Ladegut</button>
+ <em v-if="ladegutview">
+            <Ladegut class="border border-primary p-2" style="border-width: medium !important"/>
+</em>
 
 
 
@@ -65,6 +72,7 @@ export default {
             erklarungview: false,
             evuview: false,
             wagendatenview: false,
+            ladegutview: false,
             frachtbrief: {
                 adresse: '',
                 adresseview: false,

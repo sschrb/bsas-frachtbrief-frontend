@@ -1,48 +1,48 @@
-import { frachtbriefService } from '../_services';
+import { ladelisteService } from '../_services';
 
 const state = {
     all: { items: {
-        frachtbriefdata : ''}
+        ladelistedata : ''}
     },
-    frachtbriefdata: {},
-    pdf: {test: 'test'}
+    ladelistedata: {},
+    
 };
 
 const actions = {
 
-    create({ dispatch, commit }, frachtbrief) {
+    create({ dispatch, commit }, ladeliste) {
         commit('createRequest');
 
-       return frachtbriefService.create(frachtbrief)
+       return ladelisteService.create(ladeliste)
             .then(
-                //frachtbrief => commit('getAllSuccess', frachtbrief),
+                //ladeliste => commit('getAllSuccess', ladeliste),
                 error => commit('getAllFailure', error)
             );
     },
 
-    createPDF({ dispatch, commit }, frachtbrief) {
+    createPDF({ dispatch, commit }, ladeliste) {
         commit('createRequest');
 
-       frachtbriefService.update(frachtbrief)
+       ladelisteService.update(ladeliste)
             .then(
-                frachtbrief => {commit('getAllSuccess', frachtbrief)},
+                ladeliste => {commit('getAllSuccess', ladeliste)},
                 error => commit('getAllFailure', error),
                 
             ).then(
 
-        frachtbriefService.createPDF(frachtbrief)
+        ladelisteService.createPDF(ladeliste)
             .then(
-                frachtbrief => commit('getAllSuccess', frachtbrief),
+                ladeliste => commit('getAllSuccess', ladeliste),
                 error => commit('getAllFailure', error)
             ));
     },
 
-    update({ commit }, frachtbrief) {
+    update({ commit }, ladeliste) {
         commit('getAllRequest');
 
-        frachtbriefService.update(frachtbrief)
+        ladelisteService.update(ladeliste)
             .then(
-                frachtbrief => {commit('getAllSuccess', frachtbrief)},
+                ladeliste => {commit('getAllSuccess', ladeliste)},
                 error => commit('getAllFailure', error),
                 
             );
@@ -52,9 +52,9 @@ const actions = {
     getAll({ commit }) {
         commit('getAllRequest');
 
-        frachtbriefService.getAll()
+        ladelisteService.getAll()
             .then(
-                frachtbrief => commit('getAllSuccess', frachtbrief),
+                ladeliste => commit('getAllSuccess', ladeliste),
                 error => commit('getAllFailure', error)
             );
     },
@@ -62,10 +62,10 @@ const actions = {
     getById({ commit }, id) {
         commit('getAllRequest');
 
-        frachtbriefService.getById(id)
+        ladelisteService.getById(id)
             .then(
-                frachtbrief => {commit('getAllSuccessD', frachtbrief);
-            return frachtbrief},
+                ladeliste => {commit('getAllSuccessD', ladeliste);
+            return ladeliste},
                 error => commit('getAllFailure', error)
             );
     },
@@ -73,7 +73,7 @@ const actions = {
     getPdfById({ commit }, id) {
        // commit('getAllRequest');
 console.log(1)
-      return  frachtbriefService.getPdfById(id)
+      return  ladelisteService.getPdfById(id)
             .then(
                 pdf => commit('getAllPdfSuccess', pdf),
                 error => commit('getAllFailure', error)
@@ -83,7 +83,7 @@ console.log(1)
     delete({ commit }, id) {
         commit('deleteRequest', id);
 
-        frachtbriefService.delete(id)
+        ladelisteService.delete(id)
             .then(
                 user => commit('deleteSuccess', id),
                 error => commit('deleteFailure', { id, error: error.toString() })
@@ -99,15 +99,15 @@ const mutations = {
         console.log('loading true')
         state.all = { loading: true };
     },
-    getAllSuccess(state, frachtbrief) {
+    getAllSuccess(state, ladeliste) {
         console.log('pdf');
-        console.log(frachtbrief)
-        state.all = { items: frachtbrief };
+        console.log(ladeliste)
+        state.all = { items: ladeliste };
     },
-    getAllSuccessD(state, frachtbrief) {
+    getAllSuccessD(state, ladeliste) {
         console.log('DDD');
-        console.log(frachtbrief)
-        state.all = { items: frachtbrief };
+        console.log(ladeliste)
+        state.all = { items: ladeliste };
     },
     getAllPdfSuccess(state, pdf) {
         console.log(pdf);
@@ -147,7 +147,7 @@ const mutations = {
     }
 };
 
-export const frachtbrief = {
+export const ladeliste = {
     namespaced: true,
     state,
     actions,

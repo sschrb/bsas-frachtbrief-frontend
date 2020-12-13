@@ -8,6 +8,7 @@ import Adresse from './admin/Adresse';
 import Erklarung from './admin/Erklarung';
 import Evu from './admin/Evu';
 import Wagendaten from './admin/Wagendaten';
+import Ladegut from './admin/Ladegut';
 
 import { Datetime } from 'vue-datetime';
 
@@ -28,6 +29,7 @@ Vue.component("Adresse", Adresse);
 Vue.component("Erklarung", Erklarung);
 Vue.component("Evu", Evu);
 Vue.component("Wagendaten", Wagendaten);
+Vue.component("Ladegut", Ladegut);
 
 
 

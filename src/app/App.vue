@@ -19,11 +19,41 @@
                 <a class="navbar-brand" href="#"><router-link to="/verwaltung">Verwaltung</router-link></a>
             </li>          
         </ul>
+       
     </div>
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <router-link to="/login">Logout</router-link>
+            </li>
+        </ul>
+    </div>
+
+
+
+
+    
+</nav>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="navbar-brand" href="#"><router-link to="/ladeliste">Ladeliste anlegen</router-link></a>
+            </li>
+            <li class="nav-item">
+                
+            </li>  
+             <li class="nav-item">
+                
+            </li>          
+        </ul>
+       
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                
             </li>
         </ul>
     </div>
