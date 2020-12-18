@@ -155,7 +155,9 @@
 
              <div class="form-group">
                 <button class="btn btn-primary" v-on:click="saveLadeliste()" >Speichern</button>
-                
+                <em v-if="message.error">
+                    {{message.error.message}}
+                </em>
               
             </div>
 
@@ -264,7 +266,8 @@ computed: {
             erklarungen: state => state.erklarung.all.items,
             ladegueter: state => state.ladegut.all.items,
             wagendatens: state => state.wagendaten.all.items,
-            message: state => state.bahnhof.message
+            message: state => state.ladeliste.all,
+            
             
         }),
     },
@@ -340,7 +343,7 @@ saveLadeliste(){
 this.createLadeliste(this.$data);
 
 
-setTimeout(() => this.$router.push('/history') , 3000);
+setTimeout(() => this.$router.push('/history') , 2000);
 
 },
 

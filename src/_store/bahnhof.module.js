@@ -3,6 +3,7 @@ import { bahnhofService } from '../_services';
 const state = {
     all: {},
     message: false,
+    nachricht: {},
 };
 
 const actions = {
@@ -60,6 +61,8 @@ const mutations = {
     createSuccess(state, bahnhoefe) {
         state.all = { items: bahnhoefe };
         state.message =  true ;
+        state.nachricht = {text: bahnhoefe.message};
+        
     },
     createError(state, error){
 alert(error);
@@ -67,6 +70,7 @@ alert(error);
     updateSuccess(state, bahnhoefe) {
         state.all = { items: bahnhoefe };
         state.message =  true ;
+        state.nachricht = {text: 'gespeichert'};
     },
     getAllRequest(state) {
         state.all = { loading: true };
@@ -92,6 +96,7 @@ alert(error);
         // remove deleted user from state
         state.all.items = state.all.items.filter(user => user.id !== id);
         state.message =  true ;
+        state.nachricht = {text: 'gelöscht'};
     },
     deleteFailure(state, { id, error }) {
         alert(error);

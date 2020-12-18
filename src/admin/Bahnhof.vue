@@ -14,7 +14,7 @@
 
 
 
-<select class="form-control" v-model="bahnhof">
+<select v-on:click="clearNachricht()" class="form-control" v-model="bahnhof">
         <option v-bind:value="bahnhof_def">neu anlegen</option>
         <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
     </select>
@@ -65,7 +65,9 @@
 </form>
 
 
-
+<em v-if="nachricht.text">
+                    {{nachricht.text}}
+                </em>
 
 
 
@@ -112,7 +114,8 @@ computed: {
      ...mapState({
            
             bahnhoefe: state => state.bahnhof.all.items,
-           message: state => state.bahnhof.message
+           message: state => state.bahnhof.message,
+           nachricht: state => state.bahnhof.nachricht
             
         }),
     
@@ -160,6 +163,11 @@ this.update(this.bahnhof)
         loeschen(){
 this.delete(this.bahnhof.id).then(() => {this.bahnhof = this.bahnhof_def})
         },
+
+         clearNachricht(){
+            this.$store.state.bahnhof.nachricht = {};
+            console.log('clear')
+        }
 
        
         

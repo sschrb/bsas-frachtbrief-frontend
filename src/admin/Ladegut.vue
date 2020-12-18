@@ -14,7 +14,7 @@
 
 
 
-<select class="form-control" v-model="ladegut">
+<select v-on:click="clearNachricht()" class="form-control" v-model="ladegut">
         <option v-bind:value="ladegut_def">neu anlegen</option>
         <option v-for="ladegut in ladegueter" v-bind:value="ladegut" v-bind:key="ladegut.id">{{ ladegut.bezeichnung }}</option>
     </select>
@@ -78,7 +78,9 @@
 
 </form>
 
-
+<em v-if="nachricht.text">
+                    {{nachricht.text}}
+                </em>
 
 
 
@@ -132,7 +134,8 @@ computed: {
      ...mapState({
            
             ladegueter: state => state.ladegut.all.items,
-           message: state => state.ladegut.message
+           message: state => state.ladegut.message,
+           nachricht: state => state.ladegut.nachricht
             
         }),
     
@@ -180,6 +183,11 @@ this.update(this.ladegut)
         loeschen(){
 this.delete(this.ladegut.id).then(() => {this.ladegut = this.ladegut_def})
         },
+         clearNachricht(){
+            this.$store.state.ladegut.nachricht = {};
+            console.log('clear')
+        }
+
 
        
         

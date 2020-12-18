@@ -14,7 +14,7 @@
 
 
 
-<select class="form-control" v-model="evu">
+<select v-on:click="clearNachricht()" class="form-control" v-model="evu">
         <option v-bind:value="evu_def">neu anlegen</option>
         <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
     </select>
@@ -60,7 +60,9 @@
 
 </form>
 
-
+<em v-if="nachricht.text">
+                    {{nachricht.text}}
+                </em>
 
 
 
@@ -108,7 +110,8 @@ computed: {
      ...mapState({
            
             evus: state => state.evu.all.items,
-           message: state => state.evu.message
+           message: state => state.evu.message,
+           nachricht: state => state.evu.nachricht
             
         }),
     
@@ -156,6 +159,10 @@ this.update(this.evu)
         loeschen(){
 this.delete(this.evu.id).then(() => {this.evu = this.evu_def})
         },
+        clearNachricht(){
+            this.$store.state.evu.nachricht = {};
+            console.log('clear')
+        }
 
        
         

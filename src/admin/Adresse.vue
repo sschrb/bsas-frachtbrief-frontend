@@ -14,7 +14,7 @@
 
 
 
-<select class="form-control" v-model="adresse">
+<select v-on:click="clearNachricht()" class="form-control" v-model="adresse">
         <option v-bind:value="adresse_def">neu anlegen</option>
         <option v-for="adresse in adressen" v-bind:value="adresse" v-bind:key="adresse.id">{{ adresse.name }}</option>
     </select>
@@ -63,12 +63,14 @@
               
             </div>
             <em v-if="adresse.id != null"><button class="btn btn-primary" v-on:click="updaten">Update</button></em>
-            <em v-if="adresse.id != null"><button class="btn btn-primary" v-on:click="loeschen">Löschen</button></em>
+            <em v-if="adresse.id != null"><button class="btn btn-danger" v-on:click="loeschen">Löschen</button></em>
 
 
 
 </form>
-
+<em v-if="nachricht.text">
+                    {{nachricht.text}}
+                </em>
 
 
 
@@ -119,7 +121,8 @@ computed: {
      ...mapState({
            
             adressen: state => state.adresse.all.items,
-           message: state => state.adresse.message
+           message: state => state.adresse.message,
+           nachricht: state => state.adresse.nachricht
             
         }),
     
@@ -132,11 +135,9 @@ computed: {
         console.log('mount')
     },
     beforeUpdate () {
-        if(this.message){this.getAll();
-        console.log('update true')
-        }
+        if(this.message){this.getAll(); }
 
-        console.log('update false')
+        
     },
     methods: {
         ...mapActions('adresse', ['create']),
@@ -167,6 +168,11 @@ this.update(this.adresse)
         loeschen(){
 this.delete(this.adresse.id).then(() => {this.adresse = this.adresse_def})
         },
+
+        clearNachricht(){
+            this.$store.state.adresse.nachricht = {};
+            console.log('clear')
+        }
 
        
         

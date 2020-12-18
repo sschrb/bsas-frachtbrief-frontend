@@ -14,7 +14,7 @@
 
 
 
-<select class="form-control" v-model="erklarung">
+<select v-on:click="clearNachricht()" class="form-control" v-model="erklarung">
         <option v-bind:value="erklarung_def">neu anlegen</option>
         <option v-for="erklarung in erklarungen" v-bind:value="erklarung" v-bind:key="erklarung.id">{{ erklarung.code }}</option>
     </select>
@@ -47,7 +47,9 @@
 </form>
 
 
-
+<em v-if="nachricht.text">
+                    {{nachricht.text}}
+                </em>
 
 
 
@@ -88,7 +90,8 @@ computed: {
      ...mapState({
            
             erklarungen: state => state.erklarung.all.items,
-           message: state => state.erklarung.message
+           message: state => state.erklarung.message,
+           nachricht: state => state.erklarung.nachricht
             
         }),
     
@@ -136,6 +139,12 @@ this.update(this.erklarung)
         loeschen(){
 this.delete(this.erklarung.id).then(() => {this.erklarung = this.erklarung_def})
         },
+         clearNachricht(){
+            this.$store.state.erklarung.nachricht = {};
+            console.log('clear')
+        }
+
+
 
        
         

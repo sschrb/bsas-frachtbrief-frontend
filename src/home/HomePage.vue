@@ -1040,7 +1040,9 @@
 <br>
              <div class="form-group">
                 <button class="btn btn-primary" v-on:click="saveFrachtbrief()" >Speichern</button>
-                
+                <em v-if="message.error">
+                    {{message.error.message}}
+                </em>
               
             </div>
 </form>
@@ -1322,7 +1324,7 @@ computed: {
             evus: state => state.evu.all.items,
             adressen: state => state.adresse.all.items,
             erklarungen: state => state.erklarung.all.items,
-            message: state => state.bahnhof.message
+            message: state => state.frachtbrief.all,
             
         }),
     },
