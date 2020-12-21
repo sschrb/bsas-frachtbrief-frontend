@@ -5,7 +5,8 @@ const state = {
         frachtbriefdata : ''}
     },
     frachtbriefdata: {},
-    pdf: {test: 'test'}
+    pdf: {test: 'test'},
+    nachricht: {},
 };
 
 const actions = {
@@ -25,7 +26,7 @@ const actions = {
 
        frachtbriefService.update(frachtbrief)
             .then(
-                frachtbrief => {commit('getAllSuccess', frachtbrief)},
+                frachtbrief => {commit('updateSuccess', frachtbrief)},
                 error => commit('getAllFailure', error),
                 
             ).then(
@@ -42,7 +43,7 @@ const actions = {
 
         frachtbriefService.update(frachtbrief)
             .then(
-                frachtbrief => {commit('getAllSuccess', frachtbrief)},
+                frachtbrief => {commit('updateSuccess', frachtbrief)},
                 error => commit('getAllFailure', error),
                 
             );
@@ -103,6 +104,11 @@ const mutations = {
         console.log('pdf');
         console.log(frachtbrief)
         state.all = { items: frachtbrief };
+    },
+    updateSuccess(state, frachtbrief) {
+       console.log('updateasu')
+        state.all = { items: frachtbrief };
+        state.nachricht = {text: 'gespeichert'};
     },
     getAllSuccessD(state, frachtbrief) {
         console.log('DDD');

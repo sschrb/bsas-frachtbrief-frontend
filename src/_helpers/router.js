@@ -8,6 +8,7 @@ import RegisterPage from '../register/RegisterPage'
 import HistoryPage from '../history/HistoryPage'
 import ViewPage from '../view/ViewPage'
 import AdminPage from '../admin/AdminPage'
+import ViewLadeliste from '../view/ViewLadeliste'
 
 
 
@@ -23,10 +24,8 @@ export const router = new Router({
     { path: '/history', component: HistoryPage },
     { path: '/verwaltung', component: AdminPage },
     { path: '/ladeliste', component: LadelisteAnlegen },
-    { path: '/frachtbrief/:id', component: ViewPage, props: true, 
-    
-  
-  },
+    { path: '/frachtbrief/:id', component: ViewPage, props: true, },
+    { path: '/ladeliste/:id', component: ViewLadeliste, props: true, },
 
     // otherwise redirect to home
     { path: '*', redirect: '/' }

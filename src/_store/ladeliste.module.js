@@ -5,6 +5,7 @@ const state = {
         ladelistedata : ''}
     },
     ladelistedata: {},
+    nachricht: false
     
 };
 
@@ -42,7 +43,7 @@ const actions = {
 
         ladelisteService.update(ladeliste)
             .then(
-                ladeliste => {commit('getAllSuccess', ladeliste)},
+                ladeliste => {commit('updateSuccess', ladeliste)},
                 error => commit('getAllFailure', error),
                 
             );
@@ -103,6 +104,11 @@ const mutations = {
         console.log('pdf');
         console.log(ladeliste)
         state.all = { items: ladeliste };
+    },
+    updateSuccess(state, ladeliste) {
+       
+        state.all = { items: ladeliste };
+        state.nachricht = {text: 'gespeichert'};
     },
     getAllSuccessD(state, ladeliste) {
         console.log('DDD');

@@ -1,5 +1,8 @@
 import Vue from 'vue';
-import VeeValidate from 'vee-validate';
+//import VeeValidate from 'vee-validate';
+
+import de from 'vee-validate/dist/locale/de';
+import VeeValidate, { Validator } from 'vee-validate';
 //import vSelect from "vue-select";
 //import "vue-select/dist/vue-select.css";
 
@@ -22,6 +25,10 @@ import { router } from './_helpers';
 import App from './app/App';
 
 Vue.use(VeeValidate);
+
+
+Validator.localize('de', de);
+
 Vue.component('datetime', Datetime);
 //Vue.component("v-select", vSelect);
 Vue.component("Bahnhof", Bahnhof);

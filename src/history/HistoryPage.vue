@@ -31,7 +31,7 @@
                 {{fbrief.ladelistedata.refnr}}
                 <span v-if="fbrief.deleting"><em> - Deleting...</em></span>
                 <span v-else-if="fbrief.deleteError" class="text-danger"> - ERROR: {{fbrief.deleteError}}</span>
-                <span v-else> - <a class="text-danger"><router-link v-bind:to="'/frachtbrief/' + fbrief.id">Anzeigen</router-link></a></span>
+                <span v-else> - <a class="text-danger"><router-link v-bind:to="'/ladeliste/' + fbrief.id">Anzeigen</router-link></a></span>
             </li>
         </ul>
 

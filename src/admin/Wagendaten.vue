@@ -26,8 +26,11 @@
 
 
             <div class="form-group">
-                <label for="wagenummer">Wagennummer</label>
-                <input type="text" v-model="wagendaten.wagennummer" class="form-control"/>
+                <label for="Wagennummer">Wagennummer</label>
+                <input type="Wagennummer" v-model="wagendaten.wagennummer" v-validate="{ required: true, test: true }" name="Wagennummer" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Wagennummer') }"/>
+                <div v-if="submitted && errors.has('Wagennummer')" class="invalid-feedback">{{ errors.first('Wagennummer') }}</div>
+
+                
                 
             </div>
 
@@ -44,9 +47,13 @@
             </div>
 
             <div class="form-group">
-                <label for="wagenummer">Eigengewicht</label>
-                <input type="text" v-model="wagendaten.eigengewicht" class="form-control"/>
+                <label for="Eigengewicht">Eigengewicht</label>
+                <input type="Eigengewicht" v-model="wagendaten.eigengewicht" v-validate="{ required: true, integer: true }" name="Eigengewicht" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Eigengewicht') }"/>
+                <div v-if="submitted && errors.has('Eigengewicht')" class="invalid-feedback">{{ errors.first('Eigengewicht') }}</div>
+
+
                 
+
             </div>
 
            
@@ -80,13 +87,35 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import "vue-select/dist/vue-select.css";
+import { Validator } from 'vee-validate';
 
+var luhnChk = (function (arr) {
+    return function (ccNum) {
+        var 
+            len = ccNum.length,
+            bit = 1,
+            sum = 0,
+            val;
+
+        while (len) {
+            val = parseInt(ccNum.charAt(--len), 10);
+            sum += (bit ^= 1) ? arr[val] : val;
+        }
+
+        return sum && sum % 10 === 0;
+    };
+}([0, 2, 4, 6, 8, 1, 3, 5, 7, 9]));
+
+Validator.extend('test', {
+  getMessage: field => 'The ' + field + ' value is not truthy.',
+  validate: value => luhnChk(value)
+});
 
 export default {
 
     data () {
         return {
-
+            submitted: false,
             wagendaten_def: {
                 wagennummer: '',
                 halter: '',
@@ -154,7 +183,17 @@ computed: {
             )
         },
         anlegen(){
-this.create(this.wagendaten)
+
+
+
+            this.submitted = true;
+            this.$validator.validate().then(valid => {
+                if (valid) {
+                    this.create(this.wagendaten);
+                }
+            });
+
+
         },
         updaten(){
 this.update(this.wagendaten)
@@ -166,7 +205,8 @@ this.delete(this.wagendaten.id).then(() => {this.wagendaten = this.wagendaten_de
          clearNachricht(){
             this.$store.state.wagendaten.nachricht = {};
             console.log('clear')
-        }
+        },
+
 
        
         

@@ -12,7 +12,7 @@
  
         
 
-<em v-if="frachtbrief">
+
 
 
 
@@ -1082,16 +1082,18 @@
 
             
             <div class="form-group">
-                <button class="btn btn-primary" v-on:click="speichern()" :disabled="frachtbrief.pdf_id != null" >Specihern</button>
+                <button class="btn btn-primary" v-on:click="speichern()" :disabled="frachtbrief.pdf_id != null" >Speichern</button>
               
             </div>
             <em v-if="frachtbrief.pdf_id == null"><button class="btn btn-primary" v-on:click="test()">PDF generieren</button></em>
             <em v-if="frachtbrief.pdf_id != null"><button class="btn btn-primary" v-on:click="viewPdfButton">PDF anzeigen</button></em>
 
+<em v-if="nachricht">
+                    {{nachricht.text}}
+                </em>
 
 
 
-</em>
 
     </div>
 </template>
@@ -1141,7 +1143,7 @@ export default {
             evus: state => state.evu.all.items,
             adressen: state => state.adresse.all.items,
             erklarungen: state => state.erklarung.all.items,
-            message: state => state.bahnhof.message
+            nachricht: state => state.frachtbrief.nachricht
         })
     },
     created () {
@@ -1221,6 +1223,9 @@ export default {
             this.frachtbrief.laendercode = '80';
             this.frachtbrief.land = "Deutschland";
         }
+    },
+    handleSubmit(){
+
     }
 
         

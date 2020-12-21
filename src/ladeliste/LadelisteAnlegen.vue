@@ -46,8 +46,8 @@
 
     
     <span>
-      <i @click="remove1(k)" v-show="k || ( !k && ladelistedata.ladegut1.wagen.length > 1)">Remove</i>
-      <i @click="add1(k)" v-show="k == ladelistedata.ladegut1.wagen.length-1">Add fields</i>
+      <button type="button" class="btn btn-danger" @click="remove1(k)" v-show="k || ( !k && ladelistedata.ladegut1.wagen.length > 1)">-</button>
+      <button type="button" class="btn btn-success" @click="add1(k)" v-show="k == ladelistedata.ladegut1.wagen.length-1">+</button>
     </span>
   </div>
 
@@ -87,8 +87,8 @@
 
     
     <span>
-      <i @click="remove2(k)" v-show="k || ( !k && ladelistedata.ladegut1.wagen.length > 1)">Remove</i>
-      <i @click="add2(k)" v-show="k == ladelistedata.ladegut1.wagen.length-1">Add fields</i>
+      <button type="button" class="btn btn-danger" @click="remove2(k)" v-show="k || ( !k && ladelistedata.ladegut2.wagen.length > 1)">-</button>
+      <button type="button" class="btn btn-success" @click="add2(k)" v-show="k == ladelistedata.ladegut2.wagen.length-1">+</button>
     </span>
   </div>
 
@@ -135,8 +135,8 @@
 
     
     <span>
-      <i @click="remove3(k)" v-show="k || ( !k && ladelistedata.ladegut1.wagen.length > 1)">Remove</i>
-      <i @click="add3(k)" v-show="k == ladelistedata.ladegut1.wagen.length-1">Add fields</i>
+      <button type="button" class="btn btn-danger" @click="remove3(k)" v-show="k || ( !k && ladelistedata.ladegut3.wagen.length > 1)">-</button>
+      <button type="button" class="btn btn-success" @click="add3(k)" v-show="k == ladelistedata.ladegut3.wagen.length-1">+</button>
     </span>
   </div>
 
