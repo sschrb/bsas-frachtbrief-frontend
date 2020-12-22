@@ -1092,7 +1092,22 @@
                     {{nachricht.text}}
                 </em>
 
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<p>Als Vorlage verwenden:</p>
+  <div>
+    <input id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="frachtbrief.frachtbriefdata.vorlage"/>
+    <label for="vorlagefalse">Nein</label>
+  </div>
+  
+  <div>
+    <input id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="frachtbrief.frachtbriefdata.vorlage"/>
+    <label for="vorlagetrue">Ja</label>
+  </div>
 
 
     </div>
@@ -1104,6 +1119,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
     data () {
         return {
+            
             test1: {
             loading: null
             },

@@ -1048,12 +1048,45 @@
 </form>
 
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<p>Als Vorlage verwenden:</p>
+  <div>
+    <input id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="vorlage"/>
+    <label for="vorlagefalse">Nein</label>
+  </div>
+  
+  <div>
+    <input id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="vorlage"/>
+    <label for="vorlagetrue">Ja</label>
+  </div>
 
 
 
 
 
 
+
+<div class="border border-primary p-2" style="border-width: medium !important">
+<label for="erklarung">Vorlage auswählen</label>
+
+
+
+<select class="form-control" v-model="vorlagedata">
+        <option v-bind:value="vorlagedata_def">keine</option>
+        <option v-for="frachtbrief in frachtbriefs" v-bind:value="frachtbrief" v-bind:key="frachtbrief.id">{{ frachtbrief.frachtbriefdata.refnr }}</option>
+    </select>
+
+ <button class="btn btn-primary" v-on:click="vorlageLaden()" >Vorlage laden</button>
+
+
+</div>
+
+{{vorlagedata}}
         
     </div>
 </template>
@@ -1073,6 +1106,9 @@ export default {
 
     data () {
         return {
+            vorlagedata: {},
+            vorlagedata_def: {},
+            vorlage: false,
             zwBahnhof1: false,
             zwBahnhof2: false,
             zwBahnhof3: false,
@@ -1325,6 +1361,7 @@ computed: {
             adressen: state => state.adresse.all.items,
             erklarungen: state => state.erklarung.all.items,
             message: state => state.frachtbrief.all,
+            frachtbriefs: state => state.frachtbrief.all.items,
             
         }),
     },
@@ -1333,10 +1370,15 @@ computed: {
         this.getAllEvu();
         this.getAllAdresse();
         this.getAllErklarung();
+
+         this.getAllFrachtbrief();
         console.log('mount')
     },
     methods: {
-        
+         ...mapActions( 'frachtbrief', {
+            getAllFrachtbrief: 'getAll',
+            deleteFrachtbrief: 'delete'
+        }),
         ...mapActions('bahnhof', ['create']),
         ...mapActions('bahnhof', {getAllBahnhof: 'getAll'}),
         ...mapActions('evu', {getAllEvu: 'getAll'}),
@@ -1474,7 +1516,16 @@ if(this.evu2.name!='' && this.evu3.name!='' && this.evu4.name!='' && this.evu5.n
             this.frachtbrief.laendercode = '80';
             this.frachtbrief.land = "Deutschland";
         }
+    },
+    vorlageLaden(){
+        
+
+        var merged = {};
+Object.assign(this.$data, this.$data, this.vorlagedata.frachtbriefdata);
+this.vorlagedata = {};
+this.vorlage = false;
     }
+
     }
 };
 </script>
