@@ -1075,18 +1075,18 @@
 <label for="erklarung">Vorlage auswählen</label>
 
 
-
+<em v-if="frachtbriefs">
 <select class="form-control" v-model="vorlagedata">
         <option v-bind:value="vorlagedata_def">keine</option>
-        <option v-for="frachtbrief in frachtbriefs" v-bind:value="frachtbrief" v-bind:key="frachtbrief.id">{{ frachtbrief.frachtbriefdata.refnr }}</option>
+        <option v-for="frachtbrief in frachtbriefs" v-bind:value="frachtbrief" v-bind:key="frachtbrief.id">{{ frachtbrief.frachtbriefdata.refnr }} </option>
     </select>
-
+</em>
  <button class="btn btn-primary" v-on:click="vorlageLaden()" >Vorlage laden</button>
 
 
 </div>
 
-{{vorlagedata}}
+
         
     </div>
 </template>
@@ -1366,12 +1366,14 @@ computed: {
         }),
     },
     mounted () {
+        this.getAllFrachtbrief();
+
         this.getAllBahnhof();
         this.getAllEvu();
         this.getAllAdresse();
         this.getAllErklarung();
 
-         this.getAllFrachtbrief();
+         
         console.log('mount')
     },
     methods: {
@@ -1393,6 +1395,10 @@ computed: {
             //this.submitted = true;
            
         },
+        checkVorlage(frachtbrief) {
+            console.log(frachtbrief)
+  return frachtbrief.frachtbriefdata.vorlage;
+},
 saveFrachtbrief(){
 
 if(this.erklarung.id == null && this.erklarung.code != null){
