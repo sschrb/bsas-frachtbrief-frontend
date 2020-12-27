@@ -88,6 +88,11 @@ function _delete(id) {
     return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 }
 
+function logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('user');
+}
+
 function handleResponse(response) {
     
     return response.text().then(text => {

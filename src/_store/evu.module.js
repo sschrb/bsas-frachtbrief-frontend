@@ -82,7 +82,7 @@ alert(error);
     },
     getAllFailure(state, error) {
         state.all = { error };
-        alert(error);
+       
     },
     deleteRequest(state, id) {
         // add 'deleting:true' property to user being deleted
