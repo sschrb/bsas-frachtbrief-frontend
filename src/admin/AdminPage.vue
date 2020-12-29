@@ -1,61 +1,88 @@
 <template>
-    <div>
+  <div>
+    <h3>Datentabellen bearbeiten</h3>
 
+    <!-- ############################################################ WAGENDATEN ############################################################ -->
+    <div class="card mb-2">
+      <div class="card-header" v-on:click="wagendatenview = !wagendatenview">
+        Wagendaten
+      </div>
 
-
-
-
-
-
-
- <button class="btn btn-primary" v-on:click="bahnhofview = !bahnhofview">Bahnhöfe</button>
- <em v-if="bahnhofview">
-            <Bahnhof class="border border-primary p-2" style="border-width: medium !important"/>
-</em>
-<br>
-<br>
-<br>
- <button class="btn btn-primary" v-on:click="adresseview = !adresseview">Adressen</button>
- <em v-if="adresseview">
-            <Adresse class="border border-primary p-2" style="border-width: medium !important"/>
-</em>
-<br>
-<br>
-<br>
- <button class="btn btn-primary" v-on:click="erklarungview = !erklarungview">Erklärungen</button>
- <em v-if="erklarungview">
-            <Erklarung class="border border-primary p-2" style="border-width: medium !important"/>
-</em>
-<br>
-<br>
-<br>
- <button class="btn btn-primary" v-on:click="evuview = !evuview">EVU</button>
- <em v-if="evuview">
-            <Evu class="border border-primary p-2" style="border-width: medium !important"/>
-</em>
-<br>
-<br>
-<br>
- <button class="btn btn-primary" v-on:click="wagendatenview = !wagendatenview">Wagendaten</button>
- <em v-if="wagendatenview">
-            <Wagendaten class="border border-primary p-2" style="border-width: medium !important"/>
-</em>
-<br>
-<br>
-<br>
- <button class="btn btn-primary" v-on:click="ladegutview = !ladegutview">Ladegut</button>
- <em v-if="ladegutview">
-            <Ladegut class="border border-primary p-2" style="border-width: medium !important"/>
-</em>
-
-
-
-
-
-
-
-        
+      <em v-if="wagendatenview">
+        <div class="card-body">
+          <Wagendaten />
+        </div>
+      </em>
     </div>
+
+    <!-- ############################################################ ADRESSEN ############################################################ -->
+    <div class="card mb-2">
+      <div class="card-header" v-on:click="adresseview = !adresseview">
+        Adressen
+      </div>
+
+      <em v-if="adresseview">
+        <div class="card-body">
+          <Adresse />
+        </div>
+      </em>
+    </div>
+
+    <!-- ############################################################ EVU ############################################################ -->
+    <div class="card mb-2">
+      <div class="card-header" v-on:click="evuview = !evuview">
+        EVU
+      </div>
+
+      <em v-if="evuview">
+        <div class="card-body">
+          <Evu />
+        </div>
+      </em>
+    </div>
+
+    <!-- ############################################################ BAHNHOF ############################################################ -->
+    <div class="card mb-2">
+      <div class="card-header" v-on:click="bahnhofview = !bahnhofview">
+        Bahnhöfe
+      </div>
+
+      <em v-if="bahnhofview">
+        <div class="card-body">
+          <Bahnhof />
+        </div>
+      </em>
+    </div>
+
+    <!-- ############################################################ LADEGUT ############################################################ -->
+    <div class="card mb-2">
+      <div class="card-header" v-on:click="ladegutview = !ladegutview">
+        Ladegut
+      </div>
+
+      <em v-if="ladegutview">
+        <div class="card-body">
+          <Ladegut />
+        </div>
+      </em>
+    </div>
+
+    <!-- ############################################################ ERKLÄRUNGEN ############################################################ -->
+    <div class="card mb-2">
+      <div class="card-header" v-on:click="erklarungview = !erklarungview">
+        Erklärungen
+      </div>
+
+      <em v-if="erklarungview">
+        <div class="card-body">
+          <Erklarung />
+        </div>
+      </em>
+    </div>
+
+
+
+  </div>
 </template>
 
 <script>
@@ -80,14 +107,14 @@ export default {
                 bahnhof: '',
                 laendercode: '',
                 land: ''
-               
+
             },
             adressen: [
               {
                 id: "1",
                 name: "neu anlegen"
             },
-                
+
              {
                 id: "2",
                 name: "Teststr. 7, 12345 Dorf"
@@ -97,7 +124,7 @@ export default {
                 name: "Weg. 5, 12345 Stadt"
             }
             ]
-            
+
         }
     },
 computed: {

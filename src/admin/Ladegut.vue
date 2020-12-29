@@ -21,58 +21,58 @@
 
 
 
-   
+
 
 
 
             <div class="form-group">
                 <label for="wagenummer">Bezeichnung</label>
                 <input type="text" v-model="ladegut.bezeichnung" class="form-control"/>
-                
+
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Bemerkung</label>
                 <input type="text" v-model="ladegut.bemerkung" class="form-control"/>
-                
+
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Dichte</label>
                 <input type="text" v-model="ladegut.dichte" class="form-control"/>
-                
+
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">RID</label>
                 <input type="text" v-model="ladegut.rid" class="form-control"/>
-                
+
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">NHM Code</label>
                 <input type="text" v-model="ladegut.nhm" class="form-control"/>
-                
+
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Wagentyp</label>
                 <input type="text" v-model="ladegut.wagentyp" class="form-control"/>
-                
+
             </div>
 
-            
 
-           
+
+
 
             <div class="form-group">
                 <em v-if="ladegut.id == null"><button class="btn btn-primary" v-on:click="anlegen">Anlegen</button></em>
-                
-              
+
+
             </div>
-            <em v-if="ladegut.id != null"><button class="btn btn-primary" v-on:click="updaten">Update</button></em>
+            <em v-if="ladegut.id != null"><button class="btn btn-success" v-on:click="updaten">Änderungen speichern</button></em>
             <em v-if="ladegut.id != null"><button class="btn btn-danger" v-on:click="loeschen">Löschen</button></em>
-            
+
 
 
 
@@ -87,7 +87,7 @@
 
 
 
-        
+
     </div>
 </template>
 
@@ -108,11 +108,11 @@ export default {
                 rid: "",
                 nhm: "",
                 wagentyp: ""
-                
-               
-               
+
+
+
             },
-            
+
             ladegut: {
                 bezeichnung: "",
                 bemerkung: "",
@@ -120,28 +120,28 @@ export default {
                 rid: "",
                 nhm: "",
                 wagentyp: ""
-               
-               
-               
+
+
+
             },
-            
-            
+
+
         }
     },
 computed: {
         ...mapState('ladegut', ['status']),
-    
+
      ...mapState({
-           
+
             ladegueter: state => state.ladegut.all.items,
            message: state => state.ladegut.message,
            nachricht: state => state.ladegut.nachricht
-            
+
         }),
-    
-  
-     
-    
+
+
+
+
     },
       mounted () {
         this.getAll();
@@ -164,12 +164,12 @@ computed: {
             //this.submitted = true;
             this.$validator.validate().then(valid => {
                 if (valid) {
-                    
-                   
-                    
+
+
+
                    // this.getAll();
     }
-                    
+
                 }
             )
         },
@@ -189,8 +189,8 @@ this.delete(this.ladegut.id).then(() => {this.ladegut = this.ladegut_def})
         }
 
 
-       
-        
+
+
     }
 };
 </script>

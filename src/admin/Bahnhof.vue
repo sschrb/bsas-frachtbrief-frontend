@@ -21,44 +21,44 @@
 
 
 
-   
+
 
 
 
             <div class="form-group">
                 <label for="wagenummer">Name</label>
                 <input type="text" v-model="bahnhof.name" class="form-control"/>
-                
+
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Bahnhofscode</label>
                 <input type="text" v-model="bahnhof.bahnhofscode" class="form-control"/>
-                
+
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Ländercode</label>
                 <input type="text" v-model="bahnhof.laendercode" class="form-control"/>
-                
+
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Land</label>
                 <input type="text" v-model="bahnhof.land" class="form-control"/>
-                
+
             </div>
 
-           
+
 
             <div class="form-group">
                 <em v-if="bahnhof.id == null"><button class="btn btn-primary" v-on:click="anlegen">Anlegen</button></em>
-                
-              
+
+
             </div>
-            <em v-if="bahnhof.id != null"><button class="btn btn-primary" v-on:click="updaten">Update</button></em>
+            <em v-if="bahnhof.id != null"><button class="btn btn-success" v-on:click="updaten">Änderungen speichern</button></em>
             <em v-if="bahnhof.id != null"><button class="btn btn-danger" v-on:click="loeschen">Löschen</button></em>
-            
+
 
 
 
@@ -73,7 +73,7 @@
 
 
 
-        
+
     </div>
 </template>
 
@@ -92,36 +92,36 @@ export default {
                 bahnhofscode: '',
                 laendercode: '',
                 land: '',
-               
-               
+
+
             },
-            
+
             bahnhof: {
                name: "",
                 bahnhofscode: '',
                 laendercode: '',
                 land: '',
-               
-               
+
+
             },
-            
-            
+
+
         }
     },
 computed: {
         ...mapState('bahnhof', ['status']),
-    
+
      ...mapState({
-           
+
             bahnhoefe: state => state.bahnhof.all.items,
            message: state => state.bahnhof.message,
            nachricht: state => state.bahnhof.nachricht
-            
+
         }),
-    
-  
-     
-    
+
+
+
+
     },
       mounted () {
         this.getAll();
@@ -144,12 +144,12 @@ computed: {
             //this.submitted = true;
             this.$validator.validate().then(valid => {
                 if (valid) {
-                    
-                   
-                    
+
+
+
                    // this.getAll();
     }
-                    
+
                 }
             )
         },
@@ -169,8 +169,8 @@ this.delete(this.bahnhof.id).then(() => {this.bahnhof = this.bahnhof_def})
             console.log('clear')
         }
 
-       
-        
+
+
     }
 };
 </script>

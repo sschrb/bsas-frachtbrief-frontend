@@ -1,176 +1,144 @@
 <template>
-    <div>
+  <div>
+    <div class="card mb-2">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="adresse">Name der Ladeliste</label>
+          <input type="text" v-model="ladelistedata.refnr" class="form-control" />
+        </div>
+      </div>
+    </div>
+
+    <!-- ############################################################ 1. LADEGUT ############################################################ -->
+    <div class="card mb-5">
+      <div class="card-header">
+        <label for="adresse">Ladegut 1</label>
+
+        <select class="form-control" v-model="ladelistedata.ladegut1.ladegut">
+
+          <option v-for="ladegut in ladegueter" v-bind:value="ladegut" v-bind:key="ladegut.id">{{ ladegut.bezeichnung }}</option>
+        </select>
+
+      </div>
+      <div class="card-body">
 
 
+        <div class="row mb-2">
+          <div class="col-6">Wagennummer</div>
+          <div class="col-4">Liter</div>
+        </div>
 
+        <div id=app>
+          <div class="form-group" v-for="(input,k) in ladelistedata.ladegut1.wagen" :key="k">
 
+            <div class="row">
+              <div class="col-6"><select class="form-control" v-model="input.wagendaten">
+                <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ wagendaten.wagennummer }}</option>
+              </select></div>
+              <div class="col-4"><input type="text" class="form-control" v-model="input.liter"></div>
 
-
-<label for="adresse">Referenz Nummer</label>
-<div class="form-group">
-               
-                <input type="text" v-model="ladelistedata.refnr" class="form-control" />
-                
+              <div class="col-1"><button type="button" class="btn btn-success" @click="add1(k)" v-show="k == ladelistedata.ladegut1.wagen.length-1">+</button></div>
+              <div class="col-1"><button type="button" class="btn btn-danger" @click="remove1(k)" v-show="k || ( !k && ladelistedata.ladegut1.wagen.length > 1)">-</button></div>
             </div>
-
-<br>
-<br>
-
-<div class="border border-primary p-2" style="border-width: medium !important">
-<label for="adresse">Ladegut 1</label>
-
-
-
-<select class="form-control" v-model="ladelistedata.ladegut1.ladegut">
-      
-        <option v-for="ladegut in ladegueter" v-bind:value="ladegut" v-bind:key="ladegut.id">{{ ladegut.bezeichnung }}</option>
-    </select>
-
-
-
-
-
-<div id=app>
-  <div class="form-group" v-for="(input,k) in ladelistedata.ladegut1.wagen" :key="k">
-
-    <div class="row">
-        <div class="col-8">Wagennummer</div>
-        <div class="col-4">Liter</div>
-        <div class="col-8"><select class="form-control" v-model="input.wagendaten">
-        
-        <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ wagendaten.wagennummer }}</option>
-    </select></div>
-        <div class="col-4"><input type="text" class="form-control" v-model="input.liter"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
 
-    
-    <span>
-      <button type="button" class="btn btn-danger" @click="remove1(k)" v-show="k || ( !k && ladelistedata.ladegut1.wagen.length > 1)">-</button>
-      <button type="button" class="btn btn-success" @click="add1(k)" v-show="k == ladelistedata.ladegut1.wagen.length-1">+</button>
-    </span>
-  </div>
+    <!-- ############################################################ 2. LADEGUT ############################################################ -->
 
-</div>
+    <div class="card mb-5">
+      <div class="card-header">
+        <label for="adresse">Ladegut 2</label>
+        <select class="form-control" v-model="ladelistedata.ladegut2.ladegut">
+          <option v-for="ladegut in ladegueter" v-bind:value="ladegut" v-bind:key="ladegut.id">{{ ladegut.bezeichnung }}</option>
+        </select>
+      </div>
+      <div class="card-body">
 
-</div>
-<br>
-<br>
+        <div class="row mb-2">
+          <div class="col-6">Wagennummer</div>
+          <div class="col-4">Liter</div>
+        </div>
 
-<div class="border border-primary p-2" style="border-width: medium !important">
-<label for="adresse">Ladegut 2</label>
+        <div id=app>
+          <div class="form-group" v-for="(input,k) in ladelistedata.ladegut2.wagen" :key="k">
 
+            <div class="row">
 
+              <div class="col-6"><select class="form-control" v-model="input.wagendaten">
 
-<select class="form-control" v-model="ladelistedata.ladegut2.ladegut">
-      
-        <option v-for="ladegut in ladegueter" v-bind:value="ladegut" v-bind:key="ladegut.id">{{ ladegut.bezeichnung }}</option>
-    </select>
+                <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ wagendaten.wagennummer }}</option>
+              </select></div>
+              <div class="col-4"><input type="text" class="form-control" v-model="input.liter"></div>
 
+              <div class="col-1"><button type="button" class="btn btn-success" @click="add2(k)" v-show="k == ladelistedata.ladegut2.wagen.length-1">+</button></div>
+              <div class="col-1"><button type="button" class="btn btn-danger" @click="remove2(k)" v-show="k || ( !k && ladelistedata.ladegut2.wagen.length > 1)">-</button></div>
 
-
-
-
-<div id=app>
-  <div class="form-group" v-for="(input,k) in ladelistedata.ladegut2.wagen" :key="k">
-
-    <div class="row">
-        <div class="col-8">Wagennummer</div>
-        <div class="col-4">Liter</div>
-        <div class="col-8"><select class="form-control" v-model="input.wagendaten">
-        
-        <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ wagendaten.wagennummer }}</option>
-    </select></div>
-        <div class="col-4"><input type="text" class="form-control" v-model="input.liter"></div>
-    </div>
-
-
-    
-    <span>
-      <button type="button" class="btn btn-danger" @click="remove2(k)" v-show="k || ( !k && ladelistedata.ladegut2.wagen.length > 1)">-</button>
-      <button type="button" class="btn btn-success" @click="add2(k)" v-show="k == ladelistedata.ladegut2.wagen.length-1">+</button>
-    </span>
-  </div>
-
-</div>
-
-</div>
-<br>
-<br>
-
-
-
-
-
-
-
-
-<div class="border border-primary p-2" style="border-width: medium !important">
-<label for="adresse">Ladegut 3</label>
-
-
-
-<select class="form-control" v-model="ladelistedata.ladegut3.ladegut">
-      
-        <option v-for="ladegut in ladegueter" v-bind:value="ladegut" v-bind:key="ladegut.id">{{ ladegut.bezeichnung }}</option>
-    </select>
-
-
-
-
-
-<div id=app>
-  <div class="form-group" v-for="(input,k) in ladelistedata.ladegut3.wagen" :key="k">
-
-    <div class="row">
-        <div class="col-8">Wagennummer</div>
-        <div class="col-4">Liter</div>
-        <div class="col-8"><select class="form-control" v-model="input.wagendaten">
-        
-        <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ wagendaten.wagennummer }}</option>
-    </select></div>
-        <div class="col-4"><input type="text" class="form-control" v-model="input.liter"></div>
-    </div>
-
-
-    
-    <span>
-      <button type="button" class="btn btn-danger" @click="remove3(k)" v-show="k || ( !k && ladelistedata.ladegut3.wagen.length > 1)">-</button>
-      <button type="button" class="btn btn-success" @click="add3(k)" v-show="k == ladelistedata.ladegut3.wagen.length-1">+</button>
-    </span>
-  </div>
-
-</div>
-
-</div>
-<br>
-<br>
-
-
-
-
-
-
-
-
-             <div class="form-group">
-                <button class="btn btn-primary" v-on:click="saveLadeliste()" >Speichern</button>
-                <em v-if="message.error">
-                    {{message.error.message}}
-                </em>
-              
             </div>
-
-
-
-
-
-
-
-
-
-        
+          </div>
+        </div>
+      </div>
     </div>
+
+
+
+    <!-- ############################################################ 3. LADEGUT ############################################################ -->
+
+
+    <div class="card mb-5">
+      <div class="card-header">
+        <label for="adresse">Ladegut 3</label>
+
+
+
+        <select class="form-control" v-model="ladelistedata.ladegut3.ladegut">
+
+          <option v-for="ladegut in ladegueter" v-bind:value="ladegut" v-bind:key="ladegut.id">{{ ladegut.bezeichnung }}</option>
+        </select>
+      </div>
+
+      <div class="card-body">
+
+        <div class="row mb-2">
+          <div class="col-6">Wagennummer</div>
+          <div class="col-4">Liter</div>
+        </div>
+
+        <div id=app>
+          <div class="form-group" v-for="(input,k) in ladelistedata.ladegut3.wagen" :key="k">
+
+            <div class="row">
+
+              <div class="col-6"><select class="form-control" v-model="input.wagendaten">
+
+                <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ wagendaten.wagennummer }}</option>
+              </select></div>
+              <div class="col-4"><input type="text" class="form-control" v-model="input.liter"></div>
+
+              <div class="col-1"><button type="button" class="btn btn-success" @click="add3(k)" v-show="k == ladelistedata.ladegut3.wagen.length-1">+</button></div>
+              <div class="col-1"><button type="button" class="btn btn-danger" @click="remove3(k)" v-show="k || ( !k && ladelistedata.ladegut3.wagen.length > 1)">-</button></div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="form-group">
+      <button class="btn btn-success float-right mb-5" v-on:click="saveLadeliste()" >Speichern</button>
+      <em v-if="message.error">
+        {{message.error.message}}
+      </em>
+
+    </div>
+
+
+
+  </div>
 </template>
 
 <script>

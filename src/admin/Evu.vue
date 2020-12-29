@@ -21,40 +21,40 @@
 
 
 
-   
+
 
 
 
             <div class="form-group">
                 <label for="wagenummer">Name</label>
                 <input type="text" v-model="evu.name" class="form-control"/>
-                
+
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Kurzbezeichnung</label>
                 <input type="text" v-model="evu.short" class="form-control"/>
-                
+
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">EVU Code</label>
                 <input type="text" v-model="evu.code" class="form-control"/>
-                
+
             </div>
 
-            
 
-           
+
+
 
             <div class="form-group">
                 <em v-if="evu.id == null"><button class="btn btn-primary" v-on:click="anlegen">Anlegen</button></em>
-                
-              
+
+
             </div>
-            <em v-if="evu.id != null"><button class="btn btn-primary" v-on:click="updaten">Update</button></em>
+            <em v-if="evu.id != null"><button class="btn btn-success" v-on:click="updaten">Änderungen speichern</button></em>
             <em v-if="evu.id != null"><button class="btn btn-danger" v-on:click="loeschen">Löschen</button></em>
-            
+
 
 
 
@@ -69,7 +69,7 @@
 
 
 
-        
+
     </div>
 </template>
 
@@ -87,37 +87,37 @@ export default {
                 name: "",
                 short: '',
                 code: '',
-                
-               
-               
+
+
+
             },
-            
+
             evu: {
                 name: "",
                 short: '',
                 code: '',
-               
-               
-               
+
+
+
             },
-            
-            
+
+
         }
     },
 computed: {
         ...mapState('evu', ['status']),
-    
+
      ...mapState({
-           
+
             evus: state => state.evu.all.items,
            message: state => state.evu.message,
            nachricht: state => state.evu.nachricht
-            
+
         }),
-    
-  
-     
-    
+
+
+
+
     },
       mounted () {
         this.getAll();
@@ -140,12 +140,12 @@ computed: {
             //this.submitted = true;
             this.$validator.validate().then(valid => {
                 if (valid) {
-                    
-                   
-                    
+
+
+
                    // this.getAll();
     }
-                    
+
                 }
             )
         },
@@ -164,8 +164,8 @@ this.delete(this.evu.id).then(() => {this.evu = this.evu_def})
             console.log('clear')
         }
 
-       
-        
+
+
     }
 };
 </script>

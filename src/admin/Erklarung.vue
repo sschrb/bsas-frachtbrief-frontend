@@ -21,25 +21,25 @@
 
 
 
-   
+
 
 
 
             <div class="form-group">
                 <label for="wagenummer">Code mit Erläuterung</label>
                 <textarea type="text" v-model="erklarung.code" class="form-control"/>
-                
+
             </div>
 
-            
-           
+
+
 
             <div class="form-group">
                 <em v-if="erklarung.id == null"><button class="btn btn-primary" v-on:click="anlegen">Anlegen</button></em>
-                
-              
+
+
             </div>
-            <em v-if="erklarung.id != null"><button class="btn btn-primary" v-on:click="updaten">Update</button></em>
+            <em v-if="erklarung.id != null"><button class="btn btn-success" v-on:click="updaten">Änderungen speichern</button></em>
             <em v-if="erklarung.id != null"><button class="btn btn-danger" v-on:click="loeschen">Löschen</button></em>
 
 
@@ -55,7 +55,7 @@
 
 
 
-        
+
     </div>
 </template>
 
@@ -71,33 +71,33 @@ export default {
 
             erklarung_def: {
                 code: ''
-               
-               
+
+
             },
-            
+
             erklarung: {
                 code: ''
-               
-               
+
+
             },
-            
-            
+
+
         }
     },
 computed: {
         ...mapState('erklarung', ['status']),
-    
+
      ...mapState({
-           
+
             erklarungen: state => state.erklarung.all.items,
            message: state => state.erklarung.message,
            nachricht: state => state.erklarung.nachricht
-            
+
         }),
-    
-  
-     
-    
+
+
+
+
     },
       mounted () {
         this.getAll();
@@ -120,12 +120,12 @@ computed: {
             //this.submitted = true;
             this.$validator.validate().then(valid => {
                 if (valid) {
-                    
-                   
-                    
+
+
+
                    // this.getAll();
     }
-                    
+
                 }
             )
         },
@@ -146,8 +146,8 @@ this.delete(this.erklarung.id).then(() => {this.erklarung = this.erklarung_def})
 
 
 
-       
-        
+
+
     }
 };
 </script>

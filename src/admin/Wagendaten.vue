@@ -21,7 +21,7 @@
 
 
 
-   
+
 
 
 
@@ -30,20 +30,20 @@
                 <input type="Wagennummer" v-model="wagendaten.wagennummer" v-validate="{ required: true, test: true }" name="Wagennummer" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Wagennummer') }"/>
                 <div v-if="submitted && errors.has('Wagennummer')" class="invalid-feedback">{{ errors.first('Wagennummer') }}</div>
 
-                
-                
+
+
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Halter</label>
                 <input type="text" v-model="wagendaten.halter" class="form-control"/>
-                
+
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Achsanzahl</label>
                 <input type="text" v-model="wagendaten.achsanzahl" class="form-control"/>
-                
+
             </div>
 
             <div class="form-group">
@@ -52,20 +52,20 @@
                 <div v-if="submitted && errors.has('Eigengewicht')" class="invalid-feedback">{{ errors.first('Eigengewicht') }}</div>
 
 
-                
+
 
             </div>
 
-           
+
 
             <div class="form-group">
                 <em v-if="wagendaten.id == null"><button class="btn btn-primary" v-on:click="anlegen">Anlegen</button></em>
-                
-              
+
+
             </div>
-            <em v-if="wagendaten.id != null"><button class="btn btn-primary" v-on:click="updaten">Update</button></em>
+            <em v-if="wagendaten.id != null"><button class="btn btn-success" v-on:click="updaten">Änderungen speichern</button></em>
             <em v-if="wagendaten.id != null"><button class="btn btn-danger" v-on:click="loeschen">Löschen</button></em>
-            
+
 
 
 
@@ -80,7 +80,7 @@
 
 
 
-        
+
     </div>
 </template>
 
@@ -91,7 +91,7 @@ import { Validator } from 'vee-validate';
 
 var luhnChk = (function (arr) {
     return function (ccNum) {
-        var 
+        var
             len = ccNum.length,
             bit = 1,
             sum = 0,
@@ -121,36 +121,36 @@ export default {
                 halter: '',
                 achsanzahl: '',
                 eigengewicht: ''
-               
-               
+
+
             },
-            
+
             wagendaten: {
                 wagennummer: '',
                 halter: '',
                 achsanzahl: '',
                 eigengewicht: ''
-               
-               
+
+
             },
-            
-            
+
+
         }
     },
 computed: {
         ...mapState('wagendaten', ['status']),
-    
+
      ...mapState({
-           
+
             wagendatens: state => state.wagendaten.all.items,
            message: state => state.wagendaten.message,
            nachricht: state => state.wagendaten.nachricht
-            
+
         }),
-    
-  
-     
-    
+
+
+
+
     },
       mounted () {
         this.getAll();
@@ -173,12 +173,12 @@ computed: {
             //this.submitted = true;
             this.$validator.validate().then(valid => {
                 if (valid) {
-                    
-                   
-                    
+
+
+
                    // this.getAll();
     }
-                    
+
                 }
             )
         },
@@ -208,8 +208,8 @@ this.delete(this.wagendaten.id).then(() => {this.wagendaten = this.wagendaten_de
         },
 
 
-       
-        
+
+
     }
 };
 </script>

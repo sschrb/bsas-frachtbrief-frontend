@@ -1,76 +1,17 @@
 <template>
-    <div>
+  <div>
+
+
+    <form @submit.prevent="handleSubmit">
+
+      <label for="adresse">Adresse</label>
 
 
 
-
-
-
-
-
- <form @submit.prevent="handleSubmit">
-
-<label for="adresse">Adresse</label>
-
-
-
-<select v-on:click="clearNachricht()" class="form-control" v-model="adresse">
+      <select v-on:click="clearNachricht()" class="form-control" v-model="adresse">
         <option v-bind:value="adresse_def">neu anlegen</option>
         <option v-for="adresse in adressen" v-bind:value="adresse" v-bind:key="adresse.id">{{ adresse.name }}</option>
-    </select>
-
-
-
-   
-
-
-
-            <div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="adresse.name" class="form-control"/>
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Straße und Hausnummer</label>
-                <input type="text" v-model="adresse.strasse" class="form-control"/>
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Ort und PLZ</label>
-                <input type="text" v-model="adresse.ort" class="form-control"/>
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">E-Mailadresse</label>
-                <input type="text" v-model="adresse.mail" class="form-control"/>
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Telefonnummer</label>
-                <input type="text" v-model="adresse.telefon" class="form-control"/>
-                
-            </div>
-
-           
-
-            <div class="form-group">
-                <em v-if="adresse.id == null"><button class="btn btn-primary" v-on:click="anlegen">Anlegen</button></em>
-                
-              
-            </div>
-            <em v-if="adresse.id != null"><button class="btn btn-primary" v-on:click="updaten">Update</button></em>
-            <em v-if="adresse.id != null"><button class="btn btn-danger" v-on:click="loeschen">Löschen</button></em>
-
-
-
-</form>
-<em v-if="nachricht.text">
-                    {{nachricht.text}}
-                </em>
+      </select>
 
 
 
@@ -78,8 +19,63 @@
 
 
 
-        
-    </div>
+      <div class="form-group">
+        <label for="wagenummer">Name</label>
+        <input type="text" v-model="adresse.name" class="form-control"/>
+
+      </div>
+
+      <div class="form-group">
+        <label for="wagenummer">Straße und Hausnummer</label>
+        <input type="text" v-model="adresse.strasse" class="form-control"/>
+
+      </div>
+
+      <div class="form-group">
+        <label for="wagenummer">PLZ und Ort</label>
+        <input type="text" v-model="adresse.ort" class="form-control"/>
+
+      </div>
+
+      <div class="form-group">
+        <label for="wagenummer">E-Mailadresse</label>
+        <input type="text" v-model="adresse.mail" class="form-control"/>
+
+      </div>
+
+      <div class="form-group">
+        <label for="wagenummer">Telefonnummer</label>
+        <input type="text" v-model="adresse.telefon" class="form-control"/>
+
+      </div>
+
+
+
+      <div class="form-group">
+        <em v-if="adresse.id == null"><button class="btn btn-primary" v-on:click="anlegen">Anlegen</button></em>
+
+
+      </div>
+      <em v-if="adresse.id != null"><button class="btn btn-success" v-on:click="updaten">Änderungen speichern</button></em>
+      <em v-if="adresse.id != null"><button class="btn btn-danger" v-on:click="loeschen">Löschen</button></em>
+
+
+
+    </form>
+
+
+    <em v-if="nachricht.text">
+      {{nachricht.text}}
+    </em>
+
+
+
+
+
+
+
+
+  </div>
 </template>
 
 <script>
@@ -98,37 +94,37 @@ export default {
                 ort: '',
                 mail: '',
                 telefon: ''
-               
-               
+
+
             },
-            
+
             adresse: {
                 name: '',
                 strasse: '',
                 ort: '',
                 mail: '',
                 telefon: ''
-               
-               
+
+
             },
-            
-            
+
+
         }
     },
 computed: {
         ...mapState('adresse', ['status']),
-    
+
      ...mapState({
-           
+
             adressen: state => state.adresse.all.items,
            message: state => state.adresse.message,
            nachricht: state => state.adresse.nachricht
-            
+
         }),
-    
-  
-     
-    
+
+
+
+
     },
       mounted () {
         this.getAll();
@@ -137,7 +133,7 @@ computed: {
     beforeUpdate () {
         if(this.message){this.getAll(); }
 
-        
+
     },
     methods: {
         ...mapActions('adresse', ['create']),
@@ -149,12 +145,12 @@ computed: {
             //this.submitted = true;
             this.$validator.validate().then(valid => {
                 if (valid) {
-                    
-                   
-                    
+
+
+
                    // this.getAll();
     }
-                    
+
                 }
             )
         },
@@ -174,8 +170,8 @@ this.delete(this.adresse.id).then(() => {this.adresse = this.adresse_def})
             console.log('clear')
         }
 
-       
-        
+
+
     }
 };
 </script>

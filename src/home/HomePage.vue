@@ -1,1094 +1,670 @@
 <template>
-    <div>
-
-
-
-<label for="adresse">Referenz Nummer</label>
-<div class="form-group">
-               
-                <input type="text" v-model="refnr" class="form-control" />
-                
-            </div>
-
-
-
-
- <form @submit.prevent="handleSubmit">
-
-
-<label for="adresse">Absender</label>
-
-
-
-<select class="form-control" v-model="adresse1">
-        <option v-bind:value="adresse_def"></option>
-        <option v-for="adresse in adressen" v-bind:value="adresse" v-bind:key="adresse.id">{{ adresse.name }}</option>
-    </select>
-
-
-
-   <button class="btn btn-primary" v-on:click="viewAdresse1=!viewAdresse1">Details anzeigen</button>
- <em v-if="viewAdresse1">
-
-
-
-            <div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="adresse1.name" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Straße und Hausnummer</label>
-                <input type="text" v-model="adresse1.strasse" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Ort und PLZ</label>
-                <input type="text" v-model="adresse1.ort" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">E-Mailadresse</label>
-                <input type="text" v-model="adresse1.mail" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Telefonnummer</label>
-                <input type="text" v-model="adresse1.telefon" class="form-control" :disabled=true />
-                
-            </div>
- </em>
-
-
-<br>
-<br>
-<br>
-
-
-
-
-<label for="adresse">Empfänger</label>
-
-
-
-<select class="form-control" v-model="adresse2">
-        <option v-bind:value="adresse_def"></option>
-        <option v-for="adresse in adressen" v-bind:value="adresse" v-bind:key="adresse.id">{{ adresse.name }}</option>
-    </select>
-
-
-
-   <button class="btn btn-primary" v-on:click="viewAdresse2=!viewAdresse2">Details anzeigen</button>
- <em v-if="viewAdresse2">
-
-
-
-            <div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="adresse2.name" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Straße und Hausnummer</label>
-                <input type="text" v-model="adresse2.strasse" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Ort und PLZ</label>
-                <input type="text" v-model="adresse2.ort" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">E-Mailadresse</label>
-                <input type="text" v-model="adresse2.mail" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Telefonnummer</label>
-                <input type="text" v-model="adresse2.telefon" class="form-control" :disabled=true />
-                
-            </div>
- </em>
-
-
-<br>
-<br>
-<br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="border border-primary p-2" style="border-width: medium !important">
-<label for="adresse">Abgangsbahnhof</label>
-
-
-
-<select class="form-control" v-model="bahnhof1">
-       <option v-bind:value="bahnhof_def"></option>
-        <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
-    </select>
-<button class="btn btn-primary" v-on:click="viewBahnhof1=!viewBahnhof1">Details anzeigen</button>
- <em v-if="viewBahnhof1">
-<div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="bahnhof1.name" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Bahnhofscode</label>
-                <input type="text" v-model="bahnhof1.bahnhofscode" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Ländercode</label>
-                <input type="text" v-model="bahnhof1.laendercode" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Land</label>
-                <input type="text" v-model="bahnhof1.land" class="form-control" :disabled=true />
-                
-            </div>
-
-
-
- </em>
-<br>
-<br>
-
-
-<label for="adresse">Beförderer</label>
-
-
-
-<select class="form-control" v-model="evu1">
-        <option v-bind:value="evu_def"></option>
-        <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
-    </select>
-<button class="btn btn-primary" v-on:click="viewEvu1=!viewEvu1">Details anzeigen</button>
- <em v-if="viewEvu1">
-            <div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="evu1.name" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Kurzbezeichnung</label>
-                <input type="text" v-model="evu1.short" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">EVU Code</label>
-                <input type="text" v-model="evu1.code" class="form-control" :disabled=true />
-                
-            </div>
- </em>
- <br>
-<br>
- <button class="btn btn-primary" v-on:click="zwBahnhof1=!zwBahnhof1">weiteren Zwischenbahnhof hinzufügen</button>
- </div>
- <em v-if="zwBahnhof1">
-     
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="border border-primary p-2" style="border-width: medium !important">
-<label for="adresse">Bahnhof</label>
-
-<select class="form-control" v-model="bahnhof2">
-       <option v-bind:value="bahnhof_def"></option>
-        <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
-    </select>
-<button class="btn btn-primary" v-on:click="viewBahnhof2=!viewBahnhof2">Details anzeigen</button>
- <em v-if="viewBahnhof2">
-<div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="bahnhof2.name" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Bahnhofscode</label>
-                <input type="text" v-model="bahnhof2.bahnhofscode" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Ländercode</label>
-                <input type="text" v-model="bahnhof2.laendercode" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Land</label>
-                <input type="text" v-model="bahnhof2.land" class="form-control" :disabled=true />
-                
-            </div>
-
-
-
- </em>
-<br>
-<br>
-
-
-<label for="adresse">Beförderer</label>
-
-
-
-<select class="form-control" v-model="evu2">
-        <option v-bind:value="evu_def"></option>
-        <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
-    </select>
-<button class="btn btn-primary" v-on:click="viewEvu2=!viewEvu2">Details anzeigen</button>
- <em v-if="viewEvu2">
-            <div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="evu2.name" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Kurzbezeichnung</label>
-                <input type="text" v-model="evu2.short" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">EVU Code</label>
-                <input type="text" v-model="evu2.code" class="form-control" :disabled=true />
-                
-            </div>
- </em>
- <br>
-<br>
- <button class="btn btn-primary" v-on:click="zwBahnhof2=!zwBahnhof2">weiteren Zwischenbahnhof hinzufügen</button>
-</div>
- <em v-if="zwBahnhof2">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     <div class="border border-primary p-2" style="border-width: medium !important">
-<label for="adresse">Bahnhof</label>
-
-<select class="form-control" v-model="bahnhof3">
-       <option v-bind:value="bahnhof_def"></option>
-        <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
-    </select>
-<button class="btn btn-primary" v-on:click="viewBahnhof3=!viewBahnhof3">Details anzeigen</button>
- <em v-if="viewBahnhof3">
-<div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="bahnhof3.name" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Bahnhofscode</label>
-                <input type="text" v-model="bahnhof3.bahnhofscode" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Ländercode</label>
-                <input type="text" v-model="bahnhof3.laendercode" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Land</label>
-                <input type="text" v-model="bahnhof3.land" class="form-control" :disabled=true />
-                
-            </div>
-
-
-
- </em>
-<br>
-<br>
-
-
-<label for="adresse">Beförderer</label>
-
-
-
-<select class="form-control" v-model="evu3">
-        <option v-bind:value="evu_def"></option>
-        <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
-    </select>
-<button class="btn btn-primary" v-on:click="viewEvu3=!viewEvu3">Details anzeigen</button>
- <em v-if="viewEvu3">
-            <div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="evu3.name" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Kurzbezeichnung</label>
-                <input type="text" v-model="evu3.short" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">EVU Code</label>
-                <input type="text" v-model="evu3.code" class="form-control" :disabled=true />
-                
-            </div>
- </em>
- <br>
-<br>
- <button class="btn btn-primary" v-on:click="zwBahnhof3=!zwBahnhof3">weiteren Zwischenbahnhof hinzufügen</button>
-</div>
- <em v-if="zwBahnhof3">
-     
-
-
-
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="border border-primary p-2" style="border-width: medium !important">
-<label for="adresse">Bahnhof</label>
-
-<select class="form-control" v-model="bahnhof4">
-       <option v-bind:value="bahnhof_def"></option>
-        <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
-    </select>
-<button class="btn btn-primary" v-on:click="viewBahnhof4=!viewBahnhof4">Details anzeigen</button>
- <em v-if="viewBahnhof4">
-<div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="bahnhof4.name" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Bahnhofscode</label>
-                <input type="text" v-model="bahnhof4.bahnhofscode" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Ländercode</label>
-                <input type="text" v-model="bahnhof4.laendercode" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Land</label>
-                <input type="text" v-model="bahnhof4.land" class="form-control" :disabled=true />
-                
-            </div>
-
-
-
- </em>
-<br>
-<br>
-
-
-<label for="adresse">Beförderer</label>
-
-
-
-<select class="form-control" v-model="evu4">
-        <option v-bind:value="evu_def"></option>
-        <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
-    </select>
-<button class="btn btn-primary" v-on:click="viewEvu4=!viewEvu4">Details anzeigen</button>
- <em v-if="viewEvu4">
-            <div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="evu4.name" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Kurzbezeichnung</label>
-                <input type="text" v-model="evu4.short" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">EVU Code</label>
-                <input type="text" v-model="evu4.code" class="form-control" :disabled=true />
-                
-            </div>
- </em>
- <br>
-<br>
- <button class="btn btn-primary" v-on:click="zwBahnhof4=!zwBahnhof4">weiteren Zwischenbahnhof hinzufügen</button>
-</div>
- <em v-if="zwBahnhof4">
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- <div class="border border-primary p-2" style="border-width: medium !important">
-<label for="adresse">Bahnhof</label>
-
-<select class="form-control" v-model="bahnhof5">
-       <option v-bind:value="bahnhof_def"></option>
-        <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
-    </select>
-<button class="btn btn-primary" v-on:click="viewBahnhof5=!viewBahnhof5">Details anzeigen</button>
- <em v-if="viewBahnhof5">
-<div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="bahnhof5.name" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Bahnhofscode</label>
-                <input type="text" v-model="bahnhof5.bahnhofscode" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Ländercode</label>
-                <input type="text" v-model="bahnhof5.laendercode" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Land</label>
-                <input type="text" v-model="bahnhof5.land" class="form-control" :disabled=true />
-                
-            </div>
-
-
-
- </em>
-<br>
-<br>
-
-
-<label for="adresse">Beförderer</label>
-
-
-
-<select class="form-control" v-model="evu5">
-        <option v-bind:value="evu_def"></option>
-        <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
-    </select>
-<button class="btn btn-primary" v-on:click="viewEvu5=!viewEvu5">Details anzeigen</button>
- <em v-if="viewEvu5">
-            <div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="evu5.name" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Kurzbezeichnung</label>
-                <input type="text" v-model="evu5.short" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">EVU Code</label>
-                <input type="text" v-model="evu5.code" class="form-control" :disabled=true />
-                
-            </div>
- </em>
- <br>
-<br>
- <button class="btn btn-primary" v-on:click="zwBahnhof5=!zwBahnhof5">weiteren Zwischenbahnhof hinzufügen</button>
-</div>
- <em v-if="zwBahnhof5">
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     <div class="border border-primary p-2" style="border-width: medium !important">
-<label for="adresse">Bahnhof</label>
-
-<select class="form-control" v-model="bahnhof6">
-       <option v-bind:value="bahnhof_def"></option>
-        <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
-    </select>
-<button class="btn btn-primary" v-on:click="viewBahnhof6=!viewBahnhof6">Details anzeigen</button>
- <em v-if="viewBahnhof6">
-<div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="bahnhof6.name" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Bahnhofscode</label>
-                <input type="text" v-model="bahnhof6.bahnhofscode" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Ländercode</label>
-                <input type="text" v-model="bahnhof6.laendercode" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Land</label>
-                <input type="text" v-model="bahnhof6.land" class="form-control" :disabled=true />
-                
-            </div>
-
-
-
- </em>
-<br>
-<br>
-
-
-<label for="adresse">Beförderer</label>
-
-
-
-<select class="form-control" v-model="evu6">
-        <option v-bind:value="evu_def"></option>
-        <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
-    </select>
-<button class="btn btn-primary" v-on:click="viewEvu6=!viewEvu6">Details anzeigen</button>
- <em v-if="viewEvu6">
-            <div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="evu6.name" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Kurzbezeichnung</label>
-                <input type="text" v-model="evu6.short" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">EVU Code</label>
-                <input type="text" v-model="evu6.code" class="form-control" :disabled=true />
-                
-            </div>
- </em>
- <br>
-<br>
- 
-</div>
-
-
- </em>
-
- </em>
-
-
- </em>
-
- </em>
-
-
-
-
- </em>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br>
-<br>
-<br>
-
-
- <label for="adresse">Zielbahnhof</label>
-
-<select class="form-control" v-model="bahnhof7">
-       <option v-bind:value="bahnhof_def"></option>
-        <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
-    </select>
-<button class="btn btn-primary" v-on:click="viewBahnhof7=!viewBahnhof7">Details anzeigen</button>
- <em v-if="viewBahnhof7">
-<div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="bahnhof7.name" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Bahnhofscode</label>
-                <input type="text" v-model="bahnhof7.bahnhofscode" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Ländercode</label>
-                <input type="text" v-model="bahnhof7.laendercode" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Land</label>
-                <input type="text" v-model="bahnhof7.land" class="form-control" :disabled=true />
-                
-            </div>
-
-
-
- </em>
-<br>
-<br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="border border-primary p-2" style="border-width: medium !important">
-<label for="adresse">Übernahmeort</label>
-
-
-
-<select class="form-control" v-model="ubernahmeort">
-       <option v-bind:value="bahnhof_def"></option>
-        <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
-    </select>
-<button class="btn btn-primary" v-on:click="viewUbernahmeort=!viewUbernahmeort">Details anzeigen</button>
- <em v-if="viewUbernahmeort">
-<div class="form-group">
-                <label for="wagenummer">Name</label>
-                <input type="text" v-model="ubernahmeort.name" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Bahnhofscode</label>
-                <input type="text" v-model="ubernahmeort.bahnhofscode" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Ländercode</label>
-                <input type="text" v-model="ubernahmeort.laendercode" class="form-control" :disabled=true />
-                
-            </div>
-
-            <div class="form-group">
-                <label for="wagenummer">Land</label>
-                <input type="text" v-model="ubernahmeort.land" class="form-control" :disabled=true />
-                
-            </div>
-
-
-
- </em>
- <br>
- <br>
- <label for="adresse">Übernahmedatum und Uhrzeit</label><datetime type="datetime" v-model="ubernahmeort.datum" value-zone="Europe/Berlin" ></datetime>
-</div>
-<br>
-<br>
-
-
-
-
-
-
-
-
-
-<div class="border border-primary p-2" style="border-width: medium !important">
-
-<p>Frachtbrief Typ:</p>
   <div>
-    <input id="CIM" type="radio" name="type" value="CIM" v-model="type"/>
-    <label for="CIM">CIM</label>
-  </div>
-  
-  <div>
-    <input id="CUV" type="radio" name="type" value="CUV" v-model="type"/>
-    <label for="CUV">CUV</label>
-  </div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br>
-<br>
-<div class="border border-primary p-2" style="border-width: medium !important">
-<label for="adresse">Ausstellungsort</label>
-<div class="form-group">
-               
-                <input type="text" v-model="ausstellung.ort" class="form-control" />
-                
-            </div>
-<label for="adresse">Ausstellungsdatum</label><datetime v-model="ausstellung.datum" value-zone="Europe/Berlin" ></datetime>
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br>
-<br>
-<div class="border border-primary p-2" style="border-width: medium !important">
-<label for="adresse">Andere Beförderer</label>
-<br>
-<button class="btn btn-primary" v-on:click="aBefordererVorschlag()">Vorschlag generieren</button>
-<div class="row">
-    <div class="col-4">Name</div>
-    <div class="col-8">Strecke</div>
-
-    <div class="col-4"><input type="text" v-model="aBeforderer1.name" class="form-control" /></div>
-    <div class="col-8"><input type="text" v-model="aBeforderer1.strecke" class="form-control" /></div>
-
-    <div class="col-4"><input type="text" v-model="aBeforderer2.name" class="form-control" /></div>
-    <div class="col-8"><input type="text" v-model="aBeforderer2.strecke" class="form-control" /></div>
-
-    <div class="col-4"><input type="text" v-model="aBeforderer3.name" class="form-control" /></div>
-    <div class="col-8"><input type="text" v-model="aBeforderer3.strecke" class="form-control" /></div>
-
-    <div class="col-4"><input type="text" v-model="aBeforderer4.name" class="form-control" /></div>
-    <div class="col-8"><input type="text" v-model="aBeforderer4.strecke" class="form-control" /></div>
-
-    <div class="col-4"><input type="text" v-model="aBeforderer5.name" class="form-control" /></div>
-    <div class="col-8"><input type="text" v-model="aBeforderer5.strecke" class="form-control" /></div>
-
-    <div class="col-4"><input type="text" v-model="aBeforderer6.name" class="form-control" /></div>
-    <div class="col-8"><input type="text" v-model="aBeforderer6.strecke" class="form-control" /></div>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-<br>
-<br>
-<div class="border border-primary p-2" style="border-width: medium !important">
-<label for="erklarung">Erklärungen</label>
-
-
-
-<select class="form-control" v-model="erklarung">
-        <option v-bind:value="erklarung_def">neu anlegen</option>
-        <option v-for="erklarung in erklarungen" v-bind:value="erklarung" v-bind:key="erklarung.id">{{ erklarung.code }}</option>
-    </select>
-
-
-
-   
-
-
-
-            <div class="form-group">
-                <label for="wagenummer">Code mit Erläuterung</label>
-                <textarea type="text" v-model="erklarung.code" class="form-control"/>
-                
-            </div>
-</div>
-<br>
-<br>
-
-
-
-
-
-
-
-<br>
-<br>
-             <div class="form-group">
-                <button class="btn btn-primary" v-on:click="saveFrachtbrief()" >Speichern</button>
-                <em v-if="message.error">
-                    {{message.error.message}}
-                </em>
-              
-            </div>
-</form>
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<p>Als Vorlage verwenden:</p>
-  <div>
-    <input id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="vorlage"/>
-    <label for="vorlagefalse">Nein</label>
-  </div>
-  
-  <div>
-    <input id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="vorlage"/>
-    <label for="vorlagetrue">Ja</label>
-  </div>
-
-
-
-
-
-
-
-<div class="border border-primary p-2" style="border-width: medium !important">
-<label for="erklarung">Vorlage auswählen</label>
-
-
-<em v-if="frachtbriefs">
-<select class="form-control" v-model="vorlagedata">
-        <option v-bind:value="vorlagedata_def">keine</option>
-        <option v-for="frachtbrief in frachtbriefs" v-bind:value="frachtbrief" v-bind:key="frachtbrief.id">{{ frachtbrief.frachtbriefdata.refnr }} </option>
-    </select>
-</em>
- <button class="btn btn-primary" v-on:click="vorlageLaden()" >Vorlage laden</button>
-
-
-</div>
-
-
-        
+    <div class="card mb-2">
+      <div class="card-body">
+        <div class="form-group"> <!-- Pflichtfeld für spätere Bezeichnung des Frachtbriefes -->
+          <label for="">Referenz Nummer (Name des Frachtbriefes)</label>
+          <input type="text" v-model="refnr" class="form-control" />
+        </div>
+      </div>
     </div>
+
+
+    <div class="card mb-2">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="erklarung">Vorlage auswählen (optional)</label>
+
+
+          <em v-if="frachtbriefs">
+            <select class="form-control" v-model="vorlagedata">
+              <option v-bind:value="vorlagedata_def">keine</option>
+              <option v-for="frachtbrief in frachtbriefs" v-bind:value="frachtbrief" v-bind:key="frachtbrief.id">{{ frachtbrief.frachtbriefdata.refnr }} </option>
+            </select>
+          </em>
+          <button class="btn btn-primary mt-2" v-on:click="vorlageLaden()" >Vorlage laden</button>
+        </div>
+
+      </div>
+    </div>
+
+    <form @submit.prevent="handleSubmit">
+
+      <!-- ############################################################ ABSENDER ############################################################ -->
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card mb-2">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="adresse">Absender</label>
+                <select class="form-control" v-model="adresse1">
+                  <option v-bind:value="adresse_def"></option>
+                  <option v-for="adresse in adressen" v-bind:value="adresse" v-bind:key="adresse.id">{{ adresse.name }}</option>
+                </select>
+
+                <button class="btn btn-link py-0" v-on:click="viewAdresse1=!viewAdresse1">Details anzeigen</button>
+              </div>
+
+
+              <em v-if="viewAdresse1">
+                <div class="form-group">
+                  <label for="">Name</label>
+                  <input type="text" v-model="adresse1.name" disabled class="form-control" />
+
+                  <label for="">Straße und Hausnummer</label>
+                  <input type="text" v-model="adresse1.strasse" disabled class="form-control" />
+
+
+                  <label for="">PLZ und Ort</label>
+                  <input type="text" v-model="adresse1.ort" disabled class="form-control" />
+
+
+                  <label for="">E-Mailadresse</label>
+                  <input type="text" v-model="adresse1.mail" disabled class="form-control" />
+
+                  <label for="">Telefonnummer</label>
+                  <input type="text" v-model="adresse1.telefon" disabled class="form-control" />
+                </div>
+              </em>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- ############################################################ EMPFÄNGER ############################################################ -->
+        <div class="col-sm-6">
+          <div class="card mb-2">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="adresse">Empfänger</label>
+                <select class="form-control" v-model="adresse2">
+                  <option v-bind:value="adresse_def"></option>
+                  <option v-for="adresse in adressen" v-bind:value="adresse" v-bind:key="adresse.id">{{ adresse.name }}</option>
+                </select>
+
+                <button class="btn btn-link py-0" v-on:click="viewAdresse2=!viewAdresse2">Details anzeigen</button>
+              </div>
+
+
+              <em v-if="viewAdresse2">
+                <div class="form-group">
+                  <label for="">Name</label>
+                  <input type="text" v-model="adresse2.name" disabled class="form-control" />
+
+                  <label for="">Straße und Hausnummer</label>
+                  <input type="text" v-model="adresse2.strasse" disabled class="form-control" />
+
+                  <label for="">PLZ und Ort</label>
+                  <input type="text" v-model="adresse2.ort" disabled class="form-control" />
+
+                  <label for="">E-Mailadresse</label>
+                  <input type="text" v-model="adresse2.mail" disabled class="form-control" />
+
+                  <label for="">Telefonnummer</label>
+                  <input type="text" v-model="adresse2.telefon" disabled class="form-control" />
+                </div>
+              </em>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ############################################################ ABGANGSBAHNHOF ############################################################ -->
+      <div class="row">
+        <div class="col-sm-6">
+
+          <div class="card mb-2">
+            <div class="card-body">
+
+              <div class="form-group">
+                <label for="">Abgangsbahnhof</label>
+
+
+                  <select class="form-control" v-model="bahnhof1">
+                    <option v-bind:value="bahnhof_def"></option>
+                    <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
+                  </select>
+
+
+                <button class="btn btn-link py-0" v-on:click="viewBahnhof1=!viewBahnhof1">Details anzeigen</button>
+              </div>
+
+
+              <em v-if="viewBahnhof1">
+                <div class="form-group">
+                  <label for="">Name</label>
+                  <input type="text" v-model="bahnhof1.name" disabled class="form-control" />
+
+                  <label for="">Bahnhofscode</label>
+                  <input type="text" v-model="bahnhof1.bahnhofscode" class="form-control" disabled />
+
+                  <label for="">Ländercode</label>
+                  <input type="text" v-model="bahnhof1.laendercode" class="form-control" disabled />
+
+                  <label for="">Land</label>
+                  <input type="text" v-model="bahnhof1.land" class="form-control" disabled />
+                </div>
+              </em>
+
+              <div class="form-group">
+
+                <label for="adresse">Beförderer</label>
+
+                <select class="form-control" v-model="evu1">
+                  <option v-bind:value="evu_def"></option>
+                  <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
+                </select>
+
+                <button class="btn btn-link py-0" v-on:click="viewEvu1=!viewEvu1">Details anzeigen</button>
+              </div>
+
+
+              <em v-if="viewEvu1">
+                <div class="form-group">
+                  <label for="">Name</label>
+                  <input type="text" v-model="evu1.name" class="form-control" disabled />
+
+                  <label for="">Kurzbezeichnung</label>
+                  <input type="text" v-model="evu1.short" class="form-control" disabled />
+
+                  <label for="">EVU Code</label>
+                  <input type="text" v-model="evu1.code" class="form-control" disabled />
+                </div>
+              </em>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- ############################################################ ZIELBAHNHOF ############################################################ -->
+        <div class="col-sm-6">
+          <div class="card mb-2">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="adresse">Zielbahnhof</label>
+                <select class="form-control" v-model="bahnhof7">
+                  <option v-bind:value="bahnhof_def"></option>
+                  <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
+                </select>
+                <button class="btn btn-link py-0" v-on:click="viewBahnhof7=!viewBahnhof7">Details anzeigen</button>
+              </div>
+              <em v-if="viewBahnhof7">
+                <div class="form-group">
+                  <label for="">Name</label>
+                  <input type="text" v-model="bahnhof7.name" class="form-control" disabled />
+
+                  <label for="">Bahnhofscode</label>
+                  <input type="text" v-model="bahnhof7.bahnhofscode" class="form-control" disabled />
+
+                  <label for="">Ländercode</label>
+                  <input type="text" v-model="bahnhof7.laendercode" class="form-control" disabled />
+
+                  <label for="">Land</label>
+                  <input type="text" v-model="bahnhof7.land" class="form-control" disabled />
+                </div>
+              </em>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary mb-2" v-on:click="zwBahnhof1=!zwBahnhof1">1. Zwischenbahnhof hinzufügen</button>
+
+      <!-- ############################################################ 1. Zwischenbahnhof ############################################################ -->
+      <em v-if="zwBahnhof1">
+        <div class="card mb-2">
+          <div class="card-body">
+
+            <div class="form-group">
+              <label for="adresse">1. Zwischenbahnhof</label>
+              <select class="form-control" v-model="bahnhof2">
+                <option v-bind:value="bahnhof_def"></option>
+                <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
+              </select>
+
+              <button class="btn btn-link py-0" v-on:click="viewBahnhof2=!viewBahnhof2">Details anzeigen</button>
+            </div>
+
+
+
+            <em v-if="viewBahnhof2">
+              <div class="form-group">
+                <label for="">Name</label>
+                <input type="text" v-model="bahnhof2.name" class="form-control" disabled />
+
+                <label for="">Bahnhofscode</label>
+                <input type="text" v-model="bahnhof2.bahnhofscode" class="form-control" disabled />
+
+                <label for="">Ländercode</label>
+                <input type="text" v-model="bahnhof2.laendercode" class="form-control" disabled />
+
+                <label for="">Land</label>
+                <input type="text" v-model="bahnhof2.land" class="form-control" disabled />
+              </div>
+            </em>
+
+            <div class="form-group">
+              <label for="adresse">Beförderer (ab diesem Bahnhof)</label>
+              <select class="form-control" v-model="evu2">
+                <option v-bind:value="evu_def"></option>
+                <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
+              </select>
+
+              <button class="btn btn-link py-0" v-on:click="viewEvu2=!viewEvu2">Details anzeigen</button>
+            </div>
+            <em v-if="viewEvu2">
+              <div class="form-group">
+                <label for="">Name</label>
+                <input type="text" v-model="evu2.name" class="form-control" disabled />
+
+                <label for="">Kurzbezeichnung</label>
+                <input type="text" v-model="evu2.short" class="form-control" disabled />
+
+                <label for="">EVU Code</label>
+                <input type="text" v-model="evu2.code" class="form-control" disabled />
+              </div>
+            </em>
+
+
+          </div>
+        </div>
+
+        <button class="btn btn-primary mb-2" v-on:click="zwBahnhof2=!zwBahnhof2">2. Zwischenbahnhof hinzufügen</button>
+
+
+
+
+        <!-- ############################################################ 2. Zwischenbahnhof ############################################################ -->
+        <em v-if="zwBahnhof2">
+          <div class="card mb-2">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="adresse">2. Zwischenbahnhof</label>
+                <select class="form-control" v-model="bahnhof3">
+                  <option v-bind:value="bahnhof_def"></option>
+                  <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
+                </select>
+                <button class="btn btn-link py-0" v-on:click="viewBahnhof3=!viewBahnhof3">Details anzeigen</button>
+              </div>
+              <em v-if="viewBahnhof3">
+                <div class="form-group">
+                  <label for="">Name</label>
+                  <input type="text" v-model="bahnhof3.name" class="form-control" disabled />
+
+                  <label for="">Bahnhofscode</label>
+                  <input type="text" v-model="bahnhof3.bahnhofscode" class="form-control" disabled />
+
+                  <label for="">Ländercode</label>
+                  <input type="text" v-model="bahnhof3.laendercode" class="form-control" disabled />
+
+                  <label for="">Land</label>
+                  <input type="text" v-model="bahnhof3.land" class="form-control" disabled />
+                </div>
+              </em>
+
+              <label for="adresse">Beförderer (ab diesem Bahnhof)</label>
+              <select class="form-control" v-model="evu3">
+                <option v-bind:value="evu_def"></option>
+                <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
+              </select>
+              <button class="btn btn-link py-0" v-on:click="viewEvu3=!viewEvu3">Details anzeigen</button>
+
+              <em v-if="viewEvu3">
+                <div class="form-group">
+                  <label for="">Name</label>
+                  <input type="text" v-model="evu3.name" class="form-control" disabled />
+
+                  <label for="">Kurzbezeichnung</label>
+                  <input type="text" v-model="evu3.short" class="form-control" disabled />
+
+                  <label for="">EVU Code</label>
+                  <input type="text" v-model="evu3.code" class="form-control" disabled />
+                </div>
+              </em>
+
+
+            </div>
+          </div>
+
+          <button class="btn btn-primary mb-2" v-on:click="zwBahnhof3=!zwBahnhof3">3. Zwischenbahnhof hinzufügen</button>
+
+
+
+          <!-- ############################################################ 3. Zwischenbahnhof ############################################################ -->
+
+          <em v-if="zwBahnhof3">
+            <div class="card mb-2">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="adresse">3. Zwischenbahnhof</label>
+                  <select class="form-control" v-model="bahnhof4">
+                    <option v-bind:value="bahnhof_def"></option>
+                    <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
+                  </select>
+                  <button class="btn btn-link py-0" v-on:click="viewBahnhof4=!viewBahnhof4">Details anzeigen</button>
+                </div>
+
+                <em v-if="viewBahnhof4">
+                  <div class="form-group">
+                    <label for="">Name</label>
+                    <input type="text" v-model="bahnhof4.name" class="form-control" disabled />
+
+                    <label for="">Bahnhofscode</label>
+                    <input type="text" v-model="bahnhof4.bahnhofscode" class="form-control" disabled />
+
+                    <label for="">Ländercode</label>
+                    <input type="text" v-model="bahnhof4.laendercode" class="form-control" disabled />
+
+                    <label for="">Land</label>
+                    <input type="text" v-model="bahnhof4.land" class="form-control" disabled />
+                  </div>
+                </em>
+
+                <label for="adresse">Beförderer (ab diesem Bahnhof)</label>
+
+                <select class="form-control" v-model="evu4">
+                  <option v-bind:value="evu_def"></option>
+                  <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
+                </select>
+                <button class="btn btn-link py-0" v-on:click="viewEvu4=!viewEvu4">Details anzeigen</button>
+                <em v-if="viewEvu4">
+                  <div class="form-group">
+                    <label for="">Name</label>
+                    <input type="text" v-model="evu4.name" class="form-control" disabled />
+
+                    <label for="">Kurzbezeichnung</label>
+                    <input type="text" v-model="evu4.short" class="form-control" disabled />
+
+                    <label for="">EVU Code</label>
+                    <input type="text" v-model="evu4.code" class="form-control" disabled />
+                  </div>
+                </em>
+
+
+              </div>
+            </div>
+            <button class="btn btn-primary mb-2" v-on:click="zwBahnhof4=!zwBahnhof4">4. Zwischenbahnhof hinzufügen</button>
+
+
+            <!-- ############################################################ 4. Zwischenbahnhof ############################################################ -->
+            <em v-if="zwBahnhof4">
+              <div class="card mb-2">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="adresse">4. Zwischenbahnhof</label>
+
+                    <select class="form-control" v-model="bahnhof5">
+                      <option v-bind:value="bahnhof_def"></option>
+                      <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
+                    </select>
+                    <button class="btn btn-link py-0" v-on:click="viewBahnhof5=!viewBahnhof5">Details anzeigen</button>
+                  </div>
+                  <em v-if="viewBahnhof5">
+                    <div class="form-group">
+                      <label for="">Name</label>
+                      <input type="text" v-model="bahnhof5.name" class="form-control" disabled />
+
+                      <label for="">Bahnhofscode</label>
+                      <input type="text" v-model="bahnhof5.bahnhofscode" class="form-control" disabled />
+
+                      <label for="">Ländercode</label>
+                      <input type="text" v-model="bahnhof5.laendercode" class="form-control" disabled />
+
+                      <label for="">Land</label>
+                      <input type="text" v-model="bahnhof5.land" class="form-control" disabled />
+                    </div>
+                  </em>
+
+                  <label for="adresse">Beförderer (ab diesem Bahnhof)</label>
+
+                  <select class="form-control" v-model="evu5">
+                    <option v-bind:value="evu_def"></option>
+                    <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
+                  </select>
+                  <button class="btn btn-link py-0" v-on:click="viewEvu5=!viewEvu5">Details anzeigen</button>
+                  <em v-if="viewEvu5">
+                    <div class="form-group">
+                      <label for="">Name</label>
+                      <input type="text" v-model="evu5.name" class="form-control" disabled />
+
+                      <label for="">Kurzbezeichnung</label>
+                      <input type="text" v-model="evu5.short" class="form-control" disabled />
+
+                      <label for="">EVU Code</label>
+                      <input type="text" v-model="evu5.code" class="form-control" disabled />
+                    </div>
+                  </em>
+
+
+                </div>
+              </div>
+              <button class="btn btn-primary mb-2" v-on:click="zwBahnhof5=!zwBahnhof5">5. Zwischenbahnhof hinzufügen</button>
+
+
+              <!-- ############################################################ 5. Zwischenbahnhof ############################################################ -->
+              <em v-if="zwBahnhof5">
+                <div class="card mb-2">
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label for="adresse">5. Zwischenbahnhof</label>
+
+                      <select class="form-control" v-model="bahnhof6">
+                        <option v-bind:value="bahnhof_def"></option>
+                        <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
+                      </select>
+                      <button class="btn btn-link py-0" v-on:click="viewBahnhof6=!viewBahnhof6">Details anzeigen</button>
+                    </div>
+
+                    <em v-if="viewBahnhof6">
+                      <div class="form-group">
+                        <label for="">Name</label>
+                        <input type="text" v-model="bahnhof6.name" class="form-control" disabled />
+
+                        <label for="">Bahnhofscode</label>
+                        <input type="text" v-model="bahnhof6.bahnhofscode" class="form-control" disabled />
+
+                        <label for="">Ländercode</label>
+                        <input type="text" v-model="bahnhof6.laendercode" class="form-control" disabled />
+
+                        <label for="">Land</label>
+                        <input type="text" v-model="bahnhof6.land" class="form-control" disabled />
+                      </div>
+                    </em>
+
+                    <label for="adresse">Beförderer (ab diesem Bahnhof)</label>
+
+                    <select class="form-control" v-model="evu6">
+                      <option v-bind:value="evu_def"></option>
+                      <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
+                    </select>
+                    <button class="btn btn-link py-0" v-on:click="viewEvu6=!viewEvu6">Details anzeigen</button>
+                    <em v-if="viewEvu6">
+                      <div class="form-group">
+                        <label for="">Name</label>
+                        <input type="text" v-model="evu6.name" class="form-control" disabled />
+
+                        <label for="">Kurzbezeichnung</label>
+                        <input type="text" v-model="evu6.short" class="form-control" disabled />
+
+                        <label for="">EVU Code</label>
+                        <input type="text" v-model="evu6.code" class="form-control" disabled />
+                      </div>
+                    </em>
+                  </div>
+                </div>
+
+              </em> <!-- 5. Zwischenbahnhof -->
+            </em> <!-- 4. Zwischenbahnhof -->
+          </em> <!-- 3. Zwischenbahnhof -->
+        </em> <!-- 2. Zwischenbahnhof -->
+      </em> <!-- 1. Zwischenbahnhof -->
+
+
+      <!-- ############################################################ ÜBERNAHMEORT & ZEIT ############################################################ -->
+
+
+      <div class="card mb-2">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <label for="adresse">Übernahmeort</label>
+
+              <select class="form-control" v-model="ubernahmeort">
+                <option v-bind:value="bahnhof_def"></option>
+                <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
+              </select>
+
+              <button class="btn btn-link py-0" v-on:click="viewUbernahmeort=!viewUbernahmeort">Details anzeigen</button>
+
+              <em v-if="viewUbernahmeort">
+                <div class="form-group">
+                  <label for="">Name</label>
+                  <input type="text" v-model="ubernahmeort.name" class="form-control" disabled />
+
+                  <label for="">Bahnhofscode</label>
+                  <input type="text" v-model="ubernahmeort.bahnhofscode" class="form-control" disabled />
+
+                  <label for="">Ländercode</label>
+                  <input type="text" v-model="ubernahmeort.laendercode" class="form-control" disabled />
+
+                  <label for="">Land</label>
+                  <input type="text" v-model="ubernahmeort.land" class="form-control" disabled />
+                </div>
+              </em>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="adresse">Übernahmedatum und Uhrzeit</label>
+              <datetime type="datetime" v-model="ubernahmeort.datum" value-zone="Europe/Berlin" ></datetime>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- ############################################################ Frachtbrief-Typ ############################################################ -->
+
+
+      <div class="card mb-2">
+        <div class="card-body">
+          <label>Frachtbrief Typ:</label>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" id="CIM" type="radio" name="type" value="CIM" v-model="type"/>
+            <label class="form-check-label" for="CIM">CIM</label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" id="CUV" type="radio" name="type" value="CUV" v-model="type"/>
+            <label class="form-check-label" for="CUV">CUV</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- ############################################################ AUSSTELLUNGSORT ############################################################ -->
+
+
+
+      <div class="card mb-2">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <label for="adresse">Ausstellungsort</label>
+              <input type="text" v-model="ausstellung.ort" class="form-control" />
+            </div>
+            <div class="col-sm-6">
+              <label for="adresse">Ausstellungsdatum</label>
+              <datetime v-model="ausstellung.datum" value-zone="Europe/Berlin" ></datetime>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ############################################################ ANDERE BEFÖRDERER ############################################################ -->
+
+      <div class="card mb-2">
+        <div class="card-body">
+
+          <div class="row">
+            <label class="col-sm-7" for="adresse">Andere Beförderer</label>
+            <button class="btn btn-primary col-sm-4 mx-2" v-on:click="aBefordererVorschlag()">Vorschlag generieren</button>
+          </div>
+          <div class="row">
+            <div class="col-4 mb-1">EVU</div>
+            <div class="col-8 mb-1">Strecke</div>
+
+            <div class="col-4 mb-1"><input type="text" v-model="aBeforderer1.name" class="form-control" /></div>
+            <div class="col-8 mb-1"><input type="text" v-model="aBeforderer1.strecke" class="form-control" /></div>
+
+            <div class="col-4 mb-1"><input type="text" v-model="aBeforderer2.name" class="form-control" /></div>
+            <div class="col-8 mb-1"><input type="text" v-model="aBeforderer2.strecke" class="form-control" /></div>
+
+            <div class="col-4 mb-1"><input type="text" v-model="aBeforderer3.name" class="form-control" /></div>
+            <div class="col-8 mb-1"><input type="text" v-model="aBeforderer3.strecke" class="form-control" /></div>
+
+            <div class="col-4 mb-1"><input type="text" v-model="aBeforderer4.name" class="form-control" /></div>
+            <div class="col-8 mb-1"><input type="text" v-model="aBeforderer4.strecke" class="form-control" /></div>
+
+            <div class="col-4 mb-1"><input type="text" v-model="aBeforderer5.name" class="form-control" /></div>
+            <div class="col-8 mb-1"><input type="text" v-model="aBeforderer5.strecke" class="form-control" /></div>
+
+            <div class="col-4 mb-1"><input type="text" v-model="aBeforderer6.name" class="form-control" /></div>
+            <div class="col-8 mb-1"><input type="text" v-model="aBeforderer6.strecke" class="form-control" /></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ############################################################ ERKLÄRUNGEN ############################################################ -->
+
+      <div class="card mb-2">
+        <div class="card-body">
+          <div class="form-group">
+            <label for="erklarung">Erklärungen</label>
+
+            <select class="form-control" v-model="erklarung">
+              <option v-bind:value="erklarung_def">neu anlegen</option>
+              <option v-for="erklarung in erklarungen" v-bind:value="erklarung" v-bind:key="erklarung.id">{{ erklarung.code }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="wagenummer">Code mit Erläuterung</label>
+            <textarea type="text" v-model="erklarung.code" class="form-control"/>
+
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <button class="btn btn-success float-right mb-5" v-on:click="saveFrachtbrief()" >Speichern</button>
+        <em v-if="message.error">
+          {{message.error.message}}
+        </em>
+
+      </div>
+    </form>
+
+
+    <label>Als Vorlage verwenden:</label>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="vorlage"/>
+      <label class="form-check-label" for="vorlagefalse">Nein</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="vorlage"/>
+      <label class="form-check-label" for="vorlagetrue">Ja</label>
+    </div>
+
+
+
+  </div>
 </template>
 
 <script>
