@@ -136,6 +136,11 @@
 
     </div>
 
+
+<button class="btn btn-secondary mb-5 mx-1" v-on:click="generatePdfButton">PDF generieren</button>
+      <button class="btn btn-link mb-5 mx-1" v-on:click="viewPdfButton">PDF anzeigen</button>
+
+      
   </div>
 </template>
 
@@ -154,7 +159,8 @@ export default {
         ...mapState({
             
             ladeliste: state => state.ladeliste.all.items,
-            
+            pdf: state => state.ladeliste.pdf.items,
+
             ladegueter: state => state.ladegut.all.items,
             wagendatens: state => state.wagendaten.all.items,
 
@@ -187,7 +193,7 @@ this.getAllLadegut(),
         ),
         ...mapActions( 'ladeliste', ['createPDF']
         ),
-        ...mapActions( 'frachtbrief', ['getPdfById']
+        ...mapActions( 'ladeliste', ['getPdfById']
         ),
          ...mapActions('bahnhof', {getAllBahnhof: 'getAll'}),
         ...mapActions('evu', {getAllEvu: 'getAll'}),
@@ -213,8 +219,9 @@ this.getAllLadegut(),
     viewPdfButton() {
             
                    
-                  this.getPdfById(this.frachtbrief.pdf_id).then(() => {
-                      console.log(this.pdf.pdf)
+                  this.getPdfById(this.ladeliste.pdf_id).then(() => {
+                    console.log('Test')
+                      console.log(this.pdf)
 
                       const file = new Blob(
     [Uint8Array.from(this.pdf.pdf.data)], 

@@ -5,7 +5,8 @@ const state = {
         ladelistedata : ''}
     },
     ladelistedata: {},
-    nachricht: false
+    nachricht: false,
+    pdf: {test: 'test'},
     
 };
 
