@@ -140,8 +140,20 @@
 <button class="btn btn-secondary mb-5 mx-1" v-on:click="generatePdfButton">PDF generieren</button>
       <button class="btn btn-link mb-5 mx-1" v-on:click="viewPdfButton">PDF anzeigen</button>
 
-      
+
+
+<div class="form-group">
+      Status: 
+    <select v-model="ladeliste.status">
+  <option disabled value="">Abgeschlossen</option>
+  <option>in Bearbeitung</option>
+  <option>freigegeben</option>
+  <option>storniert</option>
+</select>
+</div>
   </div>
+
+  
 </template>
 
 <script>
@@ -208,8 +220,8 @@ this.getAllLadegut(),
        
     generatePdfButton() {
             
-                   
-                  this.createPDF(this.ladeliste).then(this.getById(this.$route.params.id));
+                   let data = this.ladeliste;
+                  this.createPDF(data).then(this.getById(this.$route.params.id));
                    //.then((reslut) => {this.getById(this.$route.params.id);console.log('test')});
                    
                    

@@ -218,8 +218,9 @@ export default {
 
 
 
-        }
-            
+        },
+        
+            status: 'in Bearbeitung'
         }
     },
 computed: {

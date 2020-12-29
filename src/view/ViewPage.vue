@@ -643,6 +643,15 @@
       <button class="btn btn-success mb-5" v-on:click="speichern()" :disabled="frachtbrief.pdf_id != null" >Speichern</button>
     </div>
 
+
+Status: 
+    <select v-model="frachtbrief.status">
+  <option disabled value="">Abgeschlossen</option>
+  <option>in Bearbeitung</option>
+  <option>freigegeben</option>
+  <option>storniert</option>
+</select>
+
   </div>
 </template>
 <script>

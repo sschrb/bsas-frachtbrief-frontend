@@ -981,7 +981,7 @@ if(this.erklarung.id == null && this.erklarung.code != null){
     this.createErklarung(this.erklarung);
 }
 
-var frachtbriefdata = JSON.parse('{"frachtbriefdata":' + JSON.stringify(this.$data) + '}')
+var frachtbriefdata = JSON.parse('{"frachtbriefdata":' + JSON.stringify(this.$data) + ', "status": "in Bearbeitung"}')
 console.log(frachtbriefdata)
 
 this.createFrachtbrief(frachtbriefdata);

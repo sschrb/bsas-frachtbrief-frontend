@@ -27,7 +27,7 @@ const actions = {
 
        ladelisteService.update(ladeliste)
             .then(
-                ladeliste => {commit('getAllSuccess', ladeliste)},
+                ladeliste => {commit('updateSuccess', ladeliste)},
                 error => commit('getAllFailure', error),
                 
             ).then(
