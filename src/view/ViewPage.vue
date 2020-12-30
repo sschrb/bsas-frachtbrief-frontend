@@ -618,6 +618,17 @@
         </div>
       </div>
 
+      <!-- ############################################################ Kommerzielle Bedingungen ############################################################ -->
+    <div class="card mb-2">
+      <div class="card-body">
+        <div class="form-group"> 
+          <label for="">Kommerzielle Bedingungen</label>
+          <button class="btn btn-primary col-sm-4 mx-2" v-on:click="kommerzBedingVorschlag()">Vorschlag generieren</button>
+          <textarea type="text" v-model="frachtbrief.frachtbriefdata.kommerziellebedingungen" class="form-control" />
+        </div>
+      </div>
+    </div>
+
     </form>
 
     <label>Als Vorlage verwenden:</label>
@@ -787,6 +798,9 @@ export default {
 
     },
 
+kommerzBedingVorschlag(){
+this.frachtbrief.frachtbriefdata.kommerziellebedingungen = '('+this.frachtbrief.frachtbriefdata.bahnhof1.name+' - '+this.frachtbrief.frachtbriefdata.bahnhof7.name +') ' + this.frachtbrief.frachtbriefdata.evu1.name + ' ' + this.frachtbrief.frachtbriefdata.evu1.code
+},
     aBefordererVorschlag() {
 
 

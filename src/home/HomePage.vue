@@ -640,6 +640,17 @@
       </div>
 
 
+<!-- ############################################################ Kommerzielle Bedingungen ############################################################ -->
+    <div class="card mb-2">
+      <div class="card-body">
+        <div class="form-group"> 
+          <label for="">Kommerzielle Bedingungen</label>
+          <button class="btn btn-primary col-sm-4 mx-2" v-on:click="kommerzBedingVorschlag()">Vorschlag generieren</button>
+          <textarea type="text" v-model="kommerziellebedingungen" class="form-control" />
+        </div>
+      </div>
+    </div>
+
 
       <div class="form-group">
         <button class="btn btn-success float-right mb-5" v-on:click="saveFrachtbrief()" >Speichern</button>
@@ -682,6 +693,8 @@ export default {
 
     data () {
         return {
+
+          kommerziellebedingungen: '',
             vorlagedata: {},
             vorlagedata_def: {},
             vorlage: false,
@@ -989,6 +1002,10 @@ this.createFrachtbrief(frachtbriefdata);
 
 setTimeout(() => this.$router.push('/history') , 3000);
 
+},
+
+kommerzBedingVorschlag(){
+this.kommerziellebedingungen = '('+this.bahnhof1.name+' - '+this.bahnhof7.name +') ' + this.evu1.name + ' ' + this.evu1.code
 },
 
         aBefordererVorschlag() {
