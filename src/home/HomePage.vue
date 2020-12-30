@@ -976,7 +976,7 @@ computed: {
             erklarungen: state => state.erklarung.all.items,
             message: state => state.frachtbrief.all,
             frachtbriefs: state => state.frachtbrief.vorlagen.items,
-            ladelisten: state => state.ladeliste.status.items,
+            ladelisten: state => state.ladeliste.all.items,
             
         }),
     },

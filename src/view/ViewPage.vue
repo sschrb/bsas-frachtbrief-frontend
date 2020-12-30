@@ -737,7 +737,7 @@ export default {
             adressen: state => state.adresse.all.items,
             erklarungen: state => state.erklarung.all.items,
             nachricht: state => state.frachtbrief.nachricht,
-            ladelisten: state => state.ladeliste.status.items,
+            ladelisten: state => state.ladeliste.all.items,
         })
     },
     created () {

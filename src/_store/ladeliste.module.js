@@ -137,7 +137,7 @@ const mutations = {
     getAllStatusSuccess(state, frachtbrief) {
         
         console.log(frachtbrief)
-        state.status = { items: frachtbrief };
+        state.all = { items: frachtbrief };
     },
     getAllPdfSuccess(state, pdf) {
         console.log(pdf);

@@ -41,10 +41,17 @@
     <div class="card mb-2">
       <div class="card-header">
         <h3>Ladelisten</h3>
+        <button class="btn btn-success mb-5" v-on:click="getAllLadelisteStatus('in Bearbeitung')" >in Bearbeitung</button>
+        <button class="btn btn-success mb-5" v-on:click="getAllLadelisteStatus('freigegeben')"  >freigegeben</button>
+        <button class="btn btn-success mb-5" v-on:click="getAllLadelisteStatus('storniert')"  >storniert</button>
+        <button class="btn btn-success mb-5" v-on:click="getAllLadelisteStatus('Abgeschlossen')" >Abgeschlossen</button>
+        <button class="btn btn-success mb-5" v-on:click="getAllLadeliste();" >Alles</button>
+       
       </div>
       <div class="card-body">
         <em v-if="users.loading">Loading...</em>
         <span v-if="users.error" class="text-danger">ERROR: {{users.error}}</span>
+        <em v-if="ladeliste.items[0]">
         <ul v-if="ladeliste.items">
           <li v-for="fbrief in ladeliste.items" :key="fbrief.id">
             {{fbrief.ladelistedata.refnr}}
@@ -53,6 +60,7 @@
             <span v-else> - <a class="text-danger"><router-link v-bind:to="'/ladeliste/' + fbrief.id">Anzeigen</router-link></a></span>
           </li>
         </ul>
+        </em>
       </div>
     </div>
 
@@ -75,7 +83,8 @@ export default {
     created () {
         this.getAllUsers();
         this.getAllFrachtbrief();
-        this.getAllLadeliste();
+        //this.getAllLadeliste();
+        //this.getAllLadelisteStatus("in Bearbeitung");
         this.getAllVorlagen();
     },
     methods: {
@@ -92,7 +101,8 @@ export default {
         }),
 
         ...mapActions( 'ladeliste', {
-            getAllLadeliste: 'getAll'
+            getAllLadeliste: 'getAll',
+            getAllLadelisteStatus: 'getAllStatus'
             
         })
     }
