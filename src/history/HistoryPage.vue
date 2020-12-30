@@ -18,6 +18,24 @@
       </div>
     </div>
 
+    <div class="card mb-2">
+      <div class="card-header">
+        <h3>Frachtbriefe Vorlagen</h3>
+      </div>
+      <div class="card-body">
+        <em v-if="users.loading">Loading...</em>
+        <span v-if="users.error" class="text-danger">ERROR: {{users.error}}</span>
+        <ul v-if="vorlagen.items">
+          <li v-for="fbrief in vorlagen.items" :key="fbrief.id">
+            {{fbrief.frachtbriefdata.refnr}}
+            <span v-if="fbrief.deleting"><em> - Deleting...</em></span>
+            <span v-else-if="fbrief.deleteError" class="text-danger"> - ERROR: {{fbrief.deleteError}}</span>
+            <span v-else> - <a class="text-danger"><router-link v-bind:to="'/frachtbrief/' + fbrief.id">Anzeigen</router-link></a></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
 
 
     <div class="card mb-2">
@@ -50,6 +68,7 @@ export default {
             account: state => state.account,
             users: state => state.users.all,
             frachtbrief: state => state.frachtbrief.all,
+            vorlagen: state => state.frachtbrief.vorlagen,
             ladeliste: state => state.ladeliste.all
         })
     },
@@ -57,6 +76,7 @@ export default {
         this.getAllUsers();
         this.getAllFrachtbrief();
         this.getAllLadeliste();
+        this.getAllVorlagen();
     },
     methods: {
         ...mapActions('users', {
@@ -67,6 +87,7 @@ export default {
         
        ...mapActions( 'frachtbrief', {
             getAllFrachtbrief: 'getAll',
+            getAllVorlagen: 'getAllVorlagen',
             deleteFrachtbrief: 'delete'
         }),
 

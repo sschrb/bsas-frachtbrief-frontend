@@ -34,7 +34,7 @@ const actions = {
 
         ladelisteService.createPDF(ladeliste)
             .then(
-                ladeliste => commit('getAllSuccess', ladeliste),
+                ladeliste => commit('createPDFSuccess', ladeliste),
                 error => commit('getAllFailure', error)
             ));
     },
@@ -66,8 +66,7 @@ const actions = {
 
         ladelisteService.getById(id)
             .then(
-                ladeliste => {commit('getAllSuccessD', ladeliste);
-            return ladeliste},
+                ladeliste => commit('getAllSuccessD', ladeliste),
                 error => commit('getAllFailure', error)
             );
     },
@@ -101,8 +100,16 @@ const mutations = {
         console.log('loading true')
         state.all = { loading: true };
     },
+    
+    createPDFSuccess(state, ladeliste) {
+        console.log('createPDFSuccess');
+        console.log(ladeliste)
+        state.all = { items: ladeliste };
+        
+
+    },
     getAllSuccess(state, ladeliste) {
-        console.log('pdf');
+        console.log('getAllSuccess');
         console.log(ladeliste)
         state.all = { items: ladeliste };
     },

@@ -937,12 +937,12 @@ computed: {
             adressen: state => state.adresse.all.items,
             erklarungen: state => state.erklarung.all.items,
             message: state => state.frachtbrief.all,
-            frachtbriefs: state => state.frachtbrief.all.items,
+            frachtbriefs: state => state.frachtbrief.vorlagen.items,
             
         }),
     },
     mounted () {
-        this.getAllFrachtbrief();
+        this.getAllVorlagen();
 
         this.getAllBahnhof();
         this.getAllEvu();
@@ -954,7 +954,7 @@ computed: {
     },
     methods: {
          ...mapActions( 'frachtbrief', {
-            getAllFrachtbrief: 'getAll',
+            getAllVorlagen: 'getAllVorlagen',
             deleteFrachtbrief: 'delete'
         }),
         ...mapActions('bahnhof', ['create']),
@@ -981,7 +981,7 @@ if(this.erklarung.id == null && this.erklarung.code != null){
     this.createErklarung(this.erklarung);
 }
 
-var frachtbriefdata = JSON.parse('{"frachtbriefdata":' + JSON.stringify(this.$data) + ', "status": "in Bearbeitung"}')
+var frachtbriefdata = JSON.parse('{"frachtbriefdata":' + JSON.stringify(this.$data) + ', "status": "in Bearbeitung", "vorlage": "'+this.vorlage+'"}')
 console.log(frachtbriefdata)
 
 this.createFrachtbrief(frachtbriefdata);

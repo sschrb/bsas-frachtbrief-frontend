@@ -7,6 +7,7 @@ const state = {
     frachtbriefdata: {},
     pdf: {test: 'test'},
     nachricht: {},
+    vorlagen: {}
 };
 
 const actions = {
@@ -60,6 +61,16 @@ const actions = {
             );
     },
 
+    getAllVorlagen({ commit }) {
+        commit('getAllRequest');
+
+        frachtbriefService.getAllVorlagen()
+            .then(
+                frachtbrief => commit('getAllVorlagenSuccess', frachtbrief),
+                error => commit('getAllFailure', error)
+            );
+    },
+
     getById({ commit }, id) {
         commit('getAllRequest');
 
@@ -99,6 +110,12 @@ const mutations = {
     getAllRequest(state) {
         console.log('loading true')
         state.all = { loading: true };
+    },
+    
+    getAllVorlagenSuccess(state, frachtbrief) {
+        
+        console.log(frachtbrief)
+        state.vorlagen = { items: frachtbrief };
     },
     getAllSuccess(state, frachtbrief) {
         console.log('pdf');

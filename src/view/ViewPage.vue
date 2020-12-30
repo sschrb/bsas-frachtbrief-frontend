@@ -743,7 +743,8 @@ export default {
     generatePdfButton() {
             
                    let data = this.frachtbrief;
-                  this.createPDF(data).then(this.getById(this.$route.params.id));
+                  this.createPDF(data)
+                  //.then(this.getById(this.$route.params.id));
                    //.then((reslut) => {this.getById(this.$route.params.id);console.log('test')});
                    
                    

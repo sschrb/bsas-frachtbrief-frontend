@@ -6,6 +6,7 @@ export const frachtbriefService = {
     create,
     createPDF,
     getAll,
+    getAllVorlagen,
     getById,
     getPdfById,
     update,
@@ -36,7 +37,14 @@ function createPDF(frachtbrief) {
 
 
 
+function getAllVorlagen() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
 
+    return fetch(`${config.apiUrl}/frachtbrief/vorlagen`, requestOptions).then(handleResponse);
+}
 
 function getAll() {
     const requestOptions = {
