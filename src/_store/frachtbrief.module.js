@@ -39,6 +39,23 @@ const actions = {
             ));
     },
 
+    createFinalPDF({ dispatch, commit }, frachtbrief) {
+        commit('createRequest');
+
+       frachtbriefService.update(frachtbrief)
+            .then(
+                frachtbrief => {commit('updateSuccess', frachtbrief)},
+                error => commit('getAllFailure', error),
+                
+            ).then(
+
+        frachtbriefService.createFinalPDF(frachtbrief)
+            .then(
+                frachtbrief => commit('getAllSuccess', frachtbrief),
+                error => commit('getAllFailure', error)
+            ));
+    },
+
     update({ commit }, frachtbrief) {
         commit('getAllRequest');
 

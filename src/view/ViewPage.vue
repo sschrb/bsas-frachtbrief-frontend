@@ -672,6 +672,9 @@
 
       <em v-if="frachtbrief.pdf_id == null"><button class="btn btn-secondary mb-5 mx-1" v-on:click="generatePdfButton">PDF generieren</button></em>
       <em v-if="frachtbrief.pdf_id != null"><button class="btn btn-link mb-5 mx-1" v-on:click="viewPdfButton">PDF anzeigen</button></em>
+      <button class="btn btn-secondary mb-5 mx-1" v-on:click="generateFinalPdfButton">finales PDF generieren</button>
+      <button class="btn btn-link mb-5 mx-1" v-on:click="viewFinalPdfButton">finales PDF anzeigen</button>
+
 
       <button class="btn btn-success mb-5" v-on:click="speichern()" :disabled="frachtbrief.pdf_id != null" >Speichern</button>
     </div>
@@ -763,6 +766,8 @@ export default {
         ),
         ...mapActions( 'frachtbrief', ['getPdfById']
         ),
+        ...mapActions( 'frachtbrief', ['createFinalPDF']
+        ),
          ...mapActions('bahnhof', {getAllBahnhof: 'getAll'}),
         ...mapActions('evu', {getAllEvu: 'getAll'}),
         ...mapActions('adresse', {getAllAdresse: 'getAll'}),
@@ -774,7 +779,10 @@ export default {
                    this.update(data);
               
         },
-       
+       generateFinalPdfButton(){
+let data = this.frachtbrief;
+                  this.createFinalPDF(data)
+       },
     generatePdfButton() {
             
                    let data = this.frachtbrief;
@@ -785,6 +793,27 @@ export default {
                    
                   
               
+        },
+        viewFinalPdfButton(){
+          
+                  this.getPdfById(this.frachtbrief.pdf_id_komplett).then(() => {
+                      console.log(this.pdf.pdf)
+
+                      const file = new Blob(
+    [Uint8Array.from(this.pdf.pdf.data)], 
+    {type: 'application/pdf'});
+                      
+                      const fileURL = URL.createObjectURL(file);
+    //Open the URL on new Window
+    window.open(fileURL);})
+                  
+                  
+                   //.then((reslut) => {this.getById(this.$route.params.id);console.log('test')});
+                   
+                   
+
+
+
         },
     viewPdfButton() {
             
