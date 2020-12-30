@@ -3,10 +3,12 @@ import { authHeader } from '../_helpers';
 
 export const ladelisteService = {
     
+    getAllStatus,
     create,
     createPDF,
     getAll,
     getById,
+    
     getPdfById,
     update,
     delete: _delete
@@ -36,7 +38,14 @@ function createPDF(ladeliste) {
 
 
 
+function getAllStatus(status) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
 
+    return fetch(`${config.apiUrl}/ladeliste/status/${status}`, requestOptions).then(handleResponse);
+}
 
 function getAll() {
     const requestOptions = {

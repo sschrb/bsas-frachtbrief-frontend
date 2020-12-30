@@ -651,6 +651,28 @@
       </div>
     </div>
 
+      <!-- ############################################################ Ladeliste zuordnen ############################################################ -->
+
+
+      <div class="card mb-2">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <label for="adresse">freigegebene Ladeliste zuordnen</label>
+
+              <select class="form-control" v-model="ladeliste">
+                <option v-bind:value="ladeliste_def"></option>
+                <option v-for="ladeliste in ladelisten" v-bind:value="ladeliste" v-bind:key="ladeliste.id">{{ ladeliste.ladelistedata.refnr }}</option>
+              </select>
+
+              
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+
 
       <div class="form-group">
         <button class="btn btn-success float-right mb-5" v-on:click="saveFrachtbrief()" >Speichern</button>
@@ -659,6 +681,7 @@
         </em>
 
       </div>
+      
     </form>
 
 
@@ -694,7 +717,9 @@ export default {
     data () {
         return {
 
-          kommerziellebedingungen: '',
+            ladeliste: '',
+            ladeliste_def: '',
+            kommerziellebedingungen: '',
             vorlagedata: {},
             vorlagedata_def: {},
             vorlage: false,
@@ -951,6 +976,7 @@ computed: {
             erklarungen: state => state.erklarung.all.items,
             message: state => state.frachtbrief.all,
             frachtbriefs: state => state.frachtbrief.vorlagen.items,
+            ladelisten: state => state.ladeliste.status.items,
             
         }),
     },
@@ -961,6 +987,7 @@ computed: {
         this.getAllEvu();
         this.getAllAdresse();
         this.getAllErklarung();
+        this.getAllStatus("freigegeben");
 
          
         console.log('mount')
@@ -970,6 +997,7 @@ computed: {
             getAllVorlagen: 'getAllVorlagen',
             deleteFrachtbrief: 'delete'
         }),
+        ...mapActions('ladeliste', {getAllStatus: 'getAllStatus'}),
         ...mapActions('bahnhof', ['create']),
         ...mapActions('bahnhof', {getAllBahnhof: 'getAll'}),
         ...mapActions('evu', {getAllEvu: 'getAll'}),

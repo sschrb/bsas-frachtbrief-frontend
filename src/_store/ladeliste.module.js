@@ -7,6 +7,7 @@ const state = {
     ladelistedata: {},
     nachricht: false,
     pdf: {test: 'test'},
+    status: '',
     
 };
 
@@ -57,6 +58,16 @@ const actions = {
         ladelisteService.getAll()
             .then(
                 ladeliste => commit('getAllSuccess', ladeliste),
+                error => commit('getAllFailure', error)
+            );
+    },
+
+    getAllStatus({ commit }, status) {
+        commit('getAllRequest');
+
+        ladelisteService.getAllStatus(status)
+            .then(
+                ladeliste => commit('getAllStatusSuccess', ladeliste),
                 error => commit('getAllFailure', error)
             );
     },
@@ -122,6 +133,11 @@ const mutations = {
         console.log('DDD');
         console.log(ladeliste)
         state.all = { items: ladeliste };
+    },
+    getAllStatusSuccess(state, frachtbrief) {
+        
+        console.log(frachtbrief)
+        state.status = { items: frachtbrief };
     },
     getAllPdfSuccess(state, pdf) {
         console.log(pdf);

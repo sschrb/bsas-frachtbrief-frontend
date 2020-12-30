@@ -629,6 +629,28 @@
       </div>
     </div>
 
+          <!-- ############################################################ Ladeliste zuordnen ############################################################ -->
+
+
+      <div class="card mb-2">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <label for="adresse">freigegebene Ladeliste zuordnen</label>
+
+              <select class="form-control" v-model="frachtbrief.frachtbriefdata.ladeliste">
+                <option v-bind:value="frachtbrief.frachtbriefdata.ladeliste_def"></option>
+                <option v-for="ladeliste in ladelisten" v-bind:value="ladeliste" v-bind:key="ladeliste.id">{{ ladeliste.ladelistedata.refnr }}</option>
+              </select>
+
+              
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+
     </form>
 
     <label>Als Vorlage verwenden:</label>
@@ -711,7 +733,8 @@ export default {
             evus: state => state.evu.all.items,
             adressen: state => state.adresse.all.items,
             erklarungen: state => state.erklarung.all.items,
-            nachricht: state => state.frachtbrief.nachricht
+            nachricht: state => state.frachtbrief.nachricht,
+            ladelisten: state => state.ladeliste.status.items,
         })
     },
     created () {
@@ -725,12 +748,13 @@ export default {
         this.getAllEvu();
         this.getAllAdresse();
         this.getAllErklarung();
+        this.getAllStatus("freigegeben");
         console.log('mount')
     },
     methods: {
         
         
-        
+         ...mapActions('ladeliste', {getAllStatus: 'getAllStatus'}),
        ...mapActions( 'frachtbrief', ['getById']
         ),
         ...mapActions( 'frachtbrief', ['update']
