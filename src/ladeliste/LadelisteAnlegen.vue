@@ -9,6 +9,16 @@
       </div>
     </div>
 
+    <div class="card mb-2">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="adresse">Datum</label>
+         
+          <datetime type="date" v-model="ladelistedata.datum" value-zone="Europe/Berlin" ></datetime>
+        </div>
+      </div>
+    </div>
+
     <!-- ############################################################ 1. LADEGUT ############################################################ -->
     <div class="card mb-5">
       <div class="card-header">
@@ -158,6 +168,7 @@ export default {
         return { ladelistedata: {
 
                                     refnr: '',
+                                    datum: '',
 
 
                                     ladegut1: {
