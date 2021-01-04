@@ -127,7 +127,7 @@
                     <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
                   </select>
 
-                  {{bahnhof1}}
+                  
 
 
                 <button class="btn btn-link py-0" v-on:click="viewBahnhof1=!viewBahnhof1">Details anzeigen</button>
@@ -190,7 +190,7 @@
                   <option v-bind:value="bahnhof_def"></option>
                   <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
                 </select>
-                {{bahnhof7}}
+                
                 <button class="btn btn-link py-0" v-on:click="viewBahnhof7=!viewBahnhof7">Details anzeigen</button>
               </div>
               <em v-if="viewBahnhof7">

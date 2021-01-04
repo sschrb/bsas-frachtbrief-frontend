@@ -884,7 +884,7 @@ this.frachtbrief.frachtbriefdata.kommerziellebedingungen = '('+this.frachtbrief.
 bezeichnungGutVorschlag(){
 let s = ''
 
-
+console.log("bezeichnungGutVorschlag");
 
 
 for (var l in this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata){
@@ -892,11 +892,12 @@ for (var l in this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata){
 
 
 if(typeof (this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata[l].ladegut) !== 'undefined'){
+  
   if(typeof (this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata[l].ladegut.bezeichnung) !== 'undefined'){
 
 
 
-
+console.log(this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata[l].ladegut.bezeichnung)
 
 
 
@@ -913,7 +914,7 @@ this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata[l].ladegut.bemerkung + 
 }
 
 this.frachtbrief.frachtbriefdata.bezeichnungGut = s;
-
+console.log(s)
 },
 
 
