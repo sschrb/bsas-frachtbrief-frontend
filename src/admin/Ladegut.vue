@@ -44,8 +44,16 @@
             </div>
 
             <div class="form-group">
-                <label for="wagenummer">RID</label>
-                <input type="text" v-model="ladegut.rid" class="form-control"/>
+                <label>RID:</label>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" id="CIM" type="radio" name="rid" value="Ja" v-model="ladegut.rid"/>
+            <label class="form-check-label" for="CIM">Ja</label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" id="CUV" type="radio" name="rid" value="Nein" v-model="ladegut.rid"/>
+            <label class="form-check-label" for="CUV">Nein</label>
+          </div>
 
             </div>
 
@@ -117,7 +125,7 @@ export default {
                 bezeichnung: "",
                 bemerkung: "",
                 dichte: "",
-                rid: "",
+                rid: "Nein",
                 nhm: "",
                 wagentyp: ""
 

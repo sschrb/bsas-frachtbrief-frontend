@@ -127,6 +127,8 @@
                     <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
                   </select>
 
+                  {{bahnhof1}}
+
 
                 <button class="btn btn-link py-0" v-on:click="viewBahnhof1=!viewBahnhof1">Details anzeigen</button>
               </div>
@@ -188,6 +190,7 @@
                   <option v-bind:value="bahnhof_def"></option>
                   <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
                 </select>
+                {{bahnhof7}}
                 <button class="btn btn-link py-0" v-on:click="viewBahnhof7=!viewBahnhof7">Details anzeigen</button>
               </div>
               <em v-if="viewBahnhof7">
@@ -674,6 +677,20 @@
       </div>
 
 
+     
+      <!-- ############################################################ Bezeichnung des Gutes wenn Ladeliste zugeordnet ############################################################ -->
+    <em v-if="ladeliste">
+    <div class="card mb-2">
+      <div class="card-body">
+        <div class="form-group"> 
+          <label for="">Bezeichnung des Gutes</label>
+          <button class="btn btn-primary col-sm-4 mx-2" v-on:click="bezeichnungGutVorschlag()">Vorschlag generieren</button>
+          <textarea type="text" v-model="bezeichnungGut" class="form-control" />
+        </div>
+      </div>
+    </div>
+    </em>
+
       <div class="form-group">
         <button class="btn btn-success float-right mb-5" v-on:click="saveFrachtbrief()" >Speichern</button>
         <em v-if="message.error">
@@ -717,6 +734,7 @@ export default {
     data () {
         return {
 
+            bezeichnungGut: '',
             ladeliste: '',
             ladeliste_def: '',
             kommerziellebedingungen: '',
@@ -1034,6 +1052,41 @@ setTimeout(() => this.$router.push('/history') , 3000);
 
 kommerzBedingVorschlag(){
 this.kommerziellebedingungen = '('+this.bahnhof1.name+' - '+this.bahnhof7.name +') ' + this.evu1.name + ' ' + this.evu1.code
+},
+
+bezeichnungGutVorschlag(){
+let s = ''
+
+
+
+
+for (var l in this.ladeliste.ladelistedata){
+
+
+
+if(typeof (this.ladeliste.ladelistedata[l].ladegut) !== 'undefined'){
+  if(typeof (this.ladeliste.ladelistedata[l].ladegut.bezeichnung) !== 'undefined'){
+
+
+
+
+
+
+
+
+s = s + this.ladeliste.ladelistedata[l].wagen.length + 'x ' + this.ladeliste.ladelistedata[l].ladegut.wagentyp + ' (' + this.ladeliste.ladelistedata[l].ladegut.bezeichnung + ') \n' +
+this.ladeliste.ladelistedata[l].ladegut.bemerkung + '\n \n'
+
+
+
+  }
+  
+}
+  
+}
+
+this.bezeichnungGut = s;
+
 },
 
         aBefordererVorschlag() {

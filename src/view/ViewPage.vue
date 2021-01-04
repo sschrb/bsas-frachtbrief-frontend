@@ -651,16 +651,29 @@
         </div>
       </div>
 
+      <!-- ############################################################ Bezeichnung des Gutes wenn Ladeliste zugeordnet ############################################################ -->
+    <em v-if="frachtbrief.frachtbriefdata.ladeliste">
+    <div class="card mb-2">
+      <div class="card-body">
+        <div class="form-group"> 
+          <label for="">Bezeichnung des Gutes</label>
+          <button class="btn btn-primary col-sm-4 mx-2" v-on:click="bezeichnungGutVorschlag()">Vorschlag generieren</button>
+          <textarea type="text" v-model="frachtbrief.frachtbriefdata.bezeichnungGut" class="form-control" />
+        </div>
+      </div>
+    </div>
+    </em>
+
     </form>
 
     <label>Als Vorlage verwenden:</label>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="frachtbrief.frachtbriefdata.vorlage"/>
+      <input class="form-check-input" id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="frachtbrief.vorlage"/>
       <label class="form-check-label" for="vorlagefalse">Nein</label>
     </div>
 
     <div class="form-check form-check-inline">
-      <input class="form-check-input" id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="frachtbrief.frachtbriefdata.vorlage"/>
+      <input class="form-check-input" id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="frachtbrief.vorlage"/>
       <label class="form-check-label" for="vorlagetrue">Ja</label>
     </div>
 
@@ -670,13 +683,13 @@
         {{nachricht.text}}
       </em>
 
-      <em v-if="frachtbrief.pdf_id == null"><button class="btn btn-secondary mb-5 mx-1" v-on:click="generatePdfButton">PDF generieren</button></em>
+      <button class="btn btn-secondary mb-5 mx-1" v-on:click="generatePdfButton">PDF generieren</button>
       <em v-if="frachtbrief.pdf_id != null"><button class="btn btn-link mb-5 mx-1" v-on:click="viewPdfButton">PDF anzeigen</button></em>
       <button class="btn btn-secondary mb-5 mx-1" v-on:click="generateFinalPdfButton">finales PDF generieren</button>
       <button class="btn btn-link mb-5 mx-1" v-on:click="viewFinalPdfButton">finales PDF anzeigen</button>
 
 
-      <button class="btn btn-success mb-5" v-on:click="speichern()" :disabled="frachtbrief.pdf_id != null" >Speichern</button>
+      <button class="btn btn-success mb-5" v-on:click="speichern()" >Speichern</button>
     </div>
 
 
@@ -799,13 +812,26 @@ let data = this.frachtbrief;
                   this.getPdfById(this.frachtbrief.pdf_id_komplett).then(() => {
                       console.log(this.pdf.pdf)
 
-                      const file = new Blob(
+                      const blob = new Blob(
     [Uint8Array.from(this.pdf.pdf.data)], 
     {type: 'application/pdf'});
                       
-                      const fileURL = URL.createObjectURL(file);
-    //Open the URL on new Window
-    window.open(fileURL);})
+                      let a = document.createElement("a") 
+  let blobURL = URL.createObjectURL(blob)
+  a.download = 'test.pdf'
+  a.href = blobURL
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+    
+    
+    
+    }
+    
+    
+    
+    
+    )
                   
                   
                    //.then((reslut) => {this.getById(this.$route.params.id);console.log('test')});
@@ -854,6 +880,43 @@ let data = this.frachtbrief;
 kommerzBedingVorschlag(){
 this.frachtbrief.frachtbriefdata.kommerziellebedingungen = '('+this.frachtbrief.frachtbriefdata.bahnhof1.name+' - '+this.frachtbrief.frachtbriefdata.bahnhof7.name +') ' + this.frachtbrief.frachtbriefdata.evu1.name + ' ' + this.frachtbrief.frachtbriefdata.evu1.code
 },
+
+bezeichnungGutVorschlag(){
+let s = ''
+
+
+
+
+for (var l in this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata){
+
+
+
+if(typeof (this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata[l].ladegut) !== 'undefined'){
+  if(typeof (this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata[l].ladegut.bezeichnung) !== 'undefined'){
+
+
+
+
+
+
+
+
+s = s + this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata[l].wagen.length + 'x ' + this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata[l].ladegut.wagentyp + ' (' + this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata[l].ladegut.bezeichnung + ') \n' +
+this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata[l].ladegut.bemerkung + '\n \n'
+
+
+
+  }
+  
+}
+  
+}
+
+this.frachtbrief.frachtbriefdata.bezeichnungGut = s;
+
+},
+
+
     aBefordererVorschlag() {
 
 
