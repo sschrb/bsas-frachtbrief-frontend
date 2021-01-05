@@ -116,7 +116,7 @@ const mutations = {
         console.log('createPDFSuccess');
         console.log(ladeliste)
         state.all = { items: ladeliste };
-        
+        state.nachricht = {text: 'PDF generiert'};
 
     },
     getAllSuccess(state, ladeliste) {
@@ -144,6 +144,7 @@ const mutations = {
         console.log(state.pdf)
         state.pdf = { items: pdf };
         console.log(state.pdf)
+        state.nachricht = {text: 'PDF runtergeladen'};
         
     },
     getAllFailure(state, error) {

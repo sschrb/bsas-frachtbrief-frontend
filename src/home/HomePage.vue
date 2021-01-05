@@ -515,7 +515,7 @@
             <div class="col-sm-6">
               <label for="adresse">Übernahmeort</label>
 
-              <select class="form-control" v-model="ubernahmeort">
+              <select class="form-control" v-model="ubernahmeort.bahnhof">
                 <option v-bind:value="bahnhof_def"></option>
                 <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
               </select>
@@ -525,16 +525,16 @@
               <em v-if="viewUbernahmeort">
                 <div class="form-group">
                   <label for="">Name</label>
-                  <input type="text" v-model="ubernahmeort.name" class="form-control" disabled />
+                  <input type="text" v-model="ubernahmeort.bahnhof.name" class="form-control" disabled />
 
                   <label for="">Bahnhofscode</label>
-                  <input type="text" v-model="ubernahmeort.bahnhofscode" class="form-control" disabled />
+                  <input type="text" v-model="ubernahmeort.bahnhof.bahnhofscode" class="form-control" disabled />
 
                   <label for="">Ländercode</label>
-                  <input type="text" v-model="ubernahmeort.laendercode" class="form-control" disabled />
+                  <input type="text" v-model="ubernahmeort.bahnhof.laendercode" class="form-control" disabled />
 
                   <label for="">Land</label>
-                  <input type="text" v-model="ubernahmeort.land" class="form-control" disabled />
+                  <input type="text" v-model="ubernahmeort.bahnhof.land" class="form-control" disabled />
                 </div>
               </em>
             </div>
@@ -819,11 +819,15 @@ export default {
             },
 
             viewUbernahmeort: false,
-            ubernahmeort: {
-               name: "",
+            ubernahmeort: { 
+              bahnhof:
+            {
+              name: "",
                 bahnhofscode: '',
                 laendercode: '',
                 land: '',
+                },
+               
                 datum: ''
                
                

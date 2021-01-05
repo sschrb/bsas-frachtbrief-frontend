@@ -491,7 +491,7 @@
             <div class="col-sm-6">
               <label for="adresse">Übernahmeort</label>
 
-              <select class="form-control" v-model="frachtbrief.frachtbriefdata.ubernahmeort">
+              <select class="form-control" v-model="frachtbrief.frachtbriefdata.ubernahmeort.bahnhof">
                 <option v-bind:value="frachtbrief.frachtbriefdata.bahnhof_def"></option>
                 <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
               </select>
@@ -501,16 +501,16 @@
               <em v-if="viewUbernahmeort">
                 <div class="form-group">
                   <label for="">Name</label>
-                  <input type="text" v-model="frachtbrief.frachtbriefdata.ubernahmeort.name" class="form-control" disabled />
+                  <input type="text" v-model="frachtbrief.frachtbriefdata.ubernahmeort.bahnhof.name" class="form-control" disabled />
 
                   <label for="">Bahnhofscode</label>
-                  <input type="text" v-model="frachtbrief.frachtbriefdata.ubernahmeort.bahnhofscode" class="form-control" disabled />
+                  <input type="text" v-model="frachtbrief.frachtbriefdata.ubernahmeort.bahnhof.bahnhofscode" class="form-control" disabled />
 
                   <label for="">Ländercode</label>
-                  <input type="text" v-model="frachtbrief.frachtbriefdata.ubernahmeort.laendercode" class="form-control" disabled />
+                  <input type="text" v-model="frachtbrief.frachtbriefdata.ubernahmeort.bahnhof.laendercode" class="form-control" disabled />
 
                   <label for="">Land</label>
-                  <input type="text" v-model="frachtbrief.frachtbriefdata.ubernahmeort.land" class="form-control" disabled />
+                  <input type="text" v-model="frachtbrief.frachtbriefdata.ubernahmeort.bahnhof.land" class="form-control" disabled />
                 </div>
               </em>
             </div>
@@ -683,23 +683,40 @@
         {{nachricht.text}}
       </em>
 
-      <button class="btn btn-secondary mb-5 mx-1" v-on:click="generatePdfButton">PDF generieren</button>
-      <em v-if="frachtbrief.pdf_id != null"><button class="btn btn-link mb-5 mx-1" v-on:click="viewPdfButton">PDF anzeigen</button></em>
-      <button class="btn btn-secondary mb-5 mx-1" v-on:click="generateFinalPdfButton">finales PDF generieren</button>
-      <button class="btn btn-link mb-5 mx-1" v-on:click="viewFinalPdfButton">finales PDF anzeigen</button>
+      <button class="btn btn-secondary mb-5 mx-1" v-on:click="generatePdfButton">vorschau PDF generieren</button>
+      <em v-if="frachtbrief.pdf_id != null"><button class="btn btn-link mb-5 mx-1" v-on:click="viewPdfButton">vorschau PDF anzeigen</button></em>
+
 
 
       <button class="btn btn-success mb-5" v-on:click="speichern()" >Speichern</button>
     </div>
 
 
-Status: 
+<div class="form-group">
+      Status: 
     <select v-model="frachtbrief.status">
-  <option disabled value="">Abgeschlossen</option>
-  <option>in Bearbeitung</option>
-  <option>freigegeben</option>
-  <option>storniert</option>
+  <option disabled value="Abgeschlossen">Abgeschlossen</option>
+  <option disabled value="in Bearbeitung">in Bearbeitung</option>
+  <option disabled value="freigegeben">freigegeben</option>
+  <option disabled value="storniert">storniert</option>
 </select>
+<button class="btn btn-secondary mb-5 mx-1" v-on:click="setStatus('in Bearbeitung')" :disabled="frachtbrief.status == 'Abgeschlossen'" >in Bearbeitung</button>
+<button class="btn btn-secondary mb-5 mx-1" v-on:click="setStatus('freigegeben')" :disabled="frachtbrief.status == 'Abgeschlossen'">freigegeben</button>
+<button class="btn btn-secondary mb-5 mx-1" v-on:click="setStatus('storniert')" :disabled="frachtbrief.status == 'Abgeschlossen'">storniert</button>
+
+</div>
+
+
+<em v-if="frachtbrief.status == 'freigegeben' || frachtbrief.status == 'Abgeschlossen'">
+<div class="form-group">
+      <button class="btn btn-secondary mb-5 mx-1" v-on:click="generateFinalPdfButton">finales PDF generieren</button>
+      <button class="btn btn-link mb-5 mx-1" v-on:click="viewFinalPdfButton" :disabled="frachtbrief.pdf_id_komplett == null">finales PDF anzeigen</button>
+</div>
+
+<div class="form-group">
+      <button class="btn btn-secondary mb-5 mx-1" v-on:click="setStatus('Abgeschlossen')" :disabled="frachtbrief.pdf_id_komplett == null || frachtbrief.status == 'Abgeschlossen'">Frachtbrief abschließen</button>
+</div>
+</em>
 
   </div>
 </template>
@@ -784,6 +801,7 @@ export default {
          ...mapActions('bahnhof', {getAllBahnhof: 'getAll'}),
         ...mapActions('evu', {getAllEvu: 'getAll'}),
         ...mapActions('adresse', {getAllAdresse: 'getAll'}),
+        ...mapActions('ladeliste', {updateLadeliste: 'update'}),
         ...mapActions('erklarung', {createErklarung: 'create'}),
         ...mapActions('erklarung', {getAllErklarung: 'getAll'}),
         speichern() {
@@ -791,6 +809,18 @@ export default {
             let data = this.frachtbrief;
                    this.update(data);
               
+        },
+        setStatus(s){
+
+var ladelisteid = this.frachtbrief.frachtbriefdata.ladeliste.id
+
+          this.frachtbrief.status = s;
+          
+
+          if(s=='Abgeschlossen'){
+this.updateLadeliste({id: ladelisteid, status: 'Abgeschlossen'})
+}
+
         },
        generateFinalPdfButton(){
 let data = this.frachtbrief;

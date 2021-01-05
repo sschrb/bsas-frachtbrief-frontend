@@ -29,6 +29,12 @@
           <option v-for="ladegut in ladegueter" v-bind:value="ladegut" v-bind:key="ladegut.id">{{ ladegut.bezeichnung }}</option>
         </select>
 
+
+
+
+
+
+
       </div>
       <div class="card-body">
 
@@ -165,7 +171,11 @@ import 'vue-datetime/dist/vue-datetime.css'
 export default {
 
     data () {
-        return { ladelistedata: {
+        return { 
+          
+          
+          ladelistedata: {
+
 
                                     refnr: '',
                                     datum: '',

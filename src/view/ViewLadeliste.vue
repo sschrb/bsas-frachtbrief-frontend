@@ -5,7 +5,7 @@
       <div class="card-body">
         <div class="form-group">
           <label for="adresse">Referenz Nummer (Name der Ladeliste)</label>
-          <input type="text" v-model="ladeliste.ladelistedata.refnr" class="form-control" />
+          <input type="text" v-model="ladeliste.ladelistedata.refnr" class="form-control" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'"/>
         </div>
       </div>
     </div>
@@ -15,7 +15,7 @@
         <div class="form-group">
           <label for="adresse">Datum</label>
          
-          <datetime type="date" v-model="ladeliste.ladelistedata.datum" value-zone="Europe/Berlin" ></datetime>
+          <datetime type="date" v-model="ladeliste.ladelistedata.datum" value-zone="Europe/Berlin" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'"></datetime>
         </div>
       </div>
     </div>
@@ -26,7 +26,8 @@
       <div class="card-header">
         <label for="adresse">Ladegut 1</label>
 
-        <select class="form-control" v-model="ladeliste.ladelistedata.ladegut1.ladegut">
+        <select class="form-control" v-model="ladeliste.ladelistedata.ladegut1.ladegut" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'">
+           <option v-bind:value="ladegut_def"></option>
 
           <option v-for="ladegut in ladegueter" v-bind:value="ladegut" v-bind:key="ladegut.id">{{ ladegut.bezeichnung }}</option>
         </select>
@@ -44,13 +45,14 @@
           <div class="form-group" v-for="(input,k) in ladeliste.ladelistedata.ladegut1.wagen" :key="k">
 
             <div class="row">
-              <div class="col-6"><select class="form-control" v-model="input.wagendaten">
+              <div class="col-6"><select class="form-control" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'">
+                <option v-bind:value="wagendaten_def"></option>
                 <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ wagendaten.wagennummer }}</option>
               </select></div>
-              <div class="col-4"><input type="text" class="form-control" v-model="input.liter"></div>
+              <div class="col-4"><input type="text" class="form-control" v-model="input.liter" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'"></div>
 
-              <div class="col-1"><button type="button" class="btn btn-success" @click="add1(k)" v-show="k == ladeliste.ladelistedata.ladegut1.wagen.length-1">+</button></div>
-              <div class="col-1"><button type="button" class="btn btn-danger" @click="remove1(k)" v-show="k || ( !k && ladeliste.ladelistedata.ladegut1.wagen.length > 1)">-</button></div>
+              <div class="col-1"><button type="button" class="btn btn-success" @click="add1(k)" v-show="k == ladeliste.ladelistedata.ladegut1.wagen.length-1" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'">+</button></div>
+              <div class="col-1"><button type="button" class="btn btn-danger" @click="remove1(k)" v-show="k || ( !k && ladeliste.ladelistedata.ladegut1.wagen.length > 1)" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'">-</button></div>
             </div>
           </div>
         </div>
@@ -63,7 +65,8 @@
     <div class="card mb-5">
       <div class="card-header">
         <label for="adresse">Ladegut 2</label>
-        <select class="form-control" v-model="ladeliste.ladelistedata.ladegut2.ladegut">
+        <select class="form-control" v-model="ladeliste.ladelistedata.ladegut2.ladegut" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'">
+           <option v-bind:value="ladegut_def"></option>
           <option v-for="ladegut in ladegueter" v-bind:value="ladegut" v-bind:key="ladegut.id">{{ ladegut.bezeichnung }}</option>
         </select>
       </div>
@@ -79,14 +82,16 @@
 
             <div class="row">
 
-              <div class="col-6"><select class="form-control" v-model="input.wagendaten">
+              <div class="col-6"><select class="form-control" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'">
+                
+                <option v-bind:value="wagendaten_def"></option>
 
                 <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ wagendaten.wagennummer }}</option>
               </select></div>
-              <div class="col-4"><input type="text" class="form-control" v-model="input.liter"></div>
+              <div class="col-4"><input type="text" class="form-control" v-model="input.liter" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'"></div>
 
-              <div class="col-1"><button type="button" class="btn btn-success" @click="add2(k)" v-show="k == ladeliste.ladelistedata.ladegut2.wagen.length-1">+</button></div>
-              <div class="col-1"><button type="button" class="btn btn-danger" @click="remove2(k)" v-show="k || ( !k && ladeliste.ladelistedata.ladegut2.wagen.length > 1)">-</button></div>
+              <div class="col-1"><button type="button" class="btn btn-success" @click="add2(k)" v-show="k == ladeliste.ladelistedata.ladegut2.wagen.length-1" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'">+</button></div>
+              <div class="col-1"><button type="button" class="btn btn-danger" @click="remove2(k)" v-show="k || ( !k && ladeliste.ladelistedata.ladegut2.wagen.length > 1)" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'">-</button></div>
 
             </div>
           </div>
@@ -104,7 +109,8 @@
 
 
 
-        <select class="form-control" v-model="ladeliste.ladelistedata.ladegut3.ladegut">
+        <select :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" class="form-control" v-model="ladeliste.ladelistedata.ladegut3.ladegut">
+          <option v-bind:value="ladegut_def"></option>
 
           <option v-for="ladegut in ladegueter" v-bind:value="ladegut" v-bind:key="ladegut.id">{{ ladegut.bezeichnung }}</option>
         </select>
@@ -122,14 +128,15 @@
 
             <div class="row">
 
-              <div class="col-6"><select class="form-control" v-model="input.wagendaten">
+              <div class="col-6"><select class="form-control" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'">
+                <option v-bind:value="wagendaten_def"></option>
 
                 <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ wagendaten.wagennummer }}</option>
               </select></div>
-              <div class="col-4"><input type="text" class="form-control" v-model="input.liter"></div>
+              <div class="col-4"><input type="text" class="form-control" v-model="input.liter" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'"></div>
 
-              <div class="col-1"><button type="button" class="btn btn-success" @click="add3(k)" v-show="k == ladeliste.ladelistedata.ladegut3.wagen.length-1">+</button></div>
-              <div class="col-1"><button type="button" class="btn btn-danger" @click="remove3(k)" v-show="k || ( !k && ladeliste.ladelistedata.ladegut3.wagen.length > 1)">-</button></div>
+              <div class="col-1"><button type="button" class="btn btn-success" @click="add3(k)" v-show="k == ladeliste.ladelistedata.ladegut3.wagen.length-1" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'">+</button></div>
+              <div class="col-1"><button type="button" class="btn btn-danger" @click="remove3(k)" v-show="k || ( !k && ladeliste.ladelistedata.ladegut3.wagen.length > 1)" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'">-</button></div>
 
             </div>
           </div>
@@ -147,8 +154,8 @@
     </div>
 
 
-<button class="btn btn-secondary mb-5 mx-1" v-on:click="generatePdfButton">PDF generieren</button>
-      <button class="btn btn-link mb-5 mx-1" v-on:click="viewPdfButton">PDF anzeigen</button>
+<button class="btn btn-secondary mb-5 mx-1" v-on:click="generatePdfButton">Vorschau PDF generieren</button>
+      <button class="btn btn-link mb-5 mx-1" v-on:click="viewPdfButton" :disabled="ladeliste.pdf_id == null">Vorschau PDF anzeigen</button>
 
       
 
@@ -157,13 +164,17 @@
 <div class="form-group">
       Status: 
     <select v-model="ladeliste.status">
-  <option disabled value="">Abgeschlossen</option>
-  <option>in Bearbeitung</option>
-  <option>freigegeben</option>
-  <option>storniert</option>
+  <option disabled value="Abgeschlossen">Abgeschlossen</option>
+  <option disabled value="in Bearbeitung">in Bearbeitung</option>
+  <option disabled value="freigegeben">freigegeben</option>
+  <option disabled value="storniert">storniert</option>
 </select>
+<button class="btn btn-secondary mb-5 mx-1" v-on:click="setStatus('in Bearbeitung')" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'storniert'" >in Bearbeitung</button>
+<button class="btn btn-secondary mb-5 mx-1" v-on:click="setStatus('freigegeben')" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'storniert'">freigegeben</button>
+<button class="btn btn-secondary mb-5 mx-1" v-on:click="setStatus('storniert')" :disabled="ladeliste.status == 'Abgeschlossen'">storniert</button>
+
 </div>
-{{ladeliste}}
+
   </div>
 
   
@@ -175,7 +186,9 @@ import { mapState, mapActions } from 'vuex'
 export default {
     data () {
         return {
-            
+            wagendaten_def: '',
+            ladegut_def: '',
+
 
         }
 
@@ -229,6 +242,17 @@ this.getAllLadegut(),
             console.log("handlesub")
                    this.update(this.ladeliste);
               
+        },
+
+        setStatus(s){
+          this.ladeliste.status = s;
+
+
+
+
+
+          this.speichern()
+
         },
        
     generatePdfButton() {
@@ -307,6 +331,8 @@ this.getAllLadegut(),
         
     }
 };
+
+
 </script>
 
 <style>

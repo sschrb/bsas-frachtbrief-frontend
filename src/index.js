@@ -38,6 +38,21 @@ Vue.component("Evu", Evu);
 Vue.component("Wagendaten", Wagendaten);
 Vue.component("Ladegut", Ladegut);
 
+Vue.directive("disable-all", {
+    // When all the children of the parent component have been updated
+    componentUpdated: function(el, binding) {
+      if (!binding.value) return;
+      const tags = ["input", "button", "textarea", "select"];
+      tags.forEach(tagName => {
+        const nodes = el.getElementsByTagName(tagName);
+        for (let i = 0; i < nodes.length; i++) {
+          nodes[i].disabled = true;
+          nodes[i].tabIndex = -1;
+        }
+      });
+    }
+  });
+
 
 
 // setup fake backend
