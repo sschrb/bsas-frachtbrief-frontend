@@ -4,7 +4,7 @@
       <div class="card-body">
         <div class="form-group"> <!-- Pflichtfeld für spätere Bezeichnung des Frachtbriefes -->
           <label for="">Referenz Nummer (Name des Frachtbriefes)</label>
-          <input type="text" v-model="frachtbrief.frachtbriefdata.refnr" class="form-control" />
+          <input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.refnr" class="form-control" />
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="adresse">Absender</label>
-                <select class="form-control" v-model="frachtbrief.frachtbriefdata.adresse1">
+                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.adresse1">
                   <option v-bind:value="frachtbrief.frachtbriefdata.adresse_def"></option>
                   <option v-for="adresse in adressen" v-bind:value="adresse" v-bind:key="adresse.id">{{ adresse.name }}</option>
                 </select>
@@ -61,7 +61,7 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="adresse">Empfänger</label>
-                <select class="form-control" v-model="frachtbrief.frachtbriefdata.adresse2">
+                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.adresse2">
                   <option v-bind:value="frachtbrief.frachtbriefdata.adresse_def"></option>
                   <option v-for="adresse in adressen" v-bind:value="adresse" v-bind:key="adresse.id">{{ adresse.name }}</option>
                 </select>
@@ -103,7 +103,7 @@
               <div class="form-group">
                 <label for="">Abgangsbahnhof</label>
 
-                <select class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof1">
+                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof1">
                   <option v-bind:value="frachtbrief.frachtbriefdata.bahnhof_def"></option>
                   <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
                 </select>
@@ -132,7 +132,7 @@
 
                 <label for="adresse">Beförderer</label>
 
-                <select class="form-control" v-model="frachtbrief.frachtbriefdata.evu1">
+                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.evu1">
                   <option v-bind:value="frachtbrief.frachtbriefdata.evu_def"></option>
                   <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
                 </select>
@@ -164,7 +164,7 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="adresse">Zielbahnhof</label>
-                <select class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof7">
+                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof7">
                   <option v-bind:value="frachtbrief.frachtbriefdata.bahnhof_def"></option>
                   <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
                 </select>
@@ -200,7 +200,7 @@
 
             <div class="form-group">
               <label for="adresse">1. Zwischenbahnhof</label>
-              <select class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof2">
+              <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof2">
                 <option v-bind:value="frachtbrief.frachtbriefdata.bahnhof_def"></option>
                 <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
               </select>
@@ -228,7 +228,7 @@
 
             <div class="form-group">
               <label for="adresse">Beförderer (ab diesem Bahnhof)</label>
-              <select class="form-control" v-model="frachtbrief.frachtbriefdata.evu2">
+              <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.evu2">
                 <option v-bind:value="frachtbrief.frachtbriefdata.evu_def"></option>
                 <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
               </select>
@@ -261,7 +261,7 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="adresse">2. Zwischenbahnhof</label>
-                <select class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof3">
+                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof3">
                   <option v-bind:value="frachtbrief.frachtbriefdata.bahnhof_def"></option>
                   <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
                 </select>
@@ -284,7 +284,7 @@
               </em>
 
               <label for="adresse">Beförderer (ab diesem Bahnhof)</label>
-              <select class="form-control" v-model="frachtbrief.frachtbriefdata.evu3">
+              <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.evu3">
                 <option v-bind:value="frachtbrief.frachtbriefdata.evu_def"></option>
                 <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
               </select>
@@ -317,7 +317,7 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="adresse">3. Zwischenbahnhof</label>
-                  <select class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof4">
+                  <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof4">
                     <option v-bind:value="frachtbrief.frachtbriefdata.bahnhof_def"></option>
                     <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
                   </select>
@@ -342,7 +342,7 @@
 
                 <label for="adresse">Beförderer (ab diesem Bahnhof)</label>
 
-                <select class="form-control" v-model="frachtbrief.frachtbriefdata.evu4">
+                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.evu4">
                   <option v-bind:value="frachtbrief.frachtbriefdata.evu_def"></option>
                   <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
                 </select>
@@ -374,7 +374,7 @@
                   <div class="form-group">
                     <label for="adresse">4. Zwischenbahnhof</label>
 
-                    <select class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof5">
+                    <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof5">
                       <option v-bind:value="frachtbrief.frachtbriefdata.bahnhof_def"></option>
                       <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
                     </select>
@@ -398,7 +398,7 @@
 
                   <label for="adresse">Beförderer (ab diesem Bahnhof)</label>
 
-                  <select class="form-control" v-model="frachtbrief.frachtbriefdata.evu5">
+                  <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.evu5">
                     <option v-bind:value="frachtbrief.frachtbriefdata.evu_def"></option>
                     <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
                   </select>
@@ -429,7 +429,7 @@
                     <div class="form-group">
                       <label for="adresse">5. Zwischenbahnhof</label>
 
-                      <select class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof6">
+                      <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof6">
                         <option v-bind:value="frachtbrief.frachtbriefdata.bahnhof_def"></option>
                         <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
                       </select>
@@ -454,7 +454,7 @@
 
                     <label for="adresse">Beförderer (ab diesem Bahnhof)</label>
 
-                    <select class="form-control" v-model="frachtbrief.frachtbriefdata.evu6">
+                    <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.evu6">
                       <option v-bind:value="frachtbrief.frachtbriefdata.evu_def"></option>
                       <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
                     </select>
@@ -491,7 +491,7 @@
             <div class="col-sm-6">
               <label for="adresse">Übernahmeort</label>
 
-              <select class="form-control" v-model="frachtbrief.frachtbriefdata.ubernahmeort.bahnhof">
+              <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.ubernahmeort.bahnhof">
                 <option v-bind:value="frachtbrief.frachtbriefdata.bahnhof_def"></option>
                 <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
               </select>
@@ -517,7 +517,7 @@
 
             <div class="col-sm-6">
               <label for="adresse">Übernahmedatum und Uhrzeit</label>
-              <datetime type="datetime" v-model="frachtbrief.frachtbriefdata.ubernahmeort.datum" value-zone="Europe/Berlin" ></datetime>
+              <datetime :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="datetime" v-model="frachtbrief.frachtbriefdata.ubernahmeort.datum" value-zone="Europe/Berlin" ></datetime>
             </div>
           </div>
         </div>
@@ -531,12 +531,12 @@
         <div class="card-body">
           <label>Frachtbrief Typ:</label>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" id="CIM" type="radio" name="type" value="CIM" v-model="frachtbrief.frachtbriefdata.type"/>
+            <input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-check-input" id="CIM" type="radio" name="type" value="CIM" v-model="frachtbrief.frachtbriefdata.type"/>
             <label class="form-check-label" for="CIM">CIM</label>
           </div>
 
           <div class="form-check form-check-inline">
-            <input class="form-check-input" id="CUV" type="radio" name="type" value="CUV" v-model="frachtbrief.frachtbriefdata.type"/>
+            <input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-check-input" id="CUV" type="radio" name="type" value="CUV" v-model="frachtbrief.frachtbriefdata.type"/>
             <label class="form-check-label" for="CUV">CUV</label>
           </div>
         </div>
@@ -551,11 +551,11 @@
           <div class="row">
             <div class="col-sm-6">
               <label for="adresse">Ausstellungsort</label>
-              <input type="text" v-model="frachtbrief.frachtbriefdata.ausstellung.ort" class="form-control" />
+              <input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.ausstellung.ort" class="form-control" />
             </div>
             <div class="col-sm-6">
               <label for="adresse">Ausstellungsdatum</label>
-              <datetime v-model="frachtbrief.frachtbriefdata.ausstellung.datum" value-zone="Europe/Berlin" ></datetime>
+              <datetime :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" v-model="frachtbrief.frachtbriefdata.ausstellung.datum" value-zone="Europe/Berlin" ></datetime>
             </div>
           </div>
         </div>
@@ -569,29 +569,29 @@
 
           <div class="row">
             <label class="col-sm-7" for="adresse">Andere Beförderer</label>
-            <button class="btn btn-primary col-sm-4 mx-2" v-on:click="aBefordererVorschlag()">Vorschlag generieren</button>
+            <button class="btn btn-primary col-sm-4 mx-2" v-on:click="aBefordererVorschlag()" :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'">Vorschlag generieren</button>
           </div>
           <div class="row">
             <div class="col-4 mb-1">EVU</div>
             <div class="col-8 mb-1">Strecke</div>
 
-            <div class="col-4 mb-1"><input type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer1.name" class="form-control" /></div>
-            <div class="col-8 mb-1"><input type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer1.strecke" class="form-control" /></div>
+            <div class="col-4 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer1.name" class="form-control" /></div>
+            <div class="col-8 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer1.strecke" class="form-control" /></div>
 
-            <div class="col-4 mb-1"><input type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer2.name" class="form-control" /></div>
-            <div class="col-8 mb-1"><input type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer2.strecke" class="form-control" /></div>
+            <div class="col-4 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer2.name" class="form-control" /></div>
+            <div class="col-8 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer2.strecke" class="form-control" /></div>
 
-            <div class="col-4 mb-1"><input type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer3.name" class="form-control" /></div>
-            <div class="col-8 mb-1"><input type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer3.strecke" class="form-control" /></div>
+            <div class="col-4 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer3.name" class="form-control" /></div>
+            <div class="col-8 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer3.strecke" class="form-control" /></div>
 
-            <div class="col-4 mb-1"><input type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer4.name" class="form-control" /></div>
-            <div class="col-8 mb-1"><input type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer4.strecke" class="form-control" /></div>
+            <div class="col-4 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer4.name" class="form-control" /></div>
+            <div class="col-8 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer4.strecke" class="form-control" /></div>
 
-            <div class="col-4 mb-1"><input type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer5.name" class="form-control" /></div>
-            <div class="col-8 mb-1"><input type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer5.strecke" class="form-control" /></div>
+            <div class="col-4 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer5.name" class="form-control" /></div>
+            <div class="col-8 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer5.strecke" class="form-control" /></div>
 
-            <div class="col-4 mb-1"><input type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer6.name" class="form-control" /></div>
-            <div class="col-8 mb-1"><input type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer6.strecke" class="form-control" /></div>
+            <div class="col-4 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer6.name" class="form-control" /></div>
+            <div class="col-8 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer6.strecke" class="form-control" /></div>
           </div>
         </div>
       </div>
@@ -604,7 +604,7 @@
           <div class="form-group">
             <label for="erklarung">Erklärungen</label>
 
-            <select class="form-control" v-model="frachtbrief.frachtbriefdata.erklarung">
+            <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.erklarung">
               <option v-bind:value="frachtbrief.frachtbriefdata.erklarung_def">neu anlegen</option>
               <option v-for="erklarung in erklarungen" v-bind:value="erklarung" v-bind:key="erklarung.id">{{ erklarung.code }}</option>
             </select>
@@ -612,7 +612,7 @@
 
           <div class="form-group">
             <label for="wagenummer">Code mit Erläuterung</label>
-            <textarea type="text" v-model="frachtbrief.frachtbriefdata.erklarung.code" class="form-control"/>
+            <textarea :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.erklarung.code" class="form-control"/>
 
           </div>
         </div>
@@ -623,8 +623,8 @@
       <div class="card-body">
         <div class="form-group"> 
           <label for="">Kommerzielle Bedingungen</label>
-          <button class="btn btn-primary col-sm-4 mx-2" v-on:click="kommerzBedingVorschlag()">Vorschlag generieren</button>
-          <textarea type="text" v-model="frachtbrief.frachtbriefdata.kommerziellebedingungen" class="form-control" />
+          <button class="btn btn-primary col-sm-4 mx-2" v-on:click="kommerzBedingVorschlag()" :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'">Vorschlag generieren</button>
+          <textarea :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.kommerziellebedingungen" class="form-control" />
         </div>
       </div>
     </div>
@@ -638,18 +638,23 @@
             <div class="col-sm-6">
               <label for="adresse">freigegebene Ladeliste zuordnen</label>
 
-              <select class="form-control" v-model="frachtbrief.frachtbriefdata.ladeliste">
+<em v-if="frachtbrief.status != 'Abgeschlossen'">
+              <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.ladeliste">
                 <option v-bind:value="frachtbrief.frachtbriefdata.ladeliste_def"></option>
                 <option v-for="ladeliste in ladelisten" v-bind:value="ladeliste" v-bind:key="ladeliste.id">{{ ladeliste.ladelistedata.refnr }}</option>
               </select>
-
+</em>
               
             </div>
 
             
           </div>
+          <em v-if="frachtbrief.frachtbriefdata.ladeliste.ladelistedata">
+          zugeordnet: {{' ' + this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata.refnr}}
+          </em>
         </div>
       </div>
+
 
       <!-- ############################################################ Bezeichnung des Gutes wenn Ladeliste zugeordnet ############################################################ -->
     <em v-if="frachtbrief.frachtbriefdata.ladeliste">
@@ -657,8 +662,8 @@
       <div class="card-body">
         <div class="form-group"> 
           <label for="">Bezeichnung des Gutes</label>
-          <button class="btn btn-primary col-sm-4 mx-2" v-on:click="bezeichnungGutVorschlag()">Vorschlag generieren</button>
-          <textarea type="text" v-model="frachtbrief.frachtbriefdata.bezeichnungGut" class="form-control" />
+          <button class="btn btn-primary col-sm-4 mx-2" v-on:click="bezeichnungGutVorschlag()" :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'">Vorschlag generieren</button>
+          <textarea :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.bezeichnungGut" class="form-control" />
         </div>
       </div>
     </div>
@@ -688,13 +693,13 @@
 
 
 
-      <button class="btn btn-success mb-5" v-on:click="speichern()" >Speichern</button>
+      <button class="btn btn-success mb-5" v-on:click="speichern()">Speichern</button>
     </div>
 
 
 <div class="form-group">
       Status: 
-    <select v-model="frachtbrief.status">
+    <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" v-model="frachtbrief.status">
   <option disabled value="Abgeschlossen">Abgeschlossen</option>
   <option disabled value="in Bearbeitung">in Bearbeitung</option>
   <option disabled value="freigegeben">freigegeben</option>
@@ -782,6 +787,7 @@ export default {
         this.getAllAdresse();
         this.getAllErklarung();
         this.getAllStatus("freigegeben");
+        this.clearErrorMessages();
         console.log('mount')
     },
     methods: {
@@ -801,7 +807,7 @@ export default {
          ...mapActions('bahnhof', {getAllBahnhof: 'getAll'}),
         ...mapActions('evu', {getAllEvu: 'getAll'}),
         ...mapActions('adresse', {getAllAdresse: 'getAll'}),
-        ...mapActions('ladeliste', {updateLadeliste: 'update'}),
+        ...mapActions('ladeliste', {updateLadelisteO: 'updateO'}),
         ...mapActions('erklarung', {createErklarung: 'create'}),
         ...mapActions('erklarung', {getAllErklarung: 'getAll'}),
         speichern() {
@@ -818,9 +824,13 @@ var ladelisteid = this.frachtbrief.frachtbriefdata.ladeliste.id
           
 
           if(s=='Abgeschlossen'){
-this.updateLadeliste({id: ladelisteid, status: 'Abgeschlossen'})
+this.updateLadelisteO({id: ladelisteid, status: 'Abgeschlossen'})
 }
 
+this.speichern()
+        },
+        clearErrorMessages(){
+this.nachricht.text = ''
         },
        generateFinalPdfButton(){
 let data = this.frachtbrief;
@@ -848,7 +858,7 @@ let data = this.frachtbrief;
                       
                       let a = document.createElement("a") 
   let blobURL = URL.createObjectURL(blob)
-  a.download = 'test.pdf'
+  a.download = this.frachtbrief.frachtbriefdata.refnr + '_' + this.frachtbrief.createdAt.slice(0, 10).split('-').reverse().join('.') + '.pdf'
   a.href = blobURL
   document.body.appendChild(a)
   a.click()

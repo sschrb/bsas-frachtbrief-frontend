@@ -5,6 +5,7 @@ export const frachtbriefService = {
     
     create,
     createPDF,
+    getAllStatus,
     createFinalPDF,
     getAll,
     getAllVorlagen,
@@ -24,6 +25,15 @@ function create(frachtbrief) {
     };
 
     return fetch(`${config.apiUrl}/frachtbrief`, requestOptions).then(handleResponse);
+}
+
+function getAllStatus(status) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`${config.apiUrl}/frachtbrief/status/${status}`, requestOptions).then(handleResponse);
 }
 
 function createPDF(frachtbrief) {

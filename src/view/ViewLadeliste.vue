@@ -218,6 +218,7 @@ export default {
     mounted () {
         this.getAllWagendaten(),
 this.getAllLadegut(),
+this.clearErrorMessages(),
         console.log('mount')
     },
     methods: {
@@ -242,6 +243,9 @@ this.getAllLadegut(),
             console.log("handlesub")
                    this.update(this.ladeliste);
               
+        },
+        clearErrorMessages(){
+this.nachricht.text = ''
         },
 
         setStatus(s){

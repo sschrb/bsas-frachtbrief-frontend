@@ -182,9 +182,11 @@ computed: {
             )
         },
         anlegen(){
+            this.ladegut.dichte = this.ladegut.dichte.replace(',', '.')
 this.create(this.ladegut)
         },
         updaten(){
+            this.ladegut.dichte = this.ladegut.dichte.replace(',', '.')
 this.update(this.ladegut)
         },
 

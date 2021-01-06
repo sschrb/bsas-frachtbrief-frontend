@@ -35,8 +35,18 @@ const actions = {
         frachtbriefService.createPDF(frachtbrief)
             .then(
                 frachtbrief => commit('createPDFSuccess', frachtbrief),
-                error => commit('getAllFailure', error)
+                error => commit('createPDFFailure', error)
             ));
+    },
+
+    getAllStatus({ commit }, status) {
+        commit('getAllRequest');
+
+        frachtbriefService.getAllStatus(status)
+            .then(
+                ladeliste => commit('getAllStatusSuccess', ladeliste),
+                error => commit('getAllFailure', error)
+            );
     },
 
     createFinalPDF({ dispatch, commit }, frachtbrief) {
@@ -52,7 +62,7 @@ const actions = {
         frachtbriefService.createFinalPDF(frachtbrief)
             .then(
                 frachtbrief => commit('createPDFSuccess', frachtbrief),
-                error => commit('getAllFailure', error)
+                error => commit('createPDFFailure', error)
             ));
     },
 
@@ -128,12 +138,23 @@ const mutations = {
         console.log('loading true')
         state.all = { loading: true };
     },
+    
+    createPDFFailure(state, error) {
+        
+        state.nachricht = {text: 'PDF Fehler: '+error};
+
+    },
     createPDFSuccess(state, ladeliste) {
         console.log('createPDFSuccess');
         console.log(ladeliste)
         state.all = { items: ladeliste };
         state.nachricht = {text: 'PDF generiert'};
 
+    },
+    getAllStatusSuccess(state, frachtbrief) {
+        
+        console.log(frachtbrief)
+        state.all = { items: frachtbrief };
     },
     getAllVorlagenSuccess(state, frachtbrief) {
         

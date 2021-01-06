@@ -51,6 +51,17 @@ const actions = {
             );
     },
 
+    updateO({ commit }, ladeliste) {
+        commit('getAllRequest');
+
+        ladelisteService.update(ladeliste)
+            .then(
+                ladeliste => {commit('updateSuccessO', ladeliste)},
+                error => commit('getAllFailure', error),
+                
+            );
+    },
+
 
     getAll({ commit }) {
         commit('getAllRequest');
@@ -128,6 +139,10 @@ const mutations = {
        
         state.all = { items: ladeliste };
         state.nachricht = {text: 'gespeichert'};
+    },
+    updateSuccessO(state, ladeliste) {
+       
+        
     },
     getAllSuccessD(state, ladeliste) {
         console.log('DDD');

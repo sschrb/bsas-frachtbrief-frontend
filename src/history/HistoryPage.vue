@@ -2,7 +2,28 @@
   <div>
     <div class="card mb-2">
       <div class="card-header">
-        <h3>Frachtbriefe</h3>
+        <div class="form-row">
+          <h3 class="mx-1">Frachtbriefe</h3>
+     
+
+          <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="false" v-on:click="getAllFrachtbriefStatus('in Bearbeitung')" >in Bearbeitung</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false" v-on:click="getAllFrachtbriefStatus('freigegeben')"  >freigegeben</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false" v-on:click="getAllFrachtbriefStatus('storniert')"  >storniert</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile2" role="tab" aria-controls="pills-profile2" aria-selected="false" v-on:click="getAllFrachtbriefStatus('Abgeschlossen')" >abgeschlossen</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact2" role="tab" aria-controls="pills-contact2" aria-selected="false" v-on:click="getAllFrachtbrief();" >alles</a>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div class="card-body">
@@ -10,7 +31,7 @@
         <span v-if="users.error" class="text-danger">ERROR: {{users.error}}</span>
         <ul v-if="frachtbrief.items">
           <li v-for="fbrief in frachtbrief.items" :key="fbrief.id">
-            {{fbrief.frachtbriefdata.refnr + ' #' + fbrief.status}}
+             {{fbrief.createdAt.slice(0, 10).split('-').reverse().join('.') + ' ' + fbrief.frachtbriefdata.refnr + ' ' + fbrief.status}}
             <span v-if="fbrief.deleting"><em> - Deleting...</em></span>
             <span v-else-if="fbrief.deleteError" class="text-danger"> - ERROR: {{fbrief.deleteError}}</span>
             <span v-else> - <a class="text-danger"><router-link v-bind:to="'/frachtbrief/' + fbrief.id">Anzeigen</router-link></a></span>
@@ -58,7 +79,8 @@
         <em v-if="ladeliste.items[0]">
         <ul v-if="ladeliste.items">
           <li v-for="fbrief in ladeliste.items" :key="fbrief.id">
-            {{fbrief.ladelistedata.refnr + ' #' + fbrief.status}}
+          
+             {{fbrief.createdAt.slice(0, 10).split('-').reverse().join('.') + ' ' + fbrief.ladelistedata.refnr + ' ' + fbrief.status}}
             <span v-if="fbrief.deleting"><em> - Deleting...</em></span>
             <span v-else-if="fbrief.deleteError" class="text-danger"> - ERROR: {{fbrief.deleteError}}</span>
             <span v-else> - <a class="text-danger"><router-link v-bind:to="'/ladeliste/' + fbrief.id">Anzeigen</router-link></a></span>
@@ -79,7 +101,8 @@
         <span v-if="users.error" class="text-danger">ERROR: {{users.error}}</span>
         <ul v-if="vorlagen.items">
           <li v-for="fbrief in vorlagen.items" :key="fbrief.id">
-            {{fbrief.frachtbriefdata.refnr}}
+            {{fbrief.createdAt.slice(0, 10).split('-').reverse().join('.') + ' ' + fbrief.frachtbriefdata.refnr}}
+            
             <span v-if="fbrief.deleting"><em> - Deleting...</em></span>
             <span v-else-if="fbrief.deleteError" class="text-danger"> - ERROR: {{fbrief.deleteError}}</span>
             <span v-else> - <a class="text-danger"><router-link v-bind:to="'/frachtbrief/' + fbrief.id">Anzeigen</router-link></a></span>
@@ -106,9 +129,10 @@ export default {
     },
     created () {
         this.getAllUsers();
-        this.getAllFrachtbrief();
+        //this.getAllFrachtbrief();
         //this.getAllLadeliste();
         this.getAllLadelisteStatus("in Bearbeitung");
+        this.getAllFrachtbriefStatus("in Bearbeitung");
         this.getAllVorlagen();
     },
     methods: {
@@ -121,6 +145,7 @@ export default {
        ...mapActions( 'frachtbrief', {
             getAllFrachtbrief: 'getAll',
             getAllVorlagen: 'getAllVorlagen',
+            getAllFrachtbriefStatus: 'getAllStatus',
             deleteFrachtbrief: 'delete'
         }),
 

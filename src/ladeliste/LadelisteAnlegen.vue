@@ -51,7 +51,7 @@
               <div class="col-6"><select class="form-control" v-model="input.wagendaten">
                 <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ wagendaten.wagennummer }}</option>
               </select></div>
-              <div class="col-4"><input type="text" class="form-control" v-model="input.liter"></div>
+              <div class="col-4"><input type="number" class="form-control" v-model="input.liter"></div>
 
               <div class="col-1"><button type="button" class="btn btn-success" @click="add1(k)" v-show="k == ladelistedata.ladegut1.wagen.length-1">+</button></div>
               <div class="col-1"><button type="button" class="btn btn-danger" @click="remove1(k)" v-show="k || ( !k && ladelistedata.ladegut1.wagen.length > 1)">-</button></div>
