@@ -1043,8 +1043,15 @@ saveFrachtbrief(){
 if(this.erklarung.id == null && this.erklarung.code != null){
     this.createErklarung(this.erklarung);
 }
+var frachtbriefdata = '';
+if (this.vorlage){
+  frachtbriefdata = JSON.parse('{"frachtbriefdata":' + JSON.stringify(this.$data) + ', "status": "Vorlage", "vorlage": "'+this.vorlage+'"}')
+} else {
+  frachtbriefdata = JSON.parse('{"frachtbriefdata":' + JSON.stringify(this.$data) + ', "status": "in Bearbeitung", "vorlage": "'+this.vorlage+'"}')
 
-var frachtbriefdata = JSON.parse('{"frachtbriefdata":' + JSON.stringify(this.$data) + ', "status": "in Bearbeitung", "vorlage": "'+this.vorlage+'"}')
+}
+
+
 console.log(frachtbriefdata)
 
 this.createFrachtbrief(frachtbriefdata);
@@ -1055,7 +1062,7 @@ setTimeout(() => this.$router.push('/history') , 3000);
 },
 
 kommerzBedingVorschlag(){
-this.kommerziellebedingungen = '('+this.bahnhof1.name+' - '+this.bahnhof7.name +') ' + this.evu1.name + ' ' + this.evu1.code
+this.kommerziellebedingungen = '('+this.bahnhof1.name+' - '+this.bahnhof7.name +') ' + this.evu1.short + ' ' + this.evu1.code
 },
 
 bezeichnungGutVorschlag(){
@@ -1099,82 +1106,82 @@ this.bezeichnungGut = s;
 
 
 
-if(this.evu2.name==''){
-    this.aBeforderer1.name=this.evu1.name;
+if(this.evu2.short==''){
+    this.aBeforderer1.name=this.evu1.short;
     this.aBeforderer1.strecke=this.bahnhof1.name + ' - ' + this.bahnhof7.name;
 } 
 
-if(this.evu2.name!='' && this.evu3.name==''){
-    this.aBeforderer1.name=this.evu1.name;
+if(this.evu2.short!='' && this.evu3.short==''){
+    this.aBeforderer1.name=this.evu1.short;
     this.aBeforderer1.strecke=this.bahnhof1.name + ' - ' + this.bahnhof2.name;
 
-    this.aBeforderer2.name=this.evu2.name;
+    this.aBeforderer2.name=this.evu2.short;
     this.aBeforderer2.strecke=this.bahnhof2.name + ' - ' + this.bahnhof7.name;
 
 }
 
-if(this.evu2.name!='' && this.evu3.name!='' && this.evu4.name==''){
-    this.aBeforderer1.name=this.evu1.name;
+if(this.evu2.short!='' && this.evu3.short!='' && this.evu4.short==''){
+    this.aBeforderer1.name=this.evu1.short;
     this.aBeforderer1.strecke=this.bahnhof1.name + ' - ' + this.bahnhof2.name;
 
-    this.aBeforderer2.name=this.evu2.name;
+    this.aBeforderer2.name=this.evu2.short;
     this.aBeforderer2.strecke=this.bahnhof2.name + ' - ' + this.bahnhof3.name;
 
-    this.aBeforderer3.name=this.evu3.name;
+    this.aBeforderer3.name=this.evu3.short;
     this.aBeforderer3.strecke=this.bahnhof3.name + ' - ' + this.bahnhof7.name;
 
 }
 
-if(this.evu2.name!='' && this.evu3.name!='' && this.evu4.name!='' && this.evu5.name==''){
-    this.aBeforderer1.name=this.evu1.name;
+if(this.evu2.short!='' && this.evu3.short!='' && this.evu4.short!='' && this.evu5.short==''){
+    this.aBeforderer1.name=this.evu1.short;
     this.aBeforderer1.strecke=this.bahnhof1.name + ' - ' + this.bahnhof2.name;
 
-    this.aBeforderer2.name=this.evu2.name;
+    this.aBeforderer2.name=this.evu2.short;
     this.aBeforderer2.strecke=this.bahnhof2.name + ' - ' + this.bahnhof3.name;
 
-    this.aBeforderer3.name=this.evu3.name;
+    this.aBeforderer3.name=this.evu3.short;
     this.aBeforderer3.strecke=this.bahnhof3.name + ' - ' + this.bahnhof4.name;
 
-    this.aBeforderer4.name=this.evu4.name;
+    this.aBeforderer4.name=this.evu4.short;
     this.aBeforderer4.strecke=this.bahnhof4.name + ' - ' + this.bahnhof7.name;
 
 }
 
-if(this.evu2.name!='' && this.evu3.name!='' && this.evu4.name!='' && this.evu5.name!='' && this.evu6.name==''){
-    this.aBeforderer1.name=this.evu1.name;
+if(this.evu2.short!='' && this.evu3.short!='' && this.evu4.short!='' && this.evu5.short!='' && this.evu6.short==''){
+    this.aBeforderer1.name=this.evu1.short;
     this.aBeforderer1.strecke=this.bahnhof1.name + ' - ' + this.bahnhof2.name;
 
-    this.aBeforderer2.name=this.evu2.name;
+    this.aBeforderer2.name=this.evu2.short;
     this.aBeforderer2.strecke=this.bahnhof2.name + ' - ' + this.bahnhof3.name;
 
-    this.aBeforderer3.name=this.evu3.name;
+    this.aBeforderer3.name=this.evu3.short;
     this.aBeforderer3.strecke=this.bahnhof3.name + ' - ' + this.bahnhof4.name;
 
-    this.aBeforderer4.name=this.evu4.name;
+    this.aBeforderer4.name=this.evu4.short;
     this.aBeforderer4.strecke=this.bahnhof4.name + ' - ' + this.bahnhof5.name;
 
-    this.aBeforderer5.name=this.evu5.name;
+    this.aBeforderer5.name=this.evu5.short;
     this.aBeforderer5.strecke=this.bahnhof5.name + ' - ' + this.bahnhof7.name;
 
 }
 
-if(this.evu2.name!='' && this.evu3.name!='' && this.evu4.name!='' && this.evu5.name!='' && this.evu6.name!=''){
-    this.aBeforderer1.name=this.evu1.name;
+if(this.evu2.short!='' && this.evu3.short!='' && this.evu4.short!='' && this.evu5.short!='' && this.evu6.short!=''){
+    this.aBeforderer1.name=this.evu1.short;
     this.aBeforderer1.strecke=this.bahnhof1.name + ' - ' + this.bahnhof2.name;
 
-    this.aBeforderer2.name=this.evu2.name;
+    this.aBeforderer2.name=this.evu2.short;
     this.aBeforderer2.strecke=this.bahnhof2.name + ' - ' + this.bahnhof3.name;
 
-    this.aBeforderer3.name=this.evu3.name;
+    this.aBeforderer3.name=this.evu3.short;
     this.aBeforderer3.strecke=this.bahnhof3.name + ' - ' + this.bahnhof4.name;
 
-    this.aBeforderer4.name=this.evu4.name;
+    this.aBeforderer4.name=this.evu4.short;
     this.aBeforderer4.strecke=this.bahnhof4.name + ' - ' + this.bahnhof5.name;
 
-    this.aBeforderer5.name=this.evu5.name;
+    this.aBeforderer5.name=this.evu5.short;
     this.aBeforderer5.strecke=this.bahnhof5.name + ' - ' + this.bahnhof6.name;
 
-    this.aBeforderer6.name=this.evu6.name;
+    this.aBeforderer6.name=this.evu6.short;
     this.aBeforderer6.strecke=this.bahnhof6.name + ' - ' + this.bahnhof7.name;
 
 }

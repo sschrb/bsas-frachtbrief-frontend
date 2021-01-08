@@ -673,15 +673,15 @@
 
     <label>Als Vorlage verwenden:</label>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="frachtbrief.vorlage"/>
+      <input class="form-check-input" id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="frachtbrief.vorlage" v-on:click="frachtbrief.status= 'in Bearbeitung'"/>
       <label class="form-check-label" for="vorlagefalse">Nein</label>
     </div>
 
     <div class="form-check form-check-inline">
-      <input class="form-check-input" id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="frachtbrief.vorlage"/>
+      <input class="form-check-input" id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="frachtbrief.vorlage" v-on:click="frachtbrief.status= 'Vorlage'"/>
       <label class="form-check-label" for="vorlagetrue">Ja</label>
     </div>
-
+{{frachtbrief.vorlage}}
 
     <div class="form-row float-right">
       <em v-if="nachricht">
@@ -704,6 +704,7 @@
   <option disabled value="in Bearbeitung">in Bearbeitung</option>
   <option disabled value="freigegeben">freigegeben</option>
   <option disabled value="storniert">storniert</option>
+  <option disabled value="Vorlage">Vorlage</option>
 </select>
 <button class="btn btn-secondary mb-5 mx-1" v-on:click="setStatus('in Bearbeitung')" :disabled="frachtbrief.status == 'Abgeschlossen'" >in Bearbeitung</button>
 <button class="btn btn-secondary mb-5 mx-1" v-on:click="setStatus('freigegeben')" :disabled="frachtbrief.status == 'Abgeschlossen'">freigegeben</button>
@@ -714,7 +715,7 @@
 
 <em v-if="frachtbrief.status == 'freigegeben' || frachtbrief.status == 'Abgeschlossen'">
 <div class="form-group">
-      <button class="btn btn-secondary mb-5 mx-1" v-on:click="generateFinalPdfButton">finales PDF generieren</button>
+      <button class="btn btn-secondary mb-5 mx-1" v-on:click="generateFinalPdfButton" :disabled="frachtbrief.status == 'Abgeschlossen'">finales PDF generieren</button>
       <button class="btn btn-link mb-5 mx-1" v-on:click="viewFinalPdfButton" :disabled="frachtbrief.pdf_id_komplett == null">finales PDF anzeigen</button>
 </div>
 
@@ -812,6 +813,11 @@ export default {
         ...mapActions('erklarung', {getAllErklarung: 'getAll'}),
         speichern() {
             console.log("handlesub")
+
+            if(this.frachtbrief.vorlage=='true'){
+              console.log(true)
+              this.frachtbrief.status = 'Vorlage'
+            }
             let data = this.frachtbrief;
                    this.update(data);
               
@@ -902,23 +908,13 @@ let data = this.frachtbrief;
                   
               
         },
-    bahnhofscodeChange() {
-        if(this.frachtbrief.bahnhofscode.charAt(0).toUpperCase()=='O'){
-            this.frachtbrief.laendercode = '81';
-            this.frachtbrief.land = "Österreich";
-
-
-        } else {
-            this.frachtbrief.laendercode = '80';
-            this.frachtbrief.land = "Deutschland";
-        }
-    },
+ 
     handleSubmit(){
 
     },
 
 kommerzBedingVorschlag(){
-this.frachtbrief.frachtbriefdata.kommerziellebedingungen = '('+this.frachtbrief.frachtbriefdata.bahnhof1.name+' - '+this.frachtbrief.frachtbriefdata.bahnhof7.name +') ' + this.frachtbrief.frachtbriefdata.evu1.name + ' ' + this.frachtbrief.frachtbriefdata.evu1.code
+this.frachtbrief.frachtbriefdata.kommerziellebedingungen = '('+this.frachtbrief.frachtbriefdata.bahnhof1.name+' - '+this.frachtbrief.frachtbriefdata.bahnhof7.name +') ' + this.frachtbrief.frachtbriefdata.evu1.short + ' ' + this.frachtbrief.frachtbriefdata.evu1.code
 },
 
 bezeichnungGutVorschlag(){
@@ -964,82 +960,82 @@ console.log(s)
 
 
 
-if(this.frachtbrief.frachtbriefdata.evu2.name==''){
-    this.frachtbrief.frachtbriefdata.aBeforderer1.name=this.frachtbrief.frachtbriefdata.evu1.name;
+if(this.frachtbrief.frachtbriefdata.evu2.short==''){
+    this.frachtbrief.frachtbriefdata.aBeforderer1.name=this.frachtbrief.frachtbriefdata.evu1.short;
     this.frachtbrief.frachtbriefdata.aBeforderer1.strecke=this.frachtbrief.frachtbriefdata.bahnhof1.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof7.name;
 } 
 
-if(this.frachtbrief.frachtbriefdata.evu2.name!='' && this.frachtbrief.frachtbriefdata.evu3.name==''){
-    this.frachtbrief.frachtbriefdata.aBeforderer1.name=this.frachtbrief.frachtbriefdata.evu1.name;
+if(this.frachtbrief.frachtbriefdata.evu2.short!='' && this.frachtbrief.frachtbriefdata.evu3.short==''){
+    this.frachtbrief.frachtbriefdata.aBeforderer1.name=this.frachtbrief.frachtbriefdata.evu1.short;
     this.frachtbrief.frachtbriefdata.aBeforderer1.strecke=this.frachtbrief.frachtbriefdata.bahnhof1.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof2.name;
 
-    this.frachtbrief.frachtbriefdata.aBeforderer2.name=this.frachtbrief.frachtbriefdata.evu2.name;
+    this.frachtbrief.frachtbriefdata.aBeforderer2.name=this.frachtbrief.frachtbriefdata.evu2.short;
     this.frachtbrief.frachtbriefdata.aBeforderer2.strecke=this.frachtbrief.frachtbriefdata.bahnhof2.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof7.name;
 
 }
 
-if(this.frachtbrief.frachtbriefdata.evu2.name!='' && this.frachtbrief.frachtbriefdata.evu3.name!='' && this.frachtbrief.frachtbriefdata.evu4.name==''){
-    this.frachtbrief.frachtbriefdata.aBeforderer1.name=this.frachtbrief.frachtbriefdata.evu1.name;
+if(this.frachtbrief.frachtbriefdata.evu2.short!='' && this.frachtbrief.frachtbriefdata.evu3.short!='' && this.frachtbrief.frachtbriefdata.evu4.short==''){
+    this.frachtbrief.frachtbriefdata.aBeforderer1.name=this.frachtbrief.frachtbriefdata.evu1.short;
     this.frachtbrief.frachtbriefdata.aBeforderer1.strecke=this.frachtbrief.frachtbriefdata.bahnhof1.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof2.name;
 
-    this.frachtbrief.frachtbriefdata.aBeforderer2.name=this.frachtbrief.frachtbriefdata.evu2.name;
+    this.frachtbrief.frachtbriefdata.aBeforderer2.name=this.frachtbrief.frachtbriefdata.evu2.short;
     this.frachtbrief.frachtbriefdata.aBeforderer2.strecke=this.frachtbrief.frachtbriefdata.bahnhof2.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof3.name;
 
-    this.frachtbrief.frachtbriefdata.aBeforderer3.name=this.frachtbrief.frachtbriefdata.evu3.name;
+    this.frachtbrief.frachtbriefdata.aBeforderer3.name=this.frachtbrief.frachtbriefdata.evu3.short;
     this.frachtbrief.frachtbriefdata.aBeforderer3.strecke=this.frachtbrief.frachtbriefdata.bahnhof3.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof7.name;
 
 }
 
-if(this.frachtbrief.frachtbriefdata.evu2.name!='' && this.frachtbrief.frachtbriefdata.evu3.name!='' && this.frachtbrief.frachtbriefdata.evu4.name!='' && this.frachtbrief.frachtbriefdata.evu5.name==''){
-    this.frachtbrief.frachtbriefdata.aBeforderer1.name=this.frachtbrief.frachtbriefdata.evu1.name;
+if(this.frachtbrief.frachtbriefdata.evu2.short!='' && this.frachtbrief.frachtbriefdata.evu3.short!='' && this.frachtbrief.frachtbriefdata.evu4.short!='' && this.frachtbrief.frachtbriefdata.evu5.short==''){
+    this.frachtbrief.frachtbriefdata.aBeforderer1.name=this.frachtbrief.frachtbriefdata.evu1.short;
     this.frachtbrief.frachtbriefdata.aBeforderer1.strecke=this.frachtbrief.frachtbriefdata.bahnhof1.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof2.name;
 
-    this.frachtbrief.frachtbriefdata.aBeforderer2.name=this.frachtbrief.frachtbriefdata.evu2.name;
+    this.frachtbrief.frachtbriefdata.aBeforderer2.name=this.frachtbrief.frachtbriefdata.evu2.short;
     this.frachtbrief.frachtbriefdata.aBeforderer2.strecke=this.frachtbrief.frachtbriefdata.bahnhof2.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof3.name;
 
-    this.frachtbrief.frachtbriefdata.aBeforderer3.name=this.frachtbrief.frachtbriefdata.evu3.name;
+    this.frachtbrief.frachtbriefdata.aBeforderer3.name=this.frachtbrief.frachtbriefdata.evu3.short;
     this.frachtbrief.frachtbriefdata.aBeforderer3.strecke=this.frachtbrief.frachtbriefdata.bahnhof3.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof4.name;
 
-    this.frachtbrief.frachtbriefdata.aBeforderer4.name=this.frachtbrief.frachtbriefdata.evu4.name;
+    this.frachtbrief.frachtbriefdata.aBeforderer4.name=this.frachtbrief.frachtbriefdata.evu4.short;
     this.frachtbrief.frachtbriefdata.aBeforderer4.strecke=this.frachtbrief.frachtbriefdata.bahnhof4.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof7.name;
 
 }
 
-if(this.frachtbrief.frachtbriefdata.evu2.name!='' && this.frachtbrief.frachtbriefdata.evu3.name!='' && this.frachtbrief.frachtbriefdata.evu4.name!='' && this.frachtbrief.frachtbriefdata.evu5.name!='' && this.frachtbrief.frachtbriefdata.evu6.name==''){
-    this.frachtbrief.frachtbriefdata.aBeforderer1.name=this.frachtbrief.frachtbriefdata.evu1.name;
+if(this.frachtbrief.frachtbriefdata.evu2.short!='' && this.frachtbrief.frachtbriefdata.evu3.short!='' && this.frachtbrief.frachtbriefdata.evu4.short!='' && this.frachtbrief.frachtbriefdata.evu5.short!='' && this.frachtbrief.frachtbriefdata.evu6.short==''){
+    this.frachtbrief.frachtbriefdata.aBeforderer1.name=this.frachtbrief.frachtbriefdata.evu1.short;
     this.frachtbrief.frachtbriefdata.aBeforderer1.strecke=this.frachtbrief.frachtbriefdata.bahnhof1.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof2.name;
 
-    this.frachtbrief.frachtbriefdata.aBeforderer2.name=this.frachtbrief.frachtbriefdata.evu2.name;
+    this.frachtbrief.frachtbriefdata.aBeforderer2.name=this.frachtbrief.frachtbriefdata.evu2.short;
     this.frachtbrief.frachtbriefdata.aBeforderer2.strecke=this.frachtbrief.frachtbriefdata.bahnhof2.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof3.name;
 
-    this.frachtbrief.frachtbriefdata.aBeforderer3.name=this.frachtbrief.frachtbriefdata.evu3.name;
+    this.frachtbrief.frachtbriefdata.aBeforderer3.name=this.frachtbrief.frachtbriefdata.evu3.short;
     this.frachtbrief.frachtbriefdata.aBeforderer3.strecke=this.frachtbrief.frachtbriefdata.bahnhof3.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof4.name;
 
-    this.frachtbrief.frachtbriefdata.aBeforderer4.name=this.frachtbrief.frachtbriefdata.evu4.name;
+    this.frachtbrief.frachtbriefdata.aBeforderer4.name=this.frachtbrief.frachtbriefdata.evu4.short;
     this.frachtbrief.frachtbriefdata.aBeforderer4.strecke=this.frachtbrief.frachtbriefdata.bahnhof4.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof5.name;
 
-    this.frachtbrief.frachtbriefdata.aBeforderer5.name=this.frachtbrief.frachtbriefdata.evu5.name;
+    this.frachtbrief.frachtbriefdata.aBeforderer5.name=this.frachtbrief.frachtbriefdata.evu5.short;
     this.frachtbrief.frachtbriefdata.aBeforderer5.strecke=this.frachtbrief.frachtbriefdata.bahnhof5.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof7.name;
 
 }
 
-if(this.frachtbrief.frachtbriefdata.evu2.name!='' && this.frachtbrief.frachtbriefdata.evu3.name!='' && this.frachtbrief.frachtbriefdata.evu4.name!='' && this.frachtbrief.frachtbriefdata.evu5.name!='' && this.frachtbrief.frachtbriefdata.evu6.name!=''){
-    this.frachtbrief.frachtbriefdata.aBeforderer1.name=this.frachtbrief.frachtbriefdata.evu1.name;
+if(this.frachtbrief.frachtbriefdata.evu2.short!='' && this.frachtbrief.frachtbriefdata.evu3.short!='' && this.frachtbrief.frachtbriefdata.evu4.short!='' && this.frachtbrief.frachtbriefdata.evu5.short!='' && this.frachtbrief.frachtbriefdata.evu6.short!=''){
+    this.frachtbrief.frachtbriefdata.aBeforderer1.name=this.frachtbrief.frachtbriefdata.evu1.short;
     this.frachtbrief.frachtbriefdata.aBeforderer1.strecke=this.frachtbrief.frachtbriefdata.bahnhof1.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof2.name;
 
-    this.frachtbrief.frachtbriefdata.aBeforderer2.name=this.frachtbrief.frachtbriefdata.evu2.name;
+    this.frachtbrief.frachtbriefdata.aBeforderer2.name=this.frachtbrief.frachtbriefdata.evu2.short;
     this.frachtbrief.frachtbriefdata.aBeforderer2.strecke=this.frachtbrief.frachtbriefdata.bahnhof2.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof3.name;
 
-    this.frachtbrief.frachtbriefdata.aBeforderer3.name=this.frachtbrief.frachtbriefdata.evu3.name;
+    this.frachtbrief.frachtbriefdata.aBeforderer3.name=this.frachtbrief.frachtbriefdata.evu3.short;
     this.frachtbrief.frachtbriefdata.aBeforderer3.strecke=this.frachtbrief.frachtbriefdata.bahnhof3.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof4.name;
 
-    this.frachtbrief.frachtbriefdata.aBeforderer4.name=this.frachtbrief.frachtbriefdata.evu4.name;
+    this.frachtbrief.frachtbriefdata.aBeforderer4.name=this.frachtbrief.frachtbriefdata.evu4.short;
     this.frachtbrief.frachtbriefdata.aBeforderer4.strecke=this.frachtbrief.frachtbriefdata.bahnhof4.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof5.name;
 
-    this.frachtbrief.frachtbriefdata.aBeforderer5.name=this.frachtbrief.frachtbriefdata.evu5.name;
+    this.frachtbrief.frachtbriefdata.aBeforderer5.name=this.frachtbrief.frachtbriefdata.evu5.short;
     this.frachtbrief.frachtbriefdata.aBeforderer5.strecke=this.frachtbrief.frachtbriefdata.bahnhof5.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof6.name;
 
-    this.frachtbrief.frachtbriefdata.aBeforderer6.name=this.frachtbrief.frachtbriefdata.evu6.name;
+    this.frachtbrief.frachtbriefdata.aBeforderer6.name=this.frachtbrief.frachtbriefdata.evu6.short;
     this.frachtbrief.frachtbriefdata.aBeforderer6.strecke=this.frachtbrief.frachtbriefdata.bahnhof6.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof7.name;
 
 }

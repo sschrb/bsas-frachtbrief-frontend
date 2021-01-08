@@ -186,7 +186,7 @@ computed: {
 this.create(this.ladegut)
         },
         updaten(){
-            this.ladegut.dichte = this.ladegut.dichte.replace(',', '.')
+            this.ladegut.dichte = this.ladegut.dichte.toString().replace(',', '.')
 this.update(this.ladegut)
         },
 
