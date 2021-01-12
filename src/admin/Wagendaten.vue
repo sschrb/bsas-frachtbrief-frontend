@@ -91,10 +91,14 @@ import { Validator } from 'vee-validate';
 
 var luhnChk = (function (arr) {
     return function (ccNum) {
+        
+            ccNum = String(ccNum)
+        
         var
             len = ccNum.length,
             bit = 1,
             sum = 0,
+            
             val;
 
         while (len) {
@@ -196,7 +200,16 @@ computed: {
 
         },
         updaten(){
-this.update(this.wagendaten)
+
+
+this.submitted = true;
+            this.$validator.validate().then(valid => {
+                if (valid) {
+                    this.update(this.wagendaten);
+                }
+            });
+
+
         },
 
         loeschen(){

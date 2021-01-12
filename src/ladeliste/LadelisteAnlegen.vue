@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>Ladeliste anlegen</h3>
     <div class="card mb-2">
       <div class="card-body">
         <div class="form-group">
@@ -13,7 +14,7 @@
       <div class="card-body">
         <div class="form-group">
           <label for="adresse">Datum</label>
-         
+
           <datetime type="date" v-model="ladelistedata.datum" value-zone="Europe/Berlin" ></datetime>
         </div>
       </div>
@@ -25,15 +26,9 @@
         <label for="adresse">Ladegut 1</label>
 
         <select class="form-control" v-model="ladelistedata.ladegut1.ladegut">
-
+          <option v-bind:value="ladegut_def"></option>
           <option v-for="ladegut in ladegueter" v-bind:value="ladegut" v-bind:key="ladegut.id">{{ ladegut.bezeichnung }}</option>
         </select>
-
-
-
-
-
-
 
       </div>
       <div class="card-body">
@@ -68,6 +63,7 @@
       <div class="card-header">
         <label for="adresse">Ladegut 2</label>
         <select class="form-control" v-model="ladelistedata.ladegut2.ladegut">
+          <option v-bind:value="ladegut_def"></option>
           <option v-for="ladegut in ladegueter" v-bind:value="ladegut" v-bind:key="ladegut.id">{{ ladegut.bezeichnung }}</option>
         </select>
       </div>
@@ -110,7 +106,7 @@
 
 
         <select class="form-control" v-model="ladelistedata.ladegut3.ladegut">
-
+          <option v-bind:value="ladegut_def"></option>
           <option v-for="ladegut in ladegueter" v-bind:value="ladegut" v-bind:key="ladegut.id">{{ ladegut.bezeichnung }}</option>
         </select>
       </div>
@@ -145,12 +141,13 @@
 
 
     <div class="form-group">
-      <button class="btn btn-success float-right mb-5" v-on:click="saveLadeliste()" >Speichern</button>
-      <em v-if="message.error">
-        {{message.error.message}}
-      </em>
 
+      <button class="btn btn-success float-right mb-5" v-on:click="saveLadeliste()" >Speichern u. Schließen</button>
+      <em v-if="message.error">
+      {{message.error.message}}
+      </em>
     </div>
+
 
 
 
@@ -171,9 +168,9 @@ import 'vue-datetime/dist/vue-datetime.css'
 export default {
 
     data () {
-        return { 
-          
-          
+        return {
+
+
           ladelistedata: {
 
 
@@ -199,7 +196,7 @@ export default {
 
                                     },
                                     ladegut2: {
-                                        
+
                                         ladegut: {},
                                         wagen:[{
                                             liter: '',
@@ -240,16 +237,16 @@ export default {
 
 
         },
-        
+
             status: 'in Bearbeitung'
         }
     },
 computed: {
         ...mapState('frachtbrief', ['status']),
         ...mapState('bahnhof', ['status']),
-    
+
      ...mapState({
-           
+
             bahnhoefe: state => state.bahnhof.all.items,
             evus: state => state.evu.all.items,
             adressen: state => state.adresse.all.items,
@@ -257,18 +254,18 @@ computed: {
             ladegueter: state => state.ladegut.all.items,
             wagendatens: state => state.wagendaten.all.items,
             message: state => state.ladeliste.all,
-            
-            
+
+
         }),
     },
     mounted () {
-       
+
 this.getAllWagendaten(),
 this.getAllLadegut(),
         console.log('mount')
     },
     methods: {
-        
+
         ...mapActions('ladegut', {getAllLadegut: 'getAll'}),
         ...mapActions('wagendaten', {getAllWagendaten: 'getAll'}),
 
@@ -285,7 +282,7 @@ this.getAllLadegut(),
         ...mapActions('ladeliste', {createLadeliste: 'create'}),
         handleSubmit(e) {
             //this.submitted = true;
-           
+
         },
 
         add1 () {
@@ -346,7 +343,7 @@ setTimeout(() => this.$router.push('/history') , 2000);
 if(this.evu2.name==''){
     this.aBeforderer1.name=this.evu1.name;
     this.aBeforderer1.strecke=this.bahnhof1.name + ' - ' + this.bahnhof7.name;
-} 
+}
 
 if(this.evu2.name!='' && this.evu3.name==''){
     this.aBeforderer1.name=this.evu1.name;

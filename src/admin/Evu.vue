@@ -27,20 +27,22 @@
 
             <div class="form-group">
                 <label for="wagenummer">Name</label>
-                <input type="text" v-model="evu.name" class="form-control"/>
+                <input type="text" v-model="evu.name" name="Name" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Name') }"/>
+                <div v-if="submitted && errors.has('Name')" class="invalid-feedback">{{ errors.first('Name') }}</div>
 
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Kurzbezeichnung</label>
-                <input type="text" v-model="evu.short" class="form-control"/>
+                <input type="text" v-model="evu.short" name="Kurzbezeichnung" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Kurzbezeichnung') }"/>
+                <div v-if="submitted && errors.has('Kurzbezeichnung')" class="invalid-feedback">{{ errors.first('Kurzbezeichnung') }}</div>
 
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">EVU Code</label>
-                <input type="text" v-model="evu.code" class="form-control"/>
-
+                <input type="text" v-model="evu.code" name="EVU Code" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('EVU Code') }"/>
+                <div v-if="submitted && errors.has('EVU Code')" class="invalid-feedback">{{ errors.first('EVU Code') }}</div>
             </div>
 
 
@@ -76,13 +78,14 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import "vue-select/dist/vue-select.css";
-
+import { Validator } from 'vee-validate';
 
 export default {
 
     data () {
         return {
 
+             submitted: false,
             evu_def: {
                 name: "",
                 short: '',
@@ -150,10 +153,23 @@ computed: {
             )
         },
         anlegen(){
-this.create(this.evu)
+
+ this.submitted = true;
+            this.$validator.validate().then(valid => {
+                if (valid) {
+                    this.create(this.evu)
+                }
+            });
+
         },
         updaten(){
-this.update(this.evu)
+
+ this.submitted = true;
+            this.$validator.validate().then(valid => {
+                if (valid) {
+                    this.update(this.evu)
+                }
+            });
         },
 
         loeschen(){

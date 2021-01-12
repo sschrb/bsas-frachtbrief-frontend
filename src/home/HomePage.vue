@@ -1,10 +1,12 @@
 <template>
   <div>
+    <h3>Frachtbrief anlegen</h3>
     <div class="card mb-2">
       <div class="card-body">
         <div class="form-group"> <!-- Pflichtfeld für spätere Bezeichnung des Frachtbriefes -->
           <label for="">Referenz Nummer (Name des Frachtbriefes)</label>
-          <input type="text" v-model="refnr" class="form-control" />
+          <input type="text" v-model="refnr" name="Referenz" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Referenz') }"/>
+                <div v-if="submitted && errors.has('Referenz')" class="invalid-feedback">{{ errors.first('Referenz') }}</div>
         </div>
       </div>
     </div>
@@ -14,15 +16,22 @@
       <div class="card-body">
         <div class="form-group">
           <label for="erklarung">Vorlage auswählen (optional)</label>
+          <div class="row">
 
+            <div class="col">
+              <em v-if="frachtbriefs">
+                <select class="form-control" v-model="vorlagedata">
+                  <option v-bind:value="vorlagedata_def">keine</option>
+                  <option v-for="frachtbrief in frachtbriefs" v-bind:value="frachtbrief" v-bind:key="frachtbrief.id">{{ frachtbrief.frachtbriefdata.refnr }} </option>
+                </select>
+              </em>
+            </div>
 
-          <em v-if="frachtbriefs">
-            <select class="form-control" v-model="vorlagedata">
-              <option v-bind:value="vorlagedata_def">keine</option>
-              <option v-for="frachtbrief in frachtbriefs" v-bind:value="frachtbrief" v-bind:key="frachtbrief.id">{{ frachtbrief.frachtbriefdata.refnr }} </option>
-            </select>
-          </em>
-          <button class="btn btn-primary mt-2" v-on:click="vorlageLaden()" >Vorlage laden</button>
+            <div class="col-auto">
+              <button class="btn btn-primary" v-on:click="vorlageLaden()" >Vorlage laden</button>
+            </div>
+
+          </div>
         </div>
 
       </div>
@@ -127,7 +136,7 @@
                     <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
                   </select>
 
-                  
+
 
 
                 <button class="btn btn-link py-0" v-on:click="viewBahnhof1=!viewBahnhof1">Details anzeigen</button>
@@ -190,7 +199,7 @@
                   <option v-bind:value="bahnhof_def"></option>
                   <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
                 </select>
-                
+
                 <button class="btn btn-link py-0" v-on:click="viewBahnhof7=!viewBahnhof7">Details anzeigen</button>
               </div>
               <em v-if="viewBahnhof7">
@@ -646,11 +655,11 @@
 <!-- ############################################################ Kommerzielle Bedingungen ############################################################ -->
     <div class="card mb-2">
       <div class="card-body">
-        <div class="form-group"> 
-          <label for="">Kommerzielle Bedingungen</label>
-          <button class="btn btn-primary col-sm-4 mx-2" v-on:click="kommerzBedingVorschlag()">Vorschlag generieren</button>
-          <textarea type="text" v-model="kommerziellebedingungen" class="form-control" />
+        <div class="form-row mb-1 mr-1">
+          <label for="" class="col">Kommerzielle Bedingungen</label>
+          <button class="btn btn-primary" v-on:click="kommerzBedingVorschlag()">Vorschlag generieren</button>
         </div>
+        <textarea type="text" v-model="kommerziellebedingungen" class="form-control" />
       </div>
     </div>
 
@@ -668,37 +677,39 @@
                 <option v-for="ladeliste in ladelisten" v-bind:value="ladeliste" v-bind:key="ladeliste.id">{{ ladeliste.ladelistedata.refnr }}</option>
               </select>
 
-              
+
             </div>
 
-            
+
           </div>
         </div>
       </div>
 
 
-     
+
       <!-- ############################################################ Bezeichnung des Gutes wenn Ladeliste zugeordnet ############################################################ -->
     <em v-if="ladeliste">
     <div class="card mb-2">
       <div class="card-body">
-        <div class="form-group"> 
-          <label for="">Bezeichnung des Gutes</label>
+        <div class="form-group">
+          <label for="" class="col-7">Bezeichnung des Gutes</label>
           <button class="btn btn-primary col-sm-4 mx-2" v-on:click="bezeichnungGutVorschlag()">Vorschlag generieren</button>
-          <textarea type="text" v-model="bezeichnungGut" class="form-control" />
         </div>
+        <textarea type="text" v-model="bezeichnungGut" class="form-control" />
       </div>
     </div>
     </em>
 
       <div class="form-group">
-        <button class="btn btn-success float-right mb-5" v-on:click="saveFrachtbrief()" >Speichern</button>
+        <button class="btn btn-success float-right mb-5" v-on:click="saveFrachtbrief()" >Speichern u. Schließen</button>
+        <div v-if="submitted && errors.has('Referenz')">{{ errors.first('Referenz') }}</div>
         <em v-if="message.error">
           {{message.error.message}}
+
         </em>
 
       </div>
-      
+
     </form>
 
 
@@ -725,7 +736,7 @@ import "vue-select/dist/vue-select.css";
 import { Datetime } from 'vue-datetime'
 // You need a specific loader for CSS files
 import 'vue-datetime/dist/vue-datetime.css'
-
+import { Validator } from 'vee-validate';
 
 
 
@@ -733,7 +744,7 @@ export default {
 
     data () {
         return {
-
+            submitted: false,
             bezeichnungGut: '',
             ladeliste: '',
             ladeliste_def: '',
@@ -751,8 +762,8 @@ export default {
                 bahnhofscode: '',
                 laendercode: '',
                 land: '',
-               
-               
+
+
             },
             viewBahnhof1: false,
             bahnhof1: {
@@ -760,8 +771,8 @@ export default {
                 bahnhofscode: '',
                 laendercode: '',
                 land: '',
-               
-               
+
+
             },
             viewBahnhof2: false,
             bahnhof2: {
@@ -769,8 +780,8 @@ export default {
                 bahnhofscode: '',
                 laendercode: '',
                 land: '',
-               
-               
+
+
             },
             viewBahnhof3: false,
             bahnhof3: {
@@ -778,8 +789,8 @@ export default {
                 bahnhofscode: '',
                 laendercode: '',
                 land: '',
-               
-               
+
+
             },
             viewBahnhof4: false,
             bahnhof4: {
@@ -787,8 +798,8 @@ export default {
                 bahnhofscode: '',
                 laendercode: '',
                 land: '',
-               
-               
+
+
             },
             viewBahnhof5: false,
             bahnhof5: {
@@ -796,8 +807,8 @@ export default {
                 bahnhofscode: '',
                 laendercode: '',
                 land: '',
-               
-               
+
+
             },
             viewBahnhof6: false,
             bahnhof6: {
@@ -805,8 +816,8 @@ export default {
                 bahnhofscode: '',
                 laendercode: '',
                 land: '',
-               
-               
+
+
             },
             viewBahnhof7: false,
             bahnhof7: {
@@ -814,12 +825,12 @@ export default {
                 bahnhofscode: '',
                 laendercode: '',
                 land: '',
-               
-               
+
+
             },
 
             viewUbernahmeort: false,
-            ubernahmeort: { 
+            ubernahmeort: {
               bahnhof:
             {
               name: "",
@@ -827,12 +838,12 @@ export default {
                 laendercode: '',
                 land: '',
                 },
-               
+
                 datum: ''
-               
-               
+
+
             },
-            
+
 
 
 
@@ -841,63 +852,63 @@ export default {
                 name: "",
                 short: '',
                 code: '',
-                
-               
-               
+
+
+
             },
             viewEvu1: false,
             evu1: {
                 name: "",
                 short: '',
                 code: '',
-               
-               
-               
+
+
+
             },
             viewEvu2: false,
             evu2: {
                 name: "",
                 short: '',
                 code: '',
-               
-               
-               
+
+
+
             },
             viewEvu3: false,
             evu3: {
                 name: "",
                 short: '',
                 code: '',
-               
-               
-               
+
+
+
             },
             viewEvu4: false,
             evu4: {
                 name: "",
                 short: '',
                 code: '',
-               
-               
-               
+
+
+
             },
             viewEvu5: false,
             evu5: {
                 name: "",
                 short: '',
                 code: '',
-               
-               
-               
+
+
+
             },
             viewEvu6: false,
             evu6: {
                 name: "",
                 short: '',
                 code: '',
-               
-               
-               
+
+
+
             },
 
             adresse_def: {
@@ -906,8 +917,8 @@ export default {
                 ort: '',
                 mail: '',
                 telefon: ''
-               
-               
+
+
             },
             viewAdresse1: false,
             adresse1: {
@@ -916,8 +927,8 @@ export default {
                 ort: '',
                 mail: '',
                 telefon: ''
-               
-               
+
+
             },
             viewAdresse2: false,
             adresse2: {
@@ -926,8 +937,8 @@ export default {
                 ort: '',
                 mail: '',
                 telefon: ''
-               
-               
+
+
             },
 
             ausstellung: {
@@ -973,25 +984,25 @@ export default {
 
             erklarung_def: {
                 code: ''
-               
-               
+
+
             },
-            
+
             erklarung: {
                 code: ''
-               
-               
+
+
             },
-            
-            
+
+
         }
     },
 computed: {
         ...mapState('frachtbrief', ['status']),
         ...mapState('bahnhof', ['status']),
-    
+
      ...mapState({
-           
+
             bahnhoefe: state => state.bahnhof.all.items,
             evus: state => state.evu.all.items,
             adressen: state => state.adresse.all.items,
@@ -999,7 +1010,7 @@ computed: {
             message: state => state.frachtbrief.all,
             frachtbriefs: state => state.frachtbrief.vorlagen.items,
             ladelisten: state => state.ladeliste.all.items,
-            
+
         }),
     },
     mounted () {
@@ -1011,7 +1022,7 @@ computed: {
         this.getAllErklarung();
         this.getAllStatus("freigegeben");
 
-         
+
         console.log('mount')
     },
     methods: {
@@ -1032,7 +1043,7 @@ computed: {
         ...mapActions('frachtbrief', {createFrachtbrief: 'create'}),
         handleSubmit(e) {
             //this.submitted = true;
-           
+
         },
         checkVorlage(frachtbrief) {
             console.log(frachtbrief)
@@ -1040,7 +1051,15 @@ computed: {
 },
 saveFrachtbrief(){
 
-if(this.erklarung.id == null && this.erklarung.code != null){
+  
+            this.submitted = true;
+            this.$validator.validate().then(valid => {
+                if (valid) {
+                    
+                    
+                            
+if(this.erklarung.id == null && this.erklarung.code != ''){
+
     this.createErklarung(this.erklarung);
 }
 var frachtbriefdata = '';
@@ -1052,12 +1071,21 @@ if (this.vorlage){
 }
 
 
-console.log(frachtbriefdata)
+
 
 this.createFrachtbrief(frachtbriefdata);
+this.submitted = false;
 
 
 setTimeout(() => this.$router.push('/history') , 3000);
+
+
+
+
+
+                }
+            });
+
 
 },
 
@@ -1091,9 +1119,9 @@ this.ladeliste.ladelistedata[l].ladegut.bemerkung + '\n \n'
 
 
   }
-  
+
 }
-  
+
 }
 
 this.bezeichnungGut = s;
@@ -1109,7 +1137,7 @@ this.bezeichnungGut = s;
 if(this.evu2.short==''){
     this.aBeforderer1.name=this.evu1.short;
     this.aBeforderer1.strecke=this.bahnhof1.name + ' - ' + this.bahnhof7.name;
-} 
+}
 
 if(this.evu2.short!='' && this.evu3.short==''){
     this.aBeforderer1.name=this.evu1.short;
@@ -1209,7 +1237,7 @@ if(this.evu2.short!='' && this.evu3.short!='' && this.evu4.short!='' && this.evu
         }
     },
     vorlageLaden(){
-        
+
 
         var merged = {};
 Object.assign(this.$data, this.$data, this.vorlagedata.frachtbriefdata);

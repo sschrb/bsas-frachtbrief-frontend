@@ -27,25 +27,29 @@
 
             <div class="form-group">
                 <label for="wagenummer">Name</label>
-                <input type="text" v-model="bahnhof.name" class="form-control"/>
+                <input type="text" v-model="bahnhof.name" name="Name" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Name') }"/>
+                <div v-if="submitted && errors.has('Name')" class="invalid-feedback">{{ errors.first('Name') }}</div>
 
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Bahnhofscode</label>
-                <input type="text" v-model="bahnhof.bahnhofscode" class="form-control"/>
+                <input type="text" v-model="bahnhof.bahnhofscode" name="Bahnhofscode" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Bahnhofscode') }"/>
+                <div v-if="submitted && errors.has('Bahnhofscode')" class="invalid-feedback">{{ errors.first('Bahnhofscode') }}</div>
 
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Ländercode</label>
-                <input type="text" v-model="bahnhof.laendercode" class="form-control"/>
+                <input type="text" v-model="bahnhof.laendercode" name="Ländercode" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Ländercode') }"/>
+                <div v-if="submitted && errors.has('Ländercode')" class="invalid-feedback">{{ errors.first('Ländercode') }}</div>
 
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Land</label>
-                <input type="text" v-model="bahnhof.land" class="form-control"/>
+                <input type="text" v-model="bahnhof.land" name="Land" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Land') }"/>
+                <div v-if="submitted && errors.has('Land')" class="invalid-feedback">{{ errors.first('Land') }}</div>
 
             </div>
 
@@ -80,13 +84,14 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import "vue-select/dist/vue-select.css";
-
+import { Validator } from 'vee-validate';
 
 export default {
 
     data () {
         return {
 
+            submitted: false,
             bahnhof_def: {
                name: "",
                 bahnhofscode: '',
@@ -154,10 +159,23 @@ computed: {
             )
         },
         anlegen(){
-this.create(this.bahnhof)
+
+this.submitted = true;
+            this.$validator.validate().then(valid => {
+                if (valid) {
+                    this.create(this.bahnhof)
+                }
+            });
         },
         updaten(){
-this.update(this.bahnhof)
+
+
+this.submitted = true;
+            this.$validator.validate().then(valid => {
+                if (valid) {
+                    this.update(this.bahnhof)
+                }
+            });
         },
 
         loeschen(){

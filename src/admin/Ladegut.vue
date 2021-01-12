@@ -27,19 +27,23 @@
 
             <div class="form-group">
                 <label for="wagenummer">Bezeichnung</label>
-                <input type="text" v-model="ladegut.bezeichnung" class="form-control"/>
+                <input type="text" v-model="ladegut.bezeichnung" name="Bezeichnung" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Bezeichnung') }"/>
+                <div v-if="submitted && errors.has('Bezeichnung')" class="invalid-feedback">{{ errors.first('Bezeichnung') }}</div>
 
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Bemerkung</label>
-                <input type="text" v-model="ladegut.bemerkung" class="form-control"/>
+                <input type="text" v-model="ladegut.bemerkung" name="Bemerkung" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Bemerkung') }"/>
+                <div v-if="submitted && errors.has('Bemerkung')" class="invalid-feedback">{{ errors.first('Bemerkung') }}</div>
 
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Dichte</label>
-                <input type="text" v-model="ladegut.dichte" class="form-control"/>
+                <input type="text" v-model="ladegut.dichte" name="Dichte" v-validate="{ required: true, decimal: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Dichte') }"/>
+                <div v-if="submitted && errors.has('Dichte')" class="invalid-feedback">{{ errors.first('Dichte') }}</div>
+
 
             </div>
 
@@ -59,13 +63,15 @@
 
             <div class="form-group">
                 <label for="wagenummer">NHM Code</label>
-                <input type="text" v-model="ladegut.nhm" class="form-control"/>
+                <input type="text" v-model="ladegut.nhm" name="NHM Code" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('NHM Code') }"/>
+                <div v-if="submitted && errors.has('NHM Code')" class="invalid-feedback">{{ errors.first('NHM Code') }}</div>
 
             </div>
 
             <div class="form-group">
                 <label for="wagenummer">Wagentyp</label>
-                <input type="text" v-model="ladegut.wagentyp" class="form-control"/>
+                <input type="text" v-model="ladegut.wagentyp" name="Wagentyp" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Wagentyp') }"/>
+                <div v-if="submitted && errors.has('Wagentyp')" class="invalid-feedback">{{ errors.first('Wagentyp') }}</div>
 
             </div>
 
@@ -102,13 +108,37 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import "vue-select/dist/vue-select.css";
+import { Validator } from 'vee-validate';
 
+Validator.extend("decimal", {
+  validate: (value, { decimals = '*', separator = '.' } = {}) => {
+    if (value === null || value === undefined || value === '') {
+      return {
+        valid: false
+      };
+    }
+    if (Number(decimals) === 0) {
+      return {
+        valid: /^-?\d*$/.test(value),
+      };
+    }
+    const regexPart = decimals === '*' ? '+' : `{1,${decimals}}`;
+    
+    const regex = new RegExp(`^[-+]?\\d*(\\${separator}\\d${regexPart})?([eE]{1}[-]?\\d+)?$`);
+
+    return {
+      valid: regex.test(value),
+    };
+  },
+  message: 'The {_field_} field must contain only decimal values'
+})
 
 export default {
 
     data () {
         return {
 
+            submitted: false,
             ladegut_def: {
                 bezeichnung: "",
                 bemerkung: "",
@@ -183,11 +213,27 @@ computed: {
         },
         anlegen(){
             this.ladegut.dichte = this.ladegut.dichte.replace(',', '.')
-this.create(this.ladegut)
+
+
+ this.submitted = true;
+            this.$validator.validate().then(valid => {
+                if (valid) {
+                    this.create(this.ladegut)
+                    this.submitted = false;
+                }
+            });
         },
         updaten(){
             this.ladegut.dichte = this.ladegut.dichte.toString().replace(',', '.')
-this.update(this.ladegut)
+
+
+ this.submitted = true;
+            this.$validator.validate().then(valid => {
+                if (valid) {
+                    this.update(this.ladegut)
+                    this.submitted = false;
+                }
+            });
         },
 
         loeschen(){

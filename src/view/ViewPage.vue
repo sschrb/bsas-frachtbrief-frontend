@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>Frachtbrief bearbeiten</h3>
     <div class="card mb-2">
       <div class="card-body">
         <div class="form-group"> <!-- Pflichtfeld für spätere Bezeichnung des Frachtbriefes -->
@@ -21,10 +22,13 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="adresse">Absender</label>
-                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.adresse1">
+                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.adresse1" name="Absender" v-validate="{ objectNotEmpty: true}" :class="{ 'is-invalid': submitted && errors.has('Absender') }">
                   <option v-bind:value="frachtbrief.frachtbriefdata.adresse_def"></option>
                   <option v-for="adresse in adressen" v-bind:value="adresse" v-bind:key="adresse.id">{{ adresse.name }}</option>
                 </select>
+
+
+                <div v-if="submitted && errors.has('Absender')" class="invalid-feedback">{{ errors.first('Absender') }}</div>
 
                 <button class="btn btn-link py-0" v-on:click="viewAdresse1=!viewAdresse1">Details anzeigen</button>
               </div>
@@ -621,11 +625,11 @@
       <!-- ############################################################ Kommerzielle Bedingungen ############################################################ -->
     <div class="card mb-2">
       <div class="card-body">
-        <div class="form-group"> 
-          <label for="">Kommerzielle Bedingungen</label>
+        <div class="form-group">
+          <label for="" class="col-sm-7">Kommerzielle Bedingungen</label>
           <button class="btn btn-primary col-sm-4 mx-2" v-on:click="kommerzBedingVorschlag()" :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'">Vorschlag generieren</button>
-          <textarea :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.kommerziellebedingungen" class="form-control" />
         </div>
+        <textarea :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.kommerziellebedingungen" class="form-control" />
       </div>
     </div>
 
@@ -644,10 +648,10 @@
                 <option v-for="ladeliste in ladelisten" v-bind:value="ladeliste" v-bind:key="ladeliste.id">{{ ladeliste.ladelistedata.refnr }}</option>
               </select>
 </em>
-              
+
             </div>
 
-            
+
           </div>
           <em v-if="frachtbrief.frachtbriefdata.ladeliste.ladelistedata">
           zugeordnet: {{' ' + this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata.refnr}}
@@ -660,79 +664,125 @@
     <em v-if="frachtbrief.frachtbriefdata.ladeliste">
     <div class="card mb-2">
       <div class="card-body">
-        <div class="form-group"> 
-          <label for="">Bezeichnung des Gutes</label>
+        <div class="form-group">
+          <label for="" class="col-sm-7">Bezeichnung des Gutes</label>
           <button class="btn btn-primary col-sm-4 mx-2" v-on:click="bezeichnungGutVorschlag()" :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'">Vorschlag generieren</button>
-          <textarea :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.bezeichnungGut" class="form-control" />
+
         </div>
+        <textarea :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.bezeichnungGut" class="form-control" />
       </div>
     </div>
     </em>
 
     </form>
 
-    <label>Als Vorlage verwenden:</label>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="frachtbrief.vorlage" v-on:click="frachtbrief.status= 'in Bearbeitung'"/>
-      <label class="form-check-label" for="vorlagefalse">Nein</label>
-    </div>
+    <div class="container">
+      <div class="row">
 
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="frachtbrief.vorlage" v-on:click="frachtbrief.status= 'Vorlage'"/>
-      <label class="form-check-label" for="vorlagetrue">Ja</label>
-    </div>
-{{frachtbrief.vorlage}}
+        <div class="container col">
 
-    <div class="form-row float-right">
-      <em v-if="nachricht">
-        {{nachricht.text}}
-      </em>
+          <label>Als Vorlage verwenden:</label>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="frachtbrief.vorlage" v-on:click="frachtbrief.status= 'in Bearbeitung'" :disabled="frachtbrief.status == 'Abgeschlossen'"/>
+            <label class="form-check-label" for="vorlagefalse">Nein</label>
+          </div>
 
-      <button class="btn btn-secondary mb-5 mx-1" v-on:click="generatePdfButton">vorschau PDF generieren</button>
-      <em v-if="frachtbrief.pdf_id != null"><button class="btn btn-link mb-5 mx-1" v-on:click="viewPdfButton">vorschau PDF anzeigen</button></em>
-
-
-
-      <button class="btn btn-success mb-5" v-on:click="speichern()">Speichern</button>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="frachtbrief.vorlage" v-on:click="frachtbrief.status= 'Vorlage'" :disabled="frachtbrief.status == 'Abgeschlossen'"/>
+            <label class="form-check-label" for="vorlagetrue">Ja</label>
+          </div>
+        </div>
+        <button class="btn btn-success mb-1 col-auto" v-on:click="speichern()" :disabled="frachtbrief.status == 'Abgeschlossen'">Speichern</button>
+      </div>
     </div>
 
 
-<div class="form-group">
-      Status: 
-    <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" v-model="frachtbrief.status">
-  <option disabled value="Abgeschlossen">Abgeschlossen</option>
-  <option disabled value="in Bearbeitung">in Bearbeitung</option>
-  <option disabled value="freigegeben">freigegeben</option>
-  <option disabled value="storniert">storniert</option>
-  <option disabled value="Vorlage">Vorlage</option>
-</select>
-<button class="btn btn-secondary mb-5 mx-1" v-on:click="setStatus('in Bearbeitung')" :disabled="frachtbrief.status == 'Abgeschlossen'" >in Bearbeitung</button>
-<button class="btn btn-secondary mb-5 mx-1" v-on:click="setStatus('freigegeben')" :disabled="frachtbrief.status == 'Abgeschlossen'">freigegeben</button>
-<button class="btn btn-secondary mb-5 mx-1" v-on:click="setStatus('storniert')" :disabled="frachtbrief.status == 'Abgeschlossen'">storniert</button>
-
-</div>
+    <em v-if="nachricht">
+      {{nachricht.text}}
+    </em>
 
 
-<em v-if="frachtbrief.status == 'freigegeben' || frachtbrief.status == 'Abgeschlossen'">
-<div class="form-group">
-      <button class="btn btn-secondary mb-5 mx-1" v-on:click="generateFinalPdfButton" :disabled="frachtbrief.status == 'Abgeschlossen'">finales PDF generieren</button>
-      <button class="btn btn-link mb-5 mx-1" v-on:click="viewFinalPdfButton" :disabled="frachtbrief.pdf_id_komplett == null">finales PDF anzeigen</button>
-</div>
+    <div class="card mb-2">
+      <div class="card-header">
+        PDF-Dokumente
+      </div>
 
-<div class="form-group">
-      <button class="btn btn-secondary mb-5 mx-1" v-on:click="setStatus('Abgeschlossen')" :disabled="frachtbrief.pdf_id_komplett == null || frachtbrief.status == 'Abgeschlossen'">Frachtbrief abschließen</button>
-</div>
-</em>
+      <div class="card-body">
+
+        <label>PDF-Vorschau</label>
+        <div class="form-group">
+          <button class="btn btn-secondary mx-1" v-on:click="generatePdfButton" :disabled="frachtbrief.status == 'Abgeschlossen'">PDF-Vorschau generieren</button>
+
+          <em v-if="frachtbrief.pdf_id != null">
+            <button class="btn btn-link mx-1" v-on:click="viewPdfButton" :disabled="frachtbrief.status == 'Abgeschlossen'">PDF-Vorschau anzeigen</button>
+          </em>
+        </div>
+
+        <label>PDF-Frachtbrief</label>
+        <div class="form-group">
+          <em v-if="frachtbrief.status == 'freigegeben' || frachtbrief.status == 'Abgeschlossen'">
+            <div class="form-group">
+              <button class="btn btn-secondary mx-1" v-on:click="generateFinalPdfButton" :disabled="frachtbrief.status == 'Abgeschlossen'">finalen Frachtbrief generieren</button>
+              <button class="btn btn-link mx-1" v-on:click="viewFinalPdfButton" :disabled="frachtbrief.pdf_id_komplett == null">finalen Frachtbrief anzeigen</button>
+            </div>
+
+
+          </em>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="card mb-2">
+
+      <div class="card-header">
+        <label>Aktueller Status des Frachtbriefes: {{frachtbrief.status}}</label>
+        <!--<select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.status">
+        <option disabled value="Abgeschlossen">Abgeschlossen</option>
+        <option disabled value="in Bearbeitung">in Bearbeitung</option>
+        <option disabled value="freigegeben">freigegeben</option>
+        <option disabled value="storniert">storniert</option>
+        <option disabled value="Vorlage">Vorlage</option>
+      </select> -->
+    </div>
+
+    <div class="card-body">
+      <label>Status des Frachtbriefes ändern und Speichern:</label>
+      <div class="form-group">
+        <button class="btn btn-info mx-1" v-on:click="setStatus('in Bearbeitung')" :disabled="frachtbrief.status == 'Abgeschlossen'" >in Bearbeitung</button>
+        <button class="btn btn-info mx-1" v-on:click="setStatus('freigegeben')" :disabled="frachtbrief.status == 'Abgeschlossen'">freigegeben</button>
+        <button class="btn btn-info mx-1" v-on:click="setStatus('storniert')" :disabled="frachtbrief.status == 'Abgeschlossen'">storniert</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <button class="btn btn-info col-12 mb-5" v-on:click="setStatus('Abgeschlossen')" :disabled="frachtbrief.pdf_id_komplett == null || frachtbrief.status == 'Abgeschlossen'">Frachtbrief abschließen</button>
+  </div>
 
   </div>
 </template>
 <script>
 import { mapState, mapActions } from 'vuex'
+import { Validator } from 'vee-validate';
+
+
+Validator.extend('objectNotEmpty', {
+  validate: (value) => {
+    if (value[Object.keys(value)[0]]) {
+      console.log("gggtrue")
+      return true;
+    }
+    return false
+  },
+});
+
 
 export default {
     data () {
         return {
-            
+            submitted: false,
             test1: {
             loading: null
             },
@@ -763,7 +813,7 @@ export default {
     },
     computed: {
         ...mapState({
-            
+
             frachtbrief: state => state.frachtbrief.all.items,
             brief: state => state.frachtbrief.all,
             pdf: state => state.frachtbrief.pdf.items,
@@ -777,10 +827,10 @@ export default {
         })
     },
     created () {
-        
+
         this.getById(this.$route.params.id)
-        
-        
+
+
     },
     mounted () {
         this.getAllBahnhof();
@@ -792,8 +842,8 @@ export default {
         console.log('mount')
     },
     methods: {
-        
-        
+
+
          ...mapActions('ladeliste', {getAllStatus: 'getAllStatus'}),
        ...mapActions( 'frachtbrief', ['getById']
         ),
@@ -819,15 +869,24 @@ export default {
               this.frachtbrief.status = 'Vorlage'
             }
             let data = this.frachtbrief;
-                   this.update(data);
-              
+
+
+
+            this.submitted = true;
+            this.$validator.validate().then(valid => {
+                if (valid) {
+                    this.update(data);
+                }
+            });
+                   
+
         },
         setStatus(s){
 
 var ladelisteid = this.frachtbrief.frachtbriefdata.ladeliste.id
 
           this.frachtbrief.status = s;
-          
+
 
           if(s=='Abgeschlossen'){
 this.updateLadelisteO({id: ladelisteid, status: 'Abgeschlossen'})
@@ -843,72 +902,72 @@ let data = this.frachtbrief;
                   this.createFinalPDF(data)
        },
     generatePdfButton() {
-            
+
                    let data = this.frachtbrief;
                   this.createPDF(data)
                   //.then(this.getById(this.$route.params.id));
                    //.then((reslut) => {this.getById(this.$route.params.id);console.log('test')});
-                   
-                   
-                  
-              
+
+
+
+
         },
         viewFinalPdfButton(){
-          
+
                   this.getPdfById(this.frachtbrief.pdf_id_komplett).then(() => {
                       console.log(this.pdf.pdf)
 
                       const blob = new Blob(
-    [Uint8Array.from(this.pdf.pdf.data)], 
+    [Uint8Array.from(this.pdf.pdf.data)],
     {type: 'application/pdf'});
-                      
-                      let a = document.createElement("a") 
+
+                      let a = document.createElement("a")
   let blobURL = URL.createObjectURL(blob)
   a.download = this.frachtbrief.frachtbriefdata.refnr + '_' + this.frachtbrief.createdAt.slice(0, 10).split('-').reverse().join('.') + '.pdf'
   a.href = blobURL
   document.body.appendChild(a)
   a.click()
   document.body.removeChild(a)
-    
-    
-    
+
+
+
     }
-    
-    
-    
-    
+
+
+
+
     )
-                  
-                  
+
+
                    //.then((reslut) => {this.getById(this.$route.params.id);console.log('test')});
-                   
-                   
+
+
 
 
 
         },
     viewPdfButton() {
-            
-                   
+
+
                   this.getPdfById(this.frachtbrief.pdf_id).then(() => {
                       console.log(this.pdf.pdf)
 
                       const file = new Blob(
-    [Uint8Array.from(this.pdf.pdf.data)], 
+    [Uint8Array.from(this.pdf.pdf.data)],
     {type: 'application/pdf'});
-                      
+
                       const fileURL = URL.createObjectURL(file);
     //Open the URL on new Window
     window.open(fileURL);})
-                  
-                  
+
+
                    //.then((reslut) => {this.getById(this.$route.params.id);console.log('test')});
-                   
-                   
-                  
-              
+
+
+
+
         },
- 
+
     handleSubmit(){
 
     },
@@ -928,7 +987,7 @@ for (var l in this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata){
 
 
 if(typeof (this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata[l].ladegut) !== 'undefined'){
-  
+
   if(typeof (this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata[l].ladegut.bezeichnung) !== 'undefined'){
 
 
@@ -944,9 +1003,9 @@ this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata[l].ladegut.bemerkung + 
 
 
   }
-  
+
 }
-  
+
 }
 
 this.frachtbrief.frachtbriefdata.bezeichnungGut = s;
@@ -963,7 +1022,7 @@ console.log(s)
 if(this.frachtbrief.frachtbriefdata.evu2.short==''){
     this.frachtbrief.frachtbriefdata.aBeforderer1.name=this.frachtbrief.frachtbriefdata.evu1.short;
     this.frachtbrief.frachtbriefdata.aBeforderer1.strecke=this.frachtbrief.frachtbriefdata.bahnhof1.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof7.name;
-} 
+}
 
 if(this.frachtbrief.frachtbriefdata.evu2.short!='' && this.frachtbrief.frachtbriefdata.evu3.short==''){
     this.frachtbrief.frachtbriefdata.aBeforderer1.name=this.frachtbrief.frachtbriefdata.evu1.short;
@@ -1041,7 +1100,7 @@ if(this.frachtbrief.frachtbriefdata.evu2.short!='' && this.frachtbrief.frachtbri
 }
     }
 
-        
+
     }
 };
 </script>

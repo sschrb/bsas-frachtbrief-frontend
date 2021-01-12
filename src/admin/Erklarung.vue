@@ -27,8 +27,8 @@
 
             <div class="form-group">
                 <label for="wagenummer">Code mit Erläuterung</label>
-                <textarea type="text" v-model="erklarung.code" class="form-control"/>
-
+                <textarea type="text" v-model="erklarung.code" name="Code" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Code') }"/>
+                <div v-if="submitted && errors.has('Code')" class="invalid-feedback">{{ errors.first('Code') }}</div>
             </div>
 
 
@@ -62,13 +62,13 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import "vue-select/dist/vue-select.css";
-
+import { Validator } from 'vee-validate';
 
 export default {
 
     data () {
         return {
-
+            submitted: false,
             erklarung_def: {
                 code: ''
 
@@ -130,10 +130,22 @@ computed: {
             )
         },
         anlegen(){
-this.create(this.erklarung)
+
+this.submitted = true;
+            this.$validator.validate().then(valid => {
+                if (valid) {
+                    this.create(this.erklarung)
+                }
+            });
         },
         updaten(){
-this.update(this.erklarung)
+
+this.submitted = true;
+            this.$validator.validate().then(valid => {
+                if (valid) {
+                    this.update(this.erklarung)
+                }
+            });
         },
 
         loeschen(){

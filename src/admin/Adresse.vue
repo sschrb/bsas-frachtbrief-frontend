@@ -21,19 +21,25 @@
 
       <div class="form-group">
         <label for="wagenummer">Name</label>
-        <input type="text" v-model="adresse.name" class="form-control"/>
+        <input type="text" v-model="adresse.name" name="Name" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Name') }"/>
+                <div v-if="submitted && errors.has('Name')" class="invalid-feedback">{{ errors.first('Name') }}</div>
+
 
       </div>
 
       <div class="form-group">
         <label for="wagenummer">Straße und Hausnummer</label>
-        <input type="text" v-model="adresse.strasse" class="form-control"/>
+        <input type="text" v-model="adresse.strasse" name="Straße" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Straße') }"/>
+                <div v-if="submitted && errors.has('Straße')" class="invalid-feedback">{{ errors.first('Straße') }}</div>
+
 
       </div>
 
       <div class="form-group">
         <label for="wagenummer">PLZ und Ort</label>
-        <input type="text" v-model="adresse.ort" class="form-control"/>
+        <input type="text" v-model="adresse.ort" name="Ort" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Ort') }"/>
+                <div v-if="submitted && errors.has('Ort')" class="invalid-feedback">{{ errors.first('Ort') }}</div>
+
 
       </div>
 
@@ -81,6 +87,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import "vue-select/dist/vue-select.css";
+import { Validator } from 'vee-validate';
 
 
 export default {
@@ -88,6 +95,7 @@ export default {
     data () {
         return {
 
+            submitted: false,
             adresse_def: {
                 name: '',
                 strasse: '',
@@ -155,10 +163,26 @@ computed: {
             )
         },
         anlegen(){
-this.create(this.adresse)
+
+
+ this.submitted = true;
+            this.$validator.validate().then(valid => {
+                if (valid) {
+                    this.create(this.adresse)
+                }
+            });
+
         },
         updaten(){
-this.update(this.adresse)
+
+ this.submitted = true;
+            this.$validator.validate().then(valid => {
+                if (valid) {
+                    this.update(this.adresse)
+                }
+            });
+
+
         },
 
         loeschen(){
