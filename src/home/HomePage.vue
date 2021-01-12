@@ -839,7 +839,7 @@ export default {
                 land: '',
                 },
 
-                datum: ''
+                datum: new Date().toJSON(),
 
 
             },
@@ -943,7 +943,7 @@ export default {
 
             ausstellung: {
                 ort: 'Mühlsen',
-                datum: ''
+                datum: new Date().toJSON()
             },
 
 

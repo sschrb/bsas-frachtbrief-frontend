@@ -65,13 +65,15 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="adresse">Empfänger</label>
-                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.adresse2">
+                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.adresse2" name="Empfänger" v-validate="{ objectNotEmpty: true}" :class="{ 'is-invalid': submitted && errors.has('Empfänger') }">
                   <option v-bind:value="frachtbrief.frachtbriefdata.adresse_def"></option>
                   <option v-for="adresse in adressen" v-bind:value="adresse" v-bind:key="adresse.id">{{ adresse.name }}</option>
                 </select>
-
+                <div v-if="submitted && errors.has('Empfänger')" class="invalid-feedback">{{ errors.first('Empfänger') }}</div>
                 <button class="btn btn-link py-0" v-on:click="viewAdresse2=!viewAdresse2">Details anzeigen</button>
               </div>
+
+              
 
 
               <em v-if="viewAdresse2">
@@ -107,13 +109,16 @@
               <div class="form-group">
                 <label for="">Abgangsbahnhof</label>
 
-                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof1">
+                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof1" name="Abgangsbahnhof" v-validate="{ objectNotEmpty: true}" :class="{ 'is-invalid': submitted && errors.has('Abgangsbahnhof') }">
                   <option v-bind:value="frachtbrief.frachtbriefdata.bahnhof_def"></option>
                   <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
                 </select>
+                <div v-if="submitted && errors.has('Abgangsbahnhof')" class="invalid-feedback">{{ errors.first('Abgangsbahnhof') }}</div>
 
                 <button class="btn btn-link py-0" v-on:click="viewBahnhof1=!viewBahnhof1">Details anzeigen</button>
               </div>
+
+              
 
 
               <em v-if="viewBahnhof1">
@@ -136,13 +141,16 @@
 
                 <label for="adresse">Beförderer</label>
 
-                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.evu1">
+                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.evu1" name="Beförderer" v-validate="{ objectNotEmpty: true}" :class="{ 'is-invalid': submitted && errors.has('Beförderer') }">
                   <option v-bind:value="frachtbrief.frachtbriefdata.evu_def"></option>
                   <option v-for="evu in evus" v-bind:value="evu" v-bind:key="evu.id">{{ evu.name }}</option>
                 </select>
+                <div v-if="submitted && errors.has('Beförderer')" class="invalid-feedback">{{ errors.first('Beförderer') }}</div>
 
                 <button class="btn btn-link py-0" v-on:click="viewEvu1=!viewEvu1">Details anzeigen</button>
               </div>
+              
+
 
 
               <em v-if="viewEvu1">
@@ -168,12 +176,17 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="adresse">Zielbahnhof</label>
-                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof7">
+                <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.bahnhof7" name="Zielbahnhof" v-validate="{ objectNotEmpty: true}" :class="{ 'is-invalid': submitted && errors.has('Zielbahnhof') }">
                   <option v-bind:value="frachtbrief.frachtbriefdata.bahnhof_def"></option>
                   <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
                 </select>
+                <div v-if="submitted && errors.has('Zielbahnhof')" class="invalid-feedback">{{ errors.first('Zielbahnhof') }}</div>
                 <button class="btn btn-link py-0" v-on:click="viewBahnhof7=!viewBahnhof7">Details anzeigen</button>
               </div>
+              
+
+
+
               <em v-if="viewBahnhof7">
                 <div class="form-group">
                   <label for="">Name</label>
@@ -495,10 +508,12 @@
             <div class="col-sm-6">
               <label for="adresse">Übernahmeort</label>
 
-              <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.ubernahmeort.bahnhof">
+              <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.ubernahmeort.bahnhof" name="Übernahmeort" v-validate="{ objectNotEmpty: true}" :class="{ 'is-invalid': submitted && errors.has('Übernahmeort') }">
                 <option v-bind:value="frachtbrief.frachtbriefdata.bahnhof_def"></option>
                 <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
               </select>
+              <div v-if="submitted && errors.has('Übernahmeort')" class="invalid-feedback">{{ errors.first('Übernahmeort') }}</div>
+              
 
               <button class="btn btn-link py-0" v-on:click="viewUbernahmeort=!viewUbernahmeort">Details anzeigen</button>
 
@@ -521,6 +536,7 @@
 
             <div class="col-sm-6">
               <label for="adresse">Übernahmedatum und Uhrzeit</label>
+              
               <datetime :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="datetime" v-model="frachtbrief.frachtbriefdata.ubernahmeort.datum" value-zone="Europe/Berlin" ></datetime>
             </div>
           </div>
@@ -639,15 +655,18 @@
       <div class="card mb-2">
         <div class="card-body">
           <div class="row">
+            
             <div class="col-sm-6">
               <label for="adresse">freigegebene Ladeliste zuordnen</label>
 
-<em v-if="frachtbrief.status != 'Abgeschlossen'">
-              <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.ladeliste">
+                <em v-if="frachtbrief.status != 'Abgeschlossen'">
+              <select :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" class="form-control" v-model="frachtbrief.frachtbriefdata.ladeliste" >
                 <option v-bind:value="frachtbrief.frachtbriefdata.ladeliste_def"></option>
                 <option v-for="ladeliste in ladelisten" v-bind:value="ladeliste" v-bind:key="ladeliste.id">{{ ladeliste.ladelistedata.refnr }}</option>
               </select>
-</em>
+              
+               
+                </em>
 
             </div>
 
@@ -669,7 +688,8 @@
           <button class="btn btn-primary col-sm-4 mx-2" v-on:click="bezeichnungGutVorschlag()" :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'">Vorschlag generieren</button>
 
         </div>
-        <textarea :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.bezeichnungGut" class="form-control" />
+        <textarea :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.bezeichnungGut" class="form-control" name="Bezeichnung des Gutes" v-validate="{ required: true}" :class="{ 'is-invalid': submitted && errors.has('Bezeichnung des Gutes') }"/>
+        <div v-if="submitted && errors.has('Bezeichnung des Gutes')" class="invalid-feedback">{{ errors.first('Bezeichnung des Gutes') }}</div>
       </div>
     </div>
     </em>
@@ -771,9 +791,21 @@ import { Validator } from 'vee-validate';
 Validator.extend('objectNotEmpty', {
   validate: (value) => {
     if (value[Object.keys(value)[0]]) {
+      
+      return true;
+    }
+    return false
+  },
+});
+
+Validator.extend('objectNotEmpty2', {
+  validate: (value) => {
+    console.log('rein')
+    if (value[Object.keys(value)[0]]) {
       console.log("gggtrue")
       return true;
     }
+    console.log("false")
     return false
   },
 });
@@ -872,27 +904,42 @@ export default {
 
 
 
-            this.submitted = true;
-            this.$validator.validate().then(valid => {
-                if (valid) {
-                    this.update(data);
-                }
-            });
+        
                    
-
+this.update(data);
         },
         setStatus(s){
-
+this.clearErrorMessages()
 var ladelisteid = this.frachtbrief.frachtbriefdata.ladeliste.id
 
-          this.frachtbrief.status = s;
+          
 
 
           if(s=='Abgeschlossen'){
 this.updateLadelisteO({id: ladelisteid, status: 'Abgeschlossen'})
 }
 
-this.speichern()
+if(s=='freigegeben'){
+
+              this.submitted = true;
+            if(!this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata){
+              this.nachricht.text = "Bitte Ladeliste zuordnen"
+              return
+            }
+            this.$validator.validate().then(valid => {
+                if (valid) {
+                  
+            this.frachtbrief.status = s;
+                    this.speichern()
+                }
+            });
+
+}
+
+if(s!='freigegeben'){
+  this.frachtbrief.status = s;
+  this.speichern()
+}
         },
         clearErrorMessages(){
 this.nachricht.text = ''

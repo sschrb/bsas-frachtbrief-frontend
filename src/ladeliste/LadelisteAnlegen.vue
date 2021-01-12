@@ -5,8 +5,10 @@
       <div class="card-body">
         <div class="form-group">
           <label for="adresse">Name der Ladeliste</label>
-          <input type="text" v-model="ladelistedata.refnr" class="form-control" />
+          <input type="text" v-model="ladelistedata.refnr"  name="Referenz" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Referenz') }"/>
+                <div v-if="submitted && errors.has('Referenz') " class="invalid-feedback">{{ errors.first('Referenz') }}</div> 
         </div>
+        
       </div>
     </div>
 
@@ -161,7 +163,18 @@ import "vue-select/dist/vue-select.css";
 import { Datetime } from 'vue-datetime'
 // You need a specific loader for CSS files
 import 'vue-datetime/dist/vue-datetime.css'
+import { Validator } from 'vee-validate';
 
+
+Validator.extend('objectNotEmpty', {
+  validate: (value) => {
+    if (value[Object.keys(value)[0]]) {
+      
+      return true;
+    }
+    return false
+  },
+});
 
 
 
@@ -170,12 +183,14 @@ export default {
     data () {
         return {
 
-
+submitted: false,
+ladegut_def: '',
           ladelistedata: {
 
 
                                     refnr: '',
-                                    datum: '',
+                                    datum: new Date().toJSON(),
+                                    
 
 
                                     ladegut1: {
@@ -323,14 +338,20 @@ this.getAllLadegut(),
 
 saveLadeliste(){
 
-
-
-
-
-this.createLadeliste(this.$data);
+this.submitted = true;
+this.$validator.validate().then(valid => {
+                if (valid) {
+                  
+            this.createLadeliste(this.$data);
 
 
 setTimeout(() => this.$router.push('/history') , 2000);
+                }
+            });
+
+
+
+
 
 },
 

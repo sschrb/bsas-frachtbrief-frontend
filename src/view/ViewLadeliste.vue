@@ -26,13 +26,15 @@
       <div class="card-header">
         <label for="adresse">Ladegut 1</label>
 
-        <select class="form-control" v-model="ladeliste.ladelistedata.ladegut1.ladegut" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'">
+        <select class="form-control" v-model="ladeliste.ladelistedata.ladegut1.ladegut" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" name="Ladegut 1" v-validate="{ checkLadegut: true}" :class="{ 'is-invalid': submitted && errors.has('Ladegut 1') }">
            <option v-bind:value="ladegut_def"></option>
 
           <option v-for="ladegut in ladegueter" v-bind:value="ladegut" v-bind:key="ladegut.id">{{ ladegut.bezeichnung }}</option>
         </select>
+        <div v-if="submitted && errors.has('Ladegut 1')" class="invalid-feedback">{{ errors.first('Ladegut 1') }}</div>
 
       </div>
+      <em v-if="ladeliste.ladelistedata.ladegut1.ladegut.bezeichnung">
       <div class="card-body">
 
 
@@ -45,10 +47,11 @@
           <div class="form-group" v-for="(input,k) in ladeliste.ladelistedata.ladegut1.wagen" :key="k">
 
             <div class="row">
-              <div class="col-6"><select class="form-control" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'">
+              <div class="col-6"><select class="form-control" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" name="Wagendaten" v-validate="{ checkWagen: true}" :class="{ 'is-invalid': submitted && errors.has('Wagendaten') }">
                 <option v-bind:value="wagendaten_def"></option>
                 <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ wagendaten.wagennummer }}</option>
-              </select></div>
+              </select>
+              <div v-if="submitted && errors.has('Wagendaten')" class="invalid-feedback">{{ errors.first('Wagendaten') }}</div></div>
               <div class="col-4"><input type="text" class="form-control" v-model="input.liter" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'"></div>
 
               <div class="col-1"><button type="button" class="btn btn-success" @click="add1(k)" v-show="k == ladeliste.ladelistedata.ladegut1.wagen.length-1" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'">+</button></div>
@@ -57,6 +60,7 @@
           </div>
         </div>
       </div>
+      </em>
     </div>
 
 
@@ -199,12 +203,57 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import { Validator } from 'vee-validate';
+
+
+Validator.extend('objectNotEmpty', {
+  validate: (value) => {
+    console.log("in1")
+    console.log(value[Object.keys(value)[0]])
+    if (value[Object.keys(value)[0]]) {
+      console.log("true")
+      return true;
+    }
+    console.log("false")
+    return false
+  },
+});
+
+Validator.extend('checkLadegut', {
+  validate: (value) => {
+    console.log("in2")
+    console.log(value.bezeichnung)
+    if (value.bezeichnung) {
+      console.log("true")
+      return true;
+    }
+    console.log("false")
+    return false
+  },
+});
+
+Validator.extend('checkWagen', {
+  validate: (value) => {
+    console.log("in3")
+    console.log(value)
+
+    if (value != 123) {
+      console.log("true")
+      return true;
+    }
+    console.log("false")
+    return false
+  },
+});
 
 export default {
     data () {
         return {
-            wagendaten_def: '',
-            ladegut_def: '',
+          submitted: false,
+            wagendaten_def: 123,
+            ladegut_def: {
+              bezeichnung: ''
+              },
 
 
         }
@@ -257,8 +306,16 @@ this.clearErrorMessages(),
         ...mapActions('erklarung', {createErklarung: 'create'}),
         ...mapActions('erklarung', {getAllErklarung: 'getAll'}),
         speichern() {
+this.submitted = true;
+this.$validator.validate().then(valid => {
+                if (valid) {
+                  
+            this.update(this.ladeliste);
+                }
+            });
+
             console.log("handlesub")
-                   this.update(this.ladeliste);
+                 
 
         },
         clearErrorMessages(){
