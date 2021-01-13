@@ -5,7 +5,8 @@
       <div class="card-body">
         <div class="form-group"> <!-- Pflichtfeld für spätere Bezeichnung des Frachtbriefes -->
           <label for="">Referenz Nummer (Name des Frachtbriefes)</label>
-          <input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.refnr" class="form-control" />
+          <input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.refnr" name="Referenz" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Referenz') }"/>
+                <div v-if="submitted && errors.has('Referenz')" class="invalid-feedback">{{ errors.first('Referenz') }}</div>
         </div>
       </div>
     </div>
@@ -571,7 +572,8 @@
           <div class="row">
             <div class="col-sm-6">
               <label for="adresse">Ausstellungsort</label>
-              <input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.ausstellung.ort" class="form-control" />
+              <input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.ausstellung.ort" name="Ausstellungsort" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Ausstellungsort') }"/>
+                <div v-if="submitted && errors.has('Ausstellungsort')" class="invalid-feedback">{{ errors.first('Ausstellungsort') }}</div>
             </div>
             <div class="col-sm-6">
               <label for="adresse">Ausstellungsdatum</label>
@@ -596,7 +598,8 @@
             <div class="col-8 mb-1">Strecke</div>
 
             <div class="col-4 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer1.name" class="form-control" /></div>
-            <div class="col-8 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer1.strecke" class="form-control" /></div>
+            <div class="col-8 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer1.strecke" name="Strecke" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Strecke') }"/>
+                <div v-if="submitted && errors.has('Strecke')" class="invalid-feedback">{{ errors.first('Strecke') }}</div></div>
 
             <div class="col-4 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer2.name" class="form-control" /></div>
             <div class="col-8 mb-1"><input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.aBeforderer2.strecke" class="form-control" /></div>
@@ -632,7 +635,8 @@
 
           <div class="form-group">
             <label for="wagenummer">Code mit Erläuterung</label>
-            <textarea :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.erklarung.code" class="form-control"/>
+            <textarea :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.erklarung.code" name="Code mit Erläuterung" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Code mit Erläuterung') }"/>
+                <div v-if="submitted && errors.has('Code mit Erläuterung')" class="invalid-feedback">{{ errors.first('Code mit Erläuterung') }}</div>
 
           </div>
         </div>
@@ -645,7 +649,8 @@
           <label for="" class="col-sm-7">Kommerzielle Bedingungen</label>
           <button class="btn btn-primary col-sm-4 mx-2" v-on:click="kommerzBedingVorschlag()" :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'">Vorschlag generieren</button>
         </div>
-        <textarea :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.kommerziellebedingungen" class="form-control" />
+        <textarea :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.kommerziellebedingungen" name="Kommerzielle Bedingungen" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Kommerzielle Bedingungen') }"/>
+                <div v-if="submitted && errors.has('Kommerzielle Bedingungen')" class="invalid-feedback">{{ errors.first('Kommerzielle Bedingungen') }}</div>
       </div>
     </div>
 
@@ -924,7 +929,7 @@ if(s=='freigegeben'){
               this.submitted = true;
             if(!this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata){
               this.nachricht.text = "Bitte Ladeliste zuordnen"
-              return
+              
             }
             this.$validator.validate().then(valid => {
                 if (valid) {
