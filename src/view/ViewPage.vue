@@ -925,14 +925,16 @@ this.updateLadelisteO({id: ladelisteid, status: 'Abgeschlossen'})
 }
 
 if(s=='freigegeben'){
-
+var ladeliste = true;
               this.submitted = true;
+              console.log(this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata)
             if(!this.frachtbrief.frachtbriefdata.ladeliste.ladelistedata){
               this.nachricht.text = "Bitte Ladeliste zuordnen"
-              
+              console.log('Bitte Ladeliste zuordnen')
+              ladeliste = false
             }
             this.$validator.validate().then(valid => {
-                if (valid) {
+                if (valid && ladeliste) {
                   
             this.frachtbrief.status = s;
                     this.speichern()
