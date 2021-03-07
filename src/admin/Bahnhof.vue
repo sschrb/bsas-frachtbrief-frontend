@@ -36,6 +36,7 @@
                 <label for="wagenummer">Bahnhofscode</label>
                 <input type="text" v-model="bahnhof.bahnhofscode" name="Bahnhofscode" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Bahnhofscode') }"/>
                 <div v-if="submitted && errors.has('Bahnhofscode')" class="invalid-feedback">{{ errors.first('Bahnhofscode') }}</div>
+                <a href="https://dium.dbcargo.com/dium/bahnhofsuche.do?initContext=1&style=stinnes" target="_blank">Info</a>
 
             </div>
 

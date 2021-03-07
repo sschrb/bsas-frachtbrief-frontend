@@ -50,6 +50,11 @@
               </select></div>
               <div class="col-4"><input type="number" class="form-control" v-model="input.liter"></div>
 
+
+              <div class="col-1"><button type="button" class="btn btn-info" @click="swap1(k, k-1)" v-show="k != 0" >↑</button></div>
+              <div class="col-1"><button type="button" class="btn btn-info" @click="swap1(k, k+1)" v-show="k != ladelistedata.ladegut1.wagen.length-1" >↓</button></div>
+
+
               <div class="col-1"><button type="button" class="btn btn-success" @click="add1(k)" v-show="k == ladelistedata.ladegut1.wagen.length-1">+</button></div>
               <div class="col-1"><button type="button" class="btn btn-danger" @click="remove1(k)" v-show="k || ( !k && ladelistedata.ladegut1.wagen.length > 1)">-</button></div>
             </div>
@@ -86,6 +91,10 @@
                 <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ wagendaten.wagennummer }}</option>
               </select></div>
               <div class="col-4"><input type="text" class="form-control" v-model="input.liter"></div>
+
+              <div class="col-1"><button type="button" class="btn btn-info" @click="swap2(k, k-1)" v-show="k != 0" >↑</button></div>
+              <div class="col-1"><button type="button" class="btn btn-info" @click="swap2(k, k+1)" v-show="k != ladelistedata.ladegut2.wagen.length-1" >↓</button></div>
+
 
               <div class="col-1"><button type="button" class="btn btn-success" @click="add2(k)" v-show="k == ladelistedata.ladegut2.wagen.length-1">+</button></div>
               <div class="col-1"><button type="button" class="btn btn-danger" @click="remove2(k)" v-show="k || ( !k && ladelistedata.ladegut2.wagen.length > 1)">-</button></div>
@@ -130,6 +139,9 @@
                 <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ wagendaten.wagennummer }}</option>
               </select></div>
               <div class="col-4"><input type="text" class="form-control" v-model="input.liter"></div>
+
+              <div class="col-1"><button type="button" class="btn btn-info" @click="swap3(k, k-1)" v-show="k != 0" >↑</button></div>
+              <div class="col-1"><button type="button" class="btn btn-info" @click="swap3(k, k+1)" v-show="k != ladelistedata.ladegut3.wagen.length-1" >↓</button></div>
 
               <div class="col-1"><button type="button" class="btn btn-success" @click="add3(k)" v-show="k == ladelistedata.ladegut3.wagen.length-1">+</button></div>
               <div class="col-1"><button type="button" class="btn btn-danger" @click="remove3(k)" v-show="k || ( !k && ladelistedata.ladegut3.wagen.length > 1)">-</button></div>
@@ -300,6 +312,18 @@ this.getAllLadegut(),
 
         },
 
+        swap1(indexA, indexB) {
+       
+    var temp = this.ladelistedata.ladegut1.wagen[indexA];
+    
+    this.ladelistedata.ladegut1.wagen[indexA] = this.ladelistedata.ladegut1.wagen[indexB];
+    this.ladelistedata.ladegut1.wagen[indexB] = temp;
+     
+     this.add1();
+     this.ladelistedata.ladegut1.wagen.pop()
+
+},
+
         add1 () {
       this.ladelistedata.ladegut1.wagen.push({
                                                 liter: '',
@@ -312,6 +336,18 @@ this.getAllLadegut(),
       this.ladelistedata.ladegut1.wagen.splice(index, 1)
     },
 
+    swap2(indexA, indexB) {
+       
+    var temp = this.ladelistedata.ladegut2.wagen[indexA];
+    
+    this.ladelistedata.ladegut2.wagen[indexA] = this.ladelistedata.ladegut2.wagen[indexB];
+    this.ladelistedata.ladegut2.wagen[indexB] = temp;
+     
+     this.add2();
+     this.ladelistedata.ladegut2.wagen.pop()
+
+},
+
     add2 () {
       this.ladelistedata.ladegut2.wagen.push({
                                                 liter: '',
@@ -323,6 +359,18 @@ this.getAllLadegut(),
     remove2 (index) {
       this.ladelistedata.ladegut2.wagen.splice(index, 1)
     },
+
+    swap3(indexA, indexB) {
+       
+    var temp = this.ladelistedata.ladegut3.wagen[indexA];
+    
+    this.ladelistedata.ladegut3.wagen[indexA] = this.ladelistedata.ladegut3.wagen[indexB];
+    this.ladelistedata.ladegut3.wagen[indexB] = temp;
+     
+     this.add3();
+     this.ladelistedata.ladegut3.wagen.pop()
+
+},
 
     add3 () {
       this.ladelistedata.ladegut3.wagen.push({

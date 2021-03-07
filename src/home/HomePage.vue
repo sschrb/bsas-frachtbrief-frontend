@@ -942,7 +942,7 @@ export default {
             },
 
             ausstellung: {
-                ort: 'Mühlsen',
+                ort: 'Mülsen',
                 datum: new Date().toJSON()
             },
 

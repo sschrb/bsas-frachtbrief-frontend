@@ -65,6 +65,7 @@
                 <label for="wagenummer">NHM Code</label>
                 <input type="text" v-model="ladegut.nhm" name="NHM Code" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('NHM Code') }"/>
                 <div v-if="submitted && errors.has('NHM Code')" class="invalid-feedback">{{ errors.first('NHM Code') }}</div>
+                <a href="https://agp.dbcargo.com/agp/NHMSuche" target="_blank">Info</a>
 
             </div>
 
