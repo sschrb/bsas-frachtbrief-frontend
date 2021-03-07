@@ -22,6 +22,21 @@
       </div>
     </div>
 
+    <div class="card mb-2">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="adresse">Ladeliste laden</label>
+         
+
+          <v-select :get-option-label='option => option.ladelistedata.refnr' :options="ladelisten" v-model="vorlagedata" > </v-select>
+        </div>
+        <div class="col-auto">
+              <button class="btn btn-primary" v-on:click="vorlageLaden()" >laden</button>
+            </div>
+      </div>
+      
+    </div>
+
     <!-- ############################################################ 1. LADEGUT ############################################################ -->
     <div class="card mb-5">
       <div class="card-header">
@@ -53,6 +68,7 @@
               </select> -->
               
               <v-select label="wagennummer" :options="wagendatens" v-model="input.wagendaten" > </v-select>
+              
               </div>
 
 
@@ -205,11 +221,13 @@ export default {
 
 submitted: false,
 ladegut_def: '',
+vorlagedata: [],
           ladelistedata: {
 
 
                                     refnr: '',
                                     datum: new Date().toJSON(),
+                                    
                                     
 
 
@@ -289,6 +307,7 @@ computed: {
             ladegueter: state => state.ladegut.all.items,
             wagendatens: state => state.wagendaten.all.items,
             message: state => state.ladeliste.all,
+            ladelisten: state => state.ladeliste.all.items,
 
 
         }),
@@ -297,6 +316,7 @@ computed: {
 
 this.getAllWagendaten(),
 this.getAllLadegut(),
+this.getAllLadeliste();
         console.log('mount')
     },
     methods: {
@@ -315,6 +335,11 @@ this.getAllLadegut(),
          ...mapActions('bahnhof', ['update']),
         ...mapActions('frachtbrief', {createFrachtbrief: 'create'}),
         ...mapActions('ladeliste', {createLadeliste: 'create'}),
+        ...mapActions( 'ladeliste', {
+            getAllLadeliste: 'getAll',
+            getAllLadelisteStatus: 'getAllStatus'
+
+        }),
         handleSubmit(e) {
             //this.submitted = true;
 
@@ -505,6 +530,9 @@ if(this.evu2.name!='' && this.evu3.name!='' && this.evu4.name!='' && this.evu5.n
 
           return wagennummer2
 
+        },
+        vorlageLaden(){
+this.ladelistedata = this.vorlagedata.ladelistedata
         },
         changeAdress() {
             if(this.frachtbrief.adresseform==this.adressen[0].name){
