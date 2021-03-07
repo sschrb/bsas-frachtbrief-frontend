@@ -3,8 +3,8 @@ import Vue from 'vue';
 
 import de from 'vee-validate/dist/locale/de';
 import VeeValidate, { Validator } from 'vee-validate';
-//import vSelect from "vue-select";
-//import "vue-select/dist/vue-select.css";
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
 
 import Bahnhof from './admin/Bahnhof';
 import Adresse from './admin/Adresse';
@@ -30,7 +30,7 @@ Vue.use(VeeValidate);
 Validator.localize('de', de);
 
 Vue.component('datetime', Datetime);
-//Vue.component("v-select", vSelect);
+Vue.component("v-select", vSelect);
 Vue.component("Bahnhof", Bahnhof);
 Vue.component("Adresse", Adresse);
 Vue.component("Erklarung", Erklarung);

@@ -45,10 +45,24 @@
           <div class="form-group" v-for="(input,k) in ladelistedata.ladegut1.wagen" :key="k">
 
             <div class="row">
-              <div class="col-6"><select class="form-control" v-model="input.wagendaten">
-                <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ wagendaten.wagennummer }}</option>
-              </select></div>
+              <div class="col-6">
+                
+                <!--
+                <select class="form-control" v-model="input.wagendaten">
+                <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ formatWagennummer(wagendaten.wagennummer) }}</option>
+              </select> -->
+              
+              <v-select label="wagennummer" :options="wagendatens" v-model="input.wagendaten" > </v-select>
+              </div>
+
+
+
+       
+
+
+
               <div class="col-4"><input type="number" class="form-control" v-model="input.liter"></div>
+              
 
 
               <div class="col-1"><button type="button" class="btn btn-info" @click="swap1(k, k-1)" v-show="k != 0" >↑</button></div>
@@ -86,10 +100,7 @@
 
             <div class="row">
 
-              <div class="col-6"><select class="form-control" v-model="input.wagendaten">
-
-                <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ wagendaten.wagennummer }}</option>
-              </select></div>
+              <div class="col-6"><v-select label="wagennummer" :options="wagendatens" v-model="input.wagendaten" > </v-select></div>
               <div class="col-4"><input type="text" class="form-control" v-model="input.liter"></div>
 
               <div class="col-1"><button type="button" class="btn btn-info" @click="swap2(k, k-1)" v-show="k != 0" >↑</button></div>
@@ -134,10 +145,7 @@
 
             <div class="row">
 
-              <div class="col-6"><select class="form-control" v-model="input.wagendaten">
-
-                <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ wagendaten.wagennummer }}</option>
-              </select></div>
+              <div class="col-6"><v-select label="wagennummer" :options="wagendatens" v-model="input.wagendaten" > </v-select></div>
               <div class="col-4"><input type="text" class="form-control" v-model="input.liter"></div>
 
               <div class="col-1"><button type="button" class="btn btn-info" @click="swap3(k, k-1)" v-show="k != 0" >↑</button></div>
@@ -489,6 +497,13 @@ if(this.evu2.name!='' && this.evu3.name!='' && this.evu4.name!='' && this.evu5.n
 
 }
 
+
+        },
+        formatWagennummer(wagennummer){
+          var wagennummer2 = wagennummer.slice(0, 4) + " " + wagennummer.slice(4, 8) + " " + wagennummer.slice(8, 11) + "-" + wagennummer.slice(11);
+
+
+          return wagennummer2
 
         },
         changeAdress() {
