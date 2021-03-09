@@ -14,6 +14,8 @@
 
 
 
+
+
 <select v-on:click="clearNachricht()" class="form-control" v-model="ladegut">
         <option v-bind:value="ladegut_def">neu anlegen</option>
         <option v-for="ladegut in ladegueter" v-bind:value="ladegut" v-bind:key="ladegut.id">{{ ladegut.bezeichnung }}</option>
@@ -39,7 +41,21 @@
 
             </div>
 
-            <div class="form-group">
+             <div class="form-group">
+                <label>Einheit:</label>
+          <div class="form-check form-check-inline">
+            <input v-on:click="ladegut.dichte = ''" class="form-check-input" id="LITER" type="radio" name="einheit" value="Liter" v-model="ladegut.einheit"/>
+            <label class="form-check-label" for="LITER">Liter</label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input v-on:click="ladegut.dichte = 1000" class="form-check-input" id="KG" type="radio" name="einheit" value="Kg" v-model="ladegut.einheit"/>
+            <label class="form-check-label" for="KG">Kilogramm</label>
+          </div>
+
+            </div>
+
+            <div v-if="ladegut.dichte != 1000" class="form-group">
                 <label for="wagenummer">Dichte</label>
                 <input type="text" v-model="ladegut.dichte" name="Dichte" v-validate="{ required: true, decimal: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Dichte') }"/>
                 <div v-if="submitted && errors.has('Dichte')" class="invalid-feedback">{{ errors.first('Dichte') }}</div>
@@ -60,6 +76,8 @@
           </div>
 
             </div>
+
+            
 
             <div class="form-group">
                 <label for="wagenummer">NHM Code</label>
@@ -144,7 +162,8 @@ export default {
                 bezeichnung: "",
                 bemerkung: "",
                 dichte: "",
-                rid: "",
+                rid: "Nein",
+                einheit: "Liter",
                 nhm: "",
                 wagentyp: ""
 
@@ -157,6 +176,7 @@ export default {
                 bemerkung: "",
                 dichte: "",
                 rid: "Nein",
+                einheit: "Liter",
                 nhm: "",
                 wagentyp: ""
 

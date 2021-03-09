@@ -27,8 +27,9 @@
         <div class="form-group">
           <label for="adresse">Ladeliste laden</label>
          
-
+<em v-if="ladelisten">
           <v-select :get-option-label='option => option.ladelistedata.refnr' :options="ladelisten" v-model="vorlagedata" > </v-select>
+</em>
         </div>
         <div class="col-auto">
               <button class="btn btn-primary" v-on:click="vorlageLaden()" >laden</button>

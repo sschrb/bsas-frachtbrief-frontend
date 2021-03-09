@@ -48,13 +48,20 @@
           <div class="form-group" v-for="(input,k) in ladeliste.ladelistedata.ladegut1.wagen" :key="k">
 
             <div class="row">
-              <div class="col-6"><select class="form-control" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" :name="'Wagendaten ' +(k+1)" v-validate="{ required: true, checkWagen: true}" :class="{ 'is-invalid': submitted && errors.has('Wagendaten '+ (k+1)) }">
-                <option v-bind:value="wagendaten_def"></option>
+              <div class="col-6">
+                
+              
+              <select v-if="Object.keys(input.wagendaten).length" class="form-control" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" :name="'Wagendaten ' +(k+1)" v-validate="{ required: true, checkWagen: true}" :class="{ 'is-invalid': submitted && errors.has('Wagendaten '+ (k+1)) }">
+                
+
                 <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ formatWagennummer(wagendaten.wagennummer) }}</option>
               </select>
-              <v-select placeholder="Suche" label="wagennummer" :options="wagendatens" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" :name="'Wagendaten ' +(k+1)" v-validate="{ required: true, checkWagen: true}" :class="{ 'is-invalid': submitted && errors.has('Wagendaten '+ (k+1)) }"> </v-select>
-              <div v-if="submitted && errors.has('Wagendaten '+ (k+1))" class="invalid-feedback">{{ errors.first('Wagendaten '+ (k+1)) }}</div>
-              </div>
+              
+
+
+              <v-select class="form-control" v-if="!Object.keys(input.wagendaten).length" placeholder="Suche" label="wagennummer" :options="wagendatens" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" :name="'Wagendaten ' +(k+1)" v-validate="{ required: true, checkWagen: true}" :class="{ 'is-invalid': submitted && errors.has('Wagendaten '+ (k+1)) }"> </v-select>
+              
+              <div v-if="submitted && errors.has('Wagendaten '+ (k+1))" class="invalid-feedback">{{ errors.first('Wagendaten '+ (k+1)) }}</div></div>
               <div class="col-4"><input type="text" v-model="input.liter" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" :name="'Liter ' +(k+1)" v-validate="{ required: true, numeric: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Liter ' +(k+1)) }"/>
                 <div v-if="submitted && errors.has('Liter ' +(k+1)) " class="invalid-feedback">{{ errors.first('Liter ' +(k+1)) }}</div> </div>
 
@@ -96,15 +103,20 @@
 
             <div class="row">
 
-              <div class="col-6"><select class="form-control" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" :name="'Ladegut 2 Wagendaten ' +(k+1)" v-validate="{ required: true, checkWagen: true}" :class="{ 'is-invalid': submitted && errors.has('Ladegut 2 Wagendaten '+ (k+1)) }">
-
-                <option v-bind:value="wagendaten_def"></option>
+              <div class="col-6">
+                
+              
+              <select v-if="Object.keys(input.wagendaten).length" class="form-control" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" :name="'Ladegut 2 Wagendaten ' +(k+1)" v-validate="{ required: true, checkWagen: true}" :class="{ 'is-invalid': submitted && errors.has('Ladegut 2 Wagendaten '+ (k+1)) }">
+                
 
                 <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ formatWagennummer(wagendaten.wagennummer) }}</option>
               </select>
-              <v-select placeholder="Suche" label="wagennummer" :options="wagendatens" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" :name="'Wagendaten ' +(k+1)" v-validate="{ required: true, checkWagen: true}" :class="{ 'is-invalid': submitted && errors.has('Wagendaten '+ (k+1)) }"> </v-select>
               
-               <div v-if="submitted && errors.has('Ladegut 2 Wagendaten '+ (k+1))" class="invalid-feedback">{{ errors.first('Ladegut 2 Wagendaten '+ (k+1)) }}</div></div>
+
+
+              <v-select class="form-control" v-if="!Object.keys(input.wagendaten).length" placeholder="Suche" label="wagennummer" :options="wagendatens" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" :name="'Ladegut 2 Wagendaten ' +(k+1)" v-validate="{ required: true, checkWagen: true}" :class="{ 'is-invalid': submitted && errors.has('Ladegut 2 Wagendaten '+ (k+1)) }"> </v-select>
+              
+              <div v-if="submitted && errors.has('Ladegut 2 Wagendaten '+ (k+1))" class="invalid-feedback">{{ errors.first('Ladegut 2 Wagendaten '+ (k+1)) }}</div></div>
               <div class="col-4"><input type="text" v-model="input.liter" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" :name="'Ladegut 2 Liter ' +(k+1)" v-validate="{ required: true, numeric: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Ladegut 2 Liter ' +(k+1)) }"/>
                 <div v-if="submitted && errors.has('Ladegut 2 Liter ' +(k+1)) " class="invalid-feedback">{{ errors.first('Ladegut 2 Liter ' +(k+1)) }}</div> </div>
 
@@ -152,12 +164,18 @@
 
             <div class="row">
 
-              <div class="col-6"><select class="form-control" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" :name="'Ladegut 3 Wagendaten ' +(k+1)" v-validate="{ required: true, checkWagen: true}" :class="{ 'is-invalid': submitted && errors.has('Ladegut 3 Wagendaten '+ (k+1)) }">
-                <option v-bind:value="wagendaten_def"></option>
+              <div class="col-6">
+                
+              
+              <select v-if="Object.keys(input.wagendaten).length" class="form-control" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" :name="'Ladegut 3 Wagendaten ' +(k+1)" v-validate="{ required: true, checkWagen: true}" :class="{ 'is-invalid': submitted && errors.has('Ladegut 3 Wagendaten '+ (k+1)) }">
+                
 
                 <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ formatWagennummer(wagendaten.wagennummer) }}</option>
               </select>
-              <v-select placeholder="Suche" label="wagennummer" :options="wagendatens" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" :name="'Wagendaten ' +(k+1)" v-validate="{ required: true, checkWagen: true}" :class="{ 'is-invalid': submitted && errors.has('Wagendaten '+ (k+1)) }"> </v-select>
+              
+
+
+              <v-select class="form-control" v-if="!Object.keys(input.wagendaten).length" placeholder="Suche" label="wagennummer" :options="wagendatens" v-model="input.wagendaten" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" :name="'Ladegut 3 Wagendaten ' +(k+1)" v-validate="{ required: true, checkWagen: true}" :class="{ 'is-invalid': submitted && errors.has('Ladegut 3 Wagendaten '+ (k+1)) }"> </v-select>
               
               <div v-if="submitted && errors.has('Ladegut 3 Wagendaten '+ (k+1))" class="invalid-feedback">{{ errors.first('Ladegut 3 Wagendaten '+ (k+1)) }}</div></div>
               <div class="col-4"><input type="text" class="form-control" v-model="input.liter" :disabled="ladeliste.status == 'Abgeschlossen' || ladeliste.status == 'freigegeben' || ladeliste.status == 'storniert'" :name="'Ladegut 3 Liter ' +(k+1)" v-validate="{ required: true, numeric: true}" :class="{ 'is-invalid': submitted && errors.has('Ladegut 3 Liter ' +(k+1)) }"/>
@@ -264,13 +282,13 @@ Validator.extend('checkLadegut', {
 Validator.extend('checkWagen', {
   validate: (value) => {
     console.log("in3")
-    console.log(typeof value)
+    console.log(value)
 
-    if (value != 123) {
+    if (Object.keys(value).length) {
       console.log("true")
       return true;
     }
-    console.log("false")
+    console.log("#######################false")
     return false
   },
 });
@@ -477,7 +495,7 @@ this.ladeliste.status = s;
     },
 
     formatWagennummer(wagennummer){
-          var wagennummer2 = wagennummer.slice(0, 4) + " " + wagennummer.slice(4, 8) + " " + wagennummer.slice(8, 11) + "-" + wagennummer.slice(11);
+          var wagennummer2 = wagennummer.slice(0,2) + " " + wagennummer.slice(2, 4) + " " + wagennummer.slice(4, 8) + " " + wagennummer.slice(8, 11) + "-" + wagennummer.slice(11);
 
 
           return wagennummer2
