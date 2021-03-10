@@ -2,7 +2,7 @@
   <div>
     <div class="card mb-2">
       <div class="card-header">
-        <h3>Frachtbriefe</h3>
+        <h3>Frachtbriefe</h3></a>
         <div class="row">
           <div class="col">
             <label class="mr-2">Statusfilter:</label>

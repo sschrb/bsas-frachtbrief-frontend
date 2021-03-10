@@ -4,7 +4,7 @@
 
 
       <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <a class="navbar-brand">BSAS-Tools</a>
+        <a class="navbar-brand">M.A.D Tools</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <!-- klappt Navbar auf Smartphones ein -->
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -28,6 +28,9 @@
             </li>
           </ul>
           <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#"><router-link to="/anleitung">Anleitung</router-link></a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="#"><router-link to="/login">Abmelden</router-link></a>
             </li>
@@ -63,7 +66,7 @@ export default {
     },
     methods: {
         ...mapActions({
-            clearAlert: 'alert/clear' 
+            clearAlert: 'alert/clear'
         })
     },
     watch: {
@@ -71,6 +74,6 @@ export default {
             // clear alert on location change
             this.clearAlert();
         }
-    } 
+    }
 };
 </script>

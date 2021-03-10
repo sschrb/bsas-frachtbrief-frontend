@@ -10,7 +10,7 @@
 
  <form @submit.prevent="handleSubmit">
 
-<label for="adresse">EVU</label>
+<label for="adresse">EVU bearbeiten/neu anlegen</label>
 
 
 
@@ -158,6 +158,24 @@ computed: {
             this.$validator.validate().then(valid => {
                 if (valid) {
                     this.create(this.evu)
+                    this.evu_def= {
+                name: "",
+                short: '',
+                code: '',
+
+
+
+            },
+
+            this.evu= {
+                name: "",
+                short: '',
+                code: '',
+
+
+
+            }
+             this.submitted = false;
                 }
             });
 

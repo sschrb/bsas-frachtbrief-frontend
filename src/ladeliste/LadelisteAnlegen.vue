@@ -4,11 +4,34 @@
     <div class="card mb-2">
       <div class="card-body">
         <div class="form-group">
+          <label for="adresse">von bestehender Ladeliste Kopie erzeugen (optional)</label>
+          <div class="row">
+            <div class="col">
+              <em v-if="ladelisten">
+                <v-select :get-option-label='option => option.ladelistedata.refnr' :options="ladelisten" v-model="vorlagedata" > </v-select>
+              </em>
+            </div>
+            <div class="col-auto">
+              <button class="btn btn-primary" v-on:click="vorlageLaden()" >laden</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <div class="card mb-2">
+      <div class="card-body">
+        <div class="form-group">
           <label for="adresse">Name der Ladeliste</label>
           <input type="text" v-model="ladelistedata.refnr"  name="Referenz" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Referenz') }"/>
-                <div v-if="submitted && errors.has('Referenz') " class="invalid-feedback">{{ errors.first('Referenz') }}</div> 
+                <div v-if="submitted && errors.has('Referenz') " class="invalid-feedback">{{ errors.first('Referenz') }}</div>
         </div>
-        
+
       </div>
     </div>
 
@@ -22,21 +45,7 @@
       </div>
     </div>
 
-    <div class="card mb-2">
-      <div class="card-body">
-        <div class="form-group">
-          <label for="adresse">Ladeliste laden</label>
-         
-<em v-if="ladelisten">
-          <v-select :get-option-label='option => option.ladelistedata.refnr' :options="ladelisten" v-model="vorlagedata" > </v-select>
-</em>
-        </div>
-        <div class="col-auto">
-              <button class="btn btn-primary" v-on:click="vorlageLaden()" >laden</button>
-            </div>
-      </div>
-      
-    </div>
+
 
     <!-- ############################################################ 1. LADEGUT ############################################################ -->
     <div class="card mb-5">
@@ -53,33 +62,42 @@
 
 
         <div class="row mb-2">
-          <div class="col-6">Wagennummer</div>
-          <div class="col-4">Liter</div>
+          <div class="col-5">Wagennummer</div>
+          <div class="col-3">Liter / Kilogramm</div>
         </div>
 
         <div id=app>
           <div class="form-group" v-for="(input,k) in ladelistedata.ladegut1.wagen" :key="k">
 
             <div class="row">
-              <div class="col-6">
-                
+              <div class="col-5">
+
                 <!--
                 <select class="form-control" v-model="input.wagendaten">
                 <option v-for="wagendaten in wagendatens" v-bind:value="wagendaten" v-bind:key="wagendaten.id">{{ formatWagennummer(wagendaten.wagennummer) }}</option>
               </select> -->
-              
-              <v-select label="wagennummer" :options="wagendatens" v-model="input.wagendaten" > </v-select>
-              
+
+              <v-select label="wagennummer" :options="wagendatens" v-model="input.wagendaten" >
+                <template slot="selected-option" slot-scope="data">
+    <!-- HTML that describe how select should render selected items -->
+    {{ formatWagennummer(data.wagennummer) }}
+  </template>
+  <template slot="option" slot-scope="data">
+    <!-- HTML that describe how select should render items when the select is open -->
+    {{ formatWagennummer(data.wagennummer) }}
+  </template>
+                 </v-select>
+
               </div>
 
 
 
-       
 
 
 
-              <div class="col-4"><input type="number" class="form-control" v-model="input.liter"></div>
-              
+
+              <div class="col-3"><input type="number" class="form-control" v-model="input.liter"></div>
+
 
 
               <div class="col-1"><button type="button" class="btn btn-info" @click="swap1(k, k-1)" v-show="k != 0" >↑</button></div>
@@ -108,8 +126,8 @@
       <div class="card-body">
 
         <div class="row mb-2">
-          <div class="col-6">Wagennummer</div>
-          <div class="col-4">Liter</div>
+          <div class="col-5">Wagennummer</div>
+          <div class="col-3">Liter / Kilogramm</div>
         </div>
 
         <div id=app>
@@ -117,8 +135,17 @@
 
             <div class="row">
 
-              <div class="col-6"><v-select label="wagennummer" :options="wagendatens" v-model="input.wagendaten" > </v-select></div>
-              <div class="col-4"><input type="text" class="form-control" v-model="input.liter"></div>
+              <div class="col-5"><v-select label="wagennummer" :options="wagendatens" v-model="input.wagendaten" >
+                <template slot="selected-option" slot-scope="data">
+    <!-- HTML that describe how select should render selected items -->
+    {{ formatWagennummer(data.wagennummer) }}
+  </template>
+  <template slot="option" slot-scope="data">
+    <!-- HTML that describe how select should render items when the select is open -->
+    {{ formatWagennummer(data.wagennummer) }}
+  </template>
+                </v-select></div>
+              <div class="col-3"><input type="text" class="form-control" v-model="input.liter"></div>
 
               <div class="col-1"><button type="button" class="btn btn-info" @click="swap2(k, k-1)" v-show="k != 0" >↑</button></div>
               <div class="col-1"><button type="button" class="btn btn-info" @click="swap2(k, k+1)" v-show="k != ladelistedata.ladegut2.wagen.length-1" >↓</button></div>
@@ -153,8 +180,8 @@
       <div class="card-body">
 
         <div class="row mb-2">
-          <div class="col-6">Wagennummer</div>
-          <div class="col-4">Liter</div>
+          <div class="col-5">Wagennummer</div>
+          <div class="col-3">Liter / Kilogramm</div>
         </div>
 
         <div id=app>
@@ -162,8 +189,18 @@
 
             <div class="row">
 
-              <div class="col-6"><v-select label="wagennummer" :options="wagendatens" v-model="input.wagendaten" > </v-select></div>
-              <div class="col-4"><input type="text" class="form-control" v-model="input.liter"></div>
+              <div class="col-5"><v-select label="wagennummer" :options="wagendatens" v-model="input.wagendaten" >
+                <template slot="selected-option" slot-scope="data">
+    <!-- HTML that describe how select should render selected items -->
+    {{ formatWagennummer(data.wagennummer) }}
+  </template>
+  <template slot="option" slot-scope="data">
+    <!-- HTML that describe how select should render items when the select is open -->
+    {{ formatWagennummer(data.wagennummer) }}
+  </template>
+                
+                </v-select></div>
+              <div class="col-3"><input type="text" class="form-control" v-model="input.liter"></div>
 
               <div class="col-1"><button type="button" class="btn btn-info" @click="swap3(k, k-1)" v-show="k != 0" >↑</button></div>
               <div class="col-1"><button type="button" class="btn btn-info" @click="swap3(k, k+1)" v-show="k != ladelistedata.ladegut3.wagen.length-1" >↓</button></div>
@@ -206,7 +243,7 @@ import { Validator } from 'vee-validate';
 Validator.extend('objectNotEmpty', {
   validate: (value) => {
     if (value[Object.keys(value)[0]]) {
-      
+
       return true;
     }
     return false
@@ -228,8 +265,8 @@ vorlagedata: [],
 
                                     refnr: '',
                                     datum: new Date().toJSON(),
-                                    
-                                    
+
+
 
 
                                     ladegut1: {
@@ -347,12 +384,12 @@ this.getAllLadeliste();
         },
 
         swap1(indexA, indexB) {
-       
+
     var temp = this.ladelistedata.ladegut1.wagen[indexA];
-    
+
     this.ladelistedata.ladegut1.wagen[indexA] = this.ladelistedata.ladegut1.wagen[indexB];
     this.ladelistedata.ladegut1.wagen[indexB] = temp;
-     
+
      this.add1();
      this.ladelistedata.ladegut1.wagen.pop()
 
@@ -371,12 +408,12 @@ this.getAllLadeliste();
     },
 
     swap2(indexA, indexB) {
-       
+
     var temp = this.ladelistedata.ladegut2.wagen[indexA];
-    
+
     this.ladelistedata.ladegut2.wagen[indexA] = this.ladelistedata.ladegut2.wagen[indexB];
     this.ladelistedata.ladegut2.wagen[indexB] = temp;
-     
+
      this.add2();
      this.ladelistedata.ladegut2.wagen.pop()
 
@@ -395,12 +432,12 @@ this.getAllLadeliste();
     },
 
     swap3(indexA, indexB) {
-       
+
     var temp = this.ladelistedata.ladegut3.wagen[indexA];
-    
+
     this.ladelistedata.ladegut3.wagen[indexA] = this.ladelistedata.ladegut3.wagen[indexB];
     this.ladelistedata.ladegut3.wagen[indexB] = temp;
-     
+
      this.add3();
      this.ladelistedata.ladegut3.wagen.pop()
 
@@ -423,7 +460,7 @@ saveLadeliste(){
 this.submitted = true;
 this.$validator.validate().then(valid => {
                 if (valid) {
-                  
+
             this.createLadeliste(this.$data);
 
 
@@ -526,7 +563,8 @@ if(this.evu2.name!='' && this.evu3.name!='' && this.evu4.name!='' && this.evu5.n
 
         },
         formatWagennummer(wagennummer){
-          var wagennummer2 = wagennummer.slice(0, 4) + " " + wagennummer.slice(4, 8) + " " + wagennummer.slice(8, 11) + "-" + wagennummer.slice(11);
+          if (!wagennummer) return ''
+          var wagennummer2 = wagennummer.slice(0,2) + " " + wagennummer.slice(2, 4) + " " + wagennummer.slice(4, 8) + " " + wagennummer.slice(8, 11) + "-" + wagennummer.slice(11);
 
 
           return wagennummer2

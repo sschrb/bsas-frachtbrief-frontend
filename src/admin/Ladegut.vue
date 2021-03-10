@@ -10,7 +10,7 @@
 
  <form @submit.prevent="handleSubmit">
 
-<label for="adresse">Ladegut</label>
+<label for="adresse">Ladegut bearbeiten/neu anlegen</label>
 
 
 
@@ -42,21 +42,21 @@
             </div>
 
              <div class="form-group">
-                <label>Einheit:</label>
+                <label>Einheit auf Ladeliste:</label>
           <div class="form-check form-check-inline">
             <input v-on:click="ladegut.dichte = ''" class="form-check-input" id="LITER" type="radio" name="einheit" value="Liter" v-model="ladegut.einheit"/>
             <label class="form-check-label" for="LITER">Liter</label>
           </div>
 
           <div class="form-check form-check-inline">
-            <input v-on:click="ladegut.dichte = 1000" class="form-check-input" id="KG" type="radio" name="einheit" value="Kg" v-model="ladegut.einheit"/>
+            <input v-on:click="ladegut.dichte = '1000'" class="form-check-input" id="KG" type="radio" name="einheit" value="Kg" v-model="ladegut.einheit"/>
             <label class="form-check-label" for="KG">Kilogramm</label>
           </div>
 
             </div>
 
             <div v-if="ladegut.dichte != 1000" class="form-group">
-                <label for="wagenummer">Dichte</label>
+                <label for="wagenummer">Dichte [kg/m³]</label>
                 <input type="text" v-model="ladegut.dichte" name="Dichte" v-validate="{ required: true, decimal: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Dichte') }"/>
                 <div v-if="submitted && errors.has('Dichte')" class="invalid-feedback">{{ errors.first('Dichte') }}</div>
 
@@ -77,7 +77,7 @@
 
             </div>
 
-            
+
 
             <div class="form-group">
                 <label for="wagenummer">NHM Code</label>
@@ -142,7 +142,7 @@ Validator.extend("decimal", {
       };
     }
     const regexPart = decimals === '*' ? '+' : `{1,${decimals}}`;
-    
+
     const regex = new RegExp(`^[-+]?\\d*(\\${separator}\\d${regexPart})?([eE]{1}[-]?\\d+)?$`);
 
     return {
@@ -240,6 +240,31 @@ computed: {
             this.$validator.validate().then(valid => {
                 if (valid) {
                     this.create(this.ladegut)
+                    this.ladegut_def= {
+                bezeichnung: "",
+                bemerkung: "",
+                dichte: "",
+                rid: "Nein",
+                einheit: "Liter",
+                nhm: "",
+                wagentyp: ""
+
+
+
+            },
+
+            this.ladegut= {
+                bezeichnung: "",
+                bemerkung: "",
+                dichte: "",
+                rid: "Nein",
+                einheit: "Liter",
+                nhm: "",
+                wagentyp: ""
+
+
+
+            }
                     this.submitted = false;
                 }
             });

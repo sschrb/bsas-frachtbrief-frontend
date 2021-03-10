@@ -601,8 +601,12 @@
         <div class="card-body">
 
           <div class="row">
-            <label class="col-sm-7" for="adresse">Andere Beförderer</label>
-            <button class="btn btn-primary col-sm-4 mx-2" v-on:click="aBefordererVorschlag()">Vorschlag generieren</button>
+            <div class="col">
+              <label for="adresse">Andere Beförderer</label>
+            </div>
+            <div class="col-auto">
+              <button class="btn btn-primary" v-on:click="aBefordererVorschlag()">Vorschlag generieren</button>
+            </div>
           </div>
           <div class="row">
             <div class="col-4 mb-1">EVU</div>
@@ -655,9 +659,13 @@
 <!-- ############################################################ Kommerzielle Bedingungen ############################################################ -->
     <div class="card mb-2">
       <div class="card-body">
-        <div class="form-row mb-1 mr-1">
-          <label for="" class="col">Kommerzielle Bedingungen</label>
-          <button class="btn btn-primary" v-on:click="kommerzBedingVorschlag()">Vorschlag generieren</button>
+        <div class="row mb-1">
+          <div class="col">
+            <label for="">Kommerzielle Bedingungen</label>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-primary" v-on:click="kommerzBedingVorschlag()">Vorschlag generieren</button>
+          </div>
         </div>
         <textarea type="text" v-model="kommerziellebedingungen" class="form-control" />
       </div>
@@ -692,8 +700,14 @@
     <div class="card mb-2">
       <div class="card-body">
         <div class="form-group">
-          <label for="" class="col-7">Bezeichnung des Gutes</label>
-          <button class="btn btn-primary col-sm-4 mx-2" v-on:click="bezeichnungGutVorschlag()">Vorschlag generieren</button>
+          <div class="row">
+            <div class="col">
+              <label for="">Bezeichnung des Gutes</label>
+            </div>
+            <div class="col-auto">
+              <button class="btn btn-primary" v-on:click="bezeichnungGutVorschlag()">Vorschlag generieren</button>
+            </div>
+          </div>
         </div>
         <textarea type="text" v-model="bezeichnungGut" class="form-control" />
       </div>
@@ -1051,13 +1065,13 @@ computed: {
 },
 saveFrachtbrief(){
 
-  
+
             this.submitted = true;
             this.$validator.validate().then(valid => {
                 if (valid) {
-                    
-                    
-                            
+
+
+
 if(this.erklarung.id == null && this.erklarung.code != ''){
 
     this.createErklarung(this.erklarung);

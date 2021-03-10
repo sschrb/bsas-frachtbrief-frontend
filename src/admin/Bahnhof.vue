@@ -10,7 +10,7 @@
 
  <form @submit.prevent="handleSubmit">
 
-<label for="adresse">Bahnhof</label>
+<label for="adresse">Bahnhof bearbeiten/neu anlegen</label>
 
 
 
@@ -165,6 +165,24 @@ this.submitted = true;
             this.$validator.validate().then(valid => {
                 if (valid) {
                     this.create(this.bahnhof)
+                    this.bahnhof_def= {
+               name: "",
+                bahnhofscode: '',
+                laendercode: '',
+                land: '',
+
+
+            },
+
+            this.bahnhof= {
+               name: "",
+                bahnhofscode: '',
+                laendercode: '',
+                land: '',
+
+
+            }
+            this.submitted = false;
                 }
             });
         },

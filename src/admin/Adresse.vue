@@ -4,7 +4,7 @@
 
     <form @submit.prevent="handleSubmit">
 
-      <label for="adresse">Adresse</label>
+      <label for="adresse">Adresse bearbeiten/neu anlegen</label>
 
 
 
@@ -169,6 +169,26 @@ computed: {
             this.$validator.validate().then(valid => {
                 if (valid) {
                     this.create(this.adresse)
+                    this.adresse_def= {
+                name: '',
+                strasse: '',
+                ort: '',
+                mail: '',
+                telefon: ''
+
+
+            },
+
+            this.adresse= {
+                name: '',
+                strasse: '',
+                ort: '',
+                mail: '',
+                telefon: ''
+
+
+            }
+            this.submitted = false;
                 }
             });
 

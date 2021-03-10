@@ -10,7 +10,7 @@
 
  <form @submit.prevent="handleSubmit">
 
-<label for="adresse">Wagendaten</label>
+<label for="adresse">Wagendaten bearbeiten/neu anlegen</label>
 
 
 
@@ -35,7 +35,7 @@
             </div>
 
             <div class="form-group">
-                <label for="wagenummer">Halter</label>
+                <label for="wagenummer">Halterkürzel</label>
                 <input type="text" v-model="wagendaten.halter" class="form-control"/>
 
             </div>
@@ -47,7 +47,7 @@
             </div>
 
             <div class="form-group">
-                <label for="Eigengewicht">Eigengewicht</label>
+                <label for="Eigengewicht">Eigengewicht [kg]</label>
                 <input type="Eigengewicht" v-model="wagendaten.eigengewicht" v-validate="{ required: true, integer: true }" name="Eigengewicht" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Eigengewicht') }"/>
                 <div v-if="submitted && errors.has('Eigengewicht')" class="invalid-feedback">{{ errors.first('Eigengewicht') }}</div>
 
@@ -91,14 +91,14 @@ import { Validator } from 'vee-validate';
 
 var luhnChk = (function (arr) {
     return function (ccNum) {
-        
+
             ccNum = String(ccNum)
-        
+
         var
             len = ccNum.length,
             bit = 1,
             sum = 0,
-            
+
             val;
 
         while (len) {
@@ -194,6 +194,24 @@ computed: {
             this.$validator.validate().then(valid => {
                 if (valid) {
                     this.create(this.wagendaten);
+
+                    this.wagendaten_def = {
+                wagennummer: '',
+                halter: '',
+                achsanzahl: '',
+                eigengewicht: ''
+
+
+            },
+            this.wagendaten = {
+                wagennummer: '',
+                halter: '',
+                achsanzahl: '',
+                eigengewicht: ''
+
+
+            }
+            this.submitted = false;
                 }
             });
 

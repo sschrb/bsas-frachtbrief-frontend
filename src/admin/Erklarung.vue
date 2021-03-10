@@ -10,7 +10,7 @@
 
  <form @submit.prevent="handleSubmit">
 
-<label for="erklarung">Erklärungen</label>
+<label for="erklarung">Erklärungen bearbeiten/neu anlegen</label>
 
 
 
@@ -135,6 +135,18 @@ this.submitted = true;
             this.$validator.validate().then(valid => {
                 if (valid) {
                     this.create(this.erklarung)
+                    this.erklarung_def= {
+                code: ''
+
+
+            },
+
+            this.erklarung= {
+                code: ''
+
+
+            }
+            this.submitted = false;
                 }
             });
         },

@@ -74,7 +74,7 @@
                 <button class="btn btn-link py-0" v-on:click="viewAdresse2=!viewAdresse2">Details anzeigen</button>
               </div>
 
-              
+
 
 
               <em v-if="viewAdresse2">
@@ -119,7 +119,7 @@
                 <button class="btn btn-link py-0" v-on:click="viewBahnhof1=!viewBahnhof1">Details anzeigen</button>
               </div>
 
-              
+
 
 
               <em v-if="viewBahnhof1">
@@ -150,7 +150,7 @@
 
                 <button class="btn btn-link py-0" v-on:click="viewEvu1=!viewEvu1">Details anzeigen</button>
               </div>
-              
+
 
 
 
@@ -184,7 +184,7 @@
                 <div v-if="submitted && errors.has('Zielbahnhof')" class="invalid-feedback">{{ errors.first('Zielbahnhof') }}</div>
                 <button class="btn btn-link py-0" v-on:click="viewBahnhof7=!viewBahnhof7">Details anzeigen</button>
               </div>
-              
+
 
 
 
@@ -514,7 +514,7 @@
                 <option v-for="bahnhof in bahnhoefe" v-bind:value="bahnhof" v-bind:key="bahnhof.id">{{ bahnhof.name }}</option>
               </select>
               <div v-if="submitted && errors.has('Übernahmeort')" class="invalid-feedback">{{ errors.first('Übernahmeort') }}</div>
-              
+
 
               <button class="btn btn-link py-0" v-on:click="viewUbernahmeort=!viewUbernahmeort">Details anzeigen</button>
 
@@ -537,7 +537,7 @@
 
             <div class="col-sm-6">
               <label for="adresse">Übernahmedatum und Uhrzeit</label>
-              
+
               <datetime :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="datetime" v-model="frachtbrief.frachtbriefdata.ubernahmeort.datum" value-zone="Europe/Berlin" ></datetime>
             </div>
           </div>
@@ -590,8 +590,12 @@
         <div class="card-body">
 
           <div class="row">
-            <label class="col-sm-7" for="adresse">Andere Beförderer</label>
-            <button class="btn btn-primary col-sm-4 mx-2" v-on:click="aBefordererVorschlag()" :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'">Vorschlag generieren</button>
+            <div class="col">
+              <label for="adresse">Andere Beförderer</label>
+            </div>
+            <div class="col-auto">
+              <button class="btn btn-primary" v-on:click="aBefordererVorschlag()" :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'">Vorschlag generieren</button>
+            </div>
           </div>
           <div class="row">
             <div class="col-4 mb-1">EVU</div>
@@ -643,16 +647,22 @@
       </div>
 
       <!-- ############################################################ Kommerzielle Bedingungen ############################################################ -->
-    <div class="card mb-2">
-      <div class="card-body">
-        <div class="form-group">
-          <label for="" class="col-sm-7">Kommerzielle Bedingungen</label>
-          <button class="btn btn-primary col-sm-4 mx-2" v-on:click="kommerzBedingVorschlag()" :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'">Vorschlag generieren</button>
+      <div class="card mb-2">
+        <div class="card-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <label for="">Kommerzielle Bedingungen</label>
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-primary" v-on:click="kommerzBedingVorschlag()" :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'">Vorschlag generieren</button>
+              </div>
+            </div>
+          </div>
+          <textarea :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.kommerziellebedingungen" name="Kommerzielle Bedingungen" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Kommerzielle Bedingungen') }"/>
+          <div v-if="submitted && errors.has('Kommerzielle Bedingungen')" class="invalid-feedback">{{ errors.first('Kommerzielle Bedingungen') }}</div>
         </div>
-        <textarea :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.kommerziellebedingungen" name="Kommerzielle Bedingungen" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Kommerzielle Bedingungen') }"/>
-                <div v-if="submitted && errors.has('Kommerzielle Bedingungen')" class="invalid-feedback">{{ errors.first('Kommerzielle Bedingungen') }}</div>
       </div>
-    </div>
 
           <!-- ############################################################ Ladeliste zuordnen ############################################################ -->
 
@@ -660,7 +670,7 @@
       <div class="card mb-2">
         <div class="card-body">
           <div class="row">
-            
+
             <div class="col-sm-6">
               <label for="adresse">freigegebene Ladeliste zuordnen</label>
 
@@ -669,8 +679,8 @@
                 <option v-bind:value="frachtbrief.frachtbriefdata.ladeliste_def"></option>
                 <option v-for="ladeliste in ladelisten" v-bind:value="ladeliste" v-bind:key="ladeliste.id">{{ ladeliste.ladelistedata.refnr }}</option>
               </select>
-              
-               
+
+
                 </em>
 
             </div>
@@ -689,9 +699,14 @@
     <div class="card mb-2">
       <div class="card-body">
         <div class="form-group">
-          <label for="" class="col-sm-7">Bezeichnung des Gutes</label>
-          <button class="btn btn-primary col-sm-4 mx-2" v-on:click="bezeichnungGutVorschlag()" :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'">Vorschlag generieren</button>
-
+          <div class="row">
+            <div class="col">
+              <label for="">Bezeichnung des Gutes</label>
+            </div>
+            <div class="col-auto">
+              <button class="btn btn-primary" v-on:click="bezeichnungGutVorschlag()" :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'">Vorschlag generieren</button>
+            </div>
+          </div>
         </div>
         <textarea :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.bezeichnungGut" class="form-control" name="Bezeichnung des Gutes" v-validate="{ required: true}" :class="{ 'is-invalid': submitted && errors.has('Bezeichnung des Gutes') }"/>
         <div v-if="submitted && errors.has('Bezeichnung des Gutes')" class="invalid-feedback">{{ errors.first('Bezeichnung des Gutes') }}</div>
@@ -796,7 +811,7 @@ import { Validator } from 'vee-validate';
 Validator.extend('objectNotEmpty', {
   validate: (value) => {
     if (value[Object.keys(value)[0]]) {
-      
+
       return true;
     }
     return false
@@ -909,15 +924,15 @@ export default {
 
 
 
-        
-                   
+
+
 this.update(data);
         },
         setStatus(s){
 this.clearErrorMessages()
 var ladelisteid = this.frachtbrief.frachtbriefdata.ladeliste.id
 
-          
+
 
 
           if(s=='Abgeschlossen'){
@@ -935,7 +950,7 @@ var ladeliste = true;
             }
             this.$validator.validate().then(valid => {
                 if (valid && ladeliste) {
-                  
+
             this.frachtbrief.status = s;
                     this.speichern()
                 }
