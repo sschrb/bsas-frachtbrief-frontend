@@ -4,7 +4,7 @@
     <div class="card mb-2">
       <div class="card-body">
         <div class="form-group">
-          <label for="adresse">von bestehender Ladeliste Kopie erzeugen (optional)</label>
+          <label for="adresse">Ladelisten-Vorlage laden (optional)</label>
           <div class="row">
             <div class="col">
               <em v-if="ladelisten">
@@ -198,7 +198,7 @@
     <!-- HTML that describe how select should render items when the select is open -->
     {{ formatWagennummer(data.wagennummer) }}
   </template>
-                
+
                 </v-select></div>
               <div class="col-3"><input type="text" class="form-control" v-model="input.liter"></div>
 
@@ -214,25 +214,35 @@
       </div>
     </div>
 
-<label>Als Vorlage verwenden:</label>
-    <div class="form-check form-check-inline">
-      <input v-on:click="status= 'in Bearbeitung'" class="form-check-input" id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="vorlage"/>
-      <label class="form-check-label" for="vorlagefalse">Nein</label>
-    </div>
-
-    <div class="form-check form-check-inline">
-      <input v-on:click="status= 'Vorlage'" class="form-check-input" id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="vorlage"/>
-      <label class="form-check-label" for="vorlagetrue">Ja</label>
-    </div>
-
 
     <div class="form-group">
+      <div class="row mx-1">
+        <div class="col">
+          <label>Als Vorlage verwenden:</label>
+          <div class="form-check form-check-inline">
+            <input v-on:click="status= 'in Bearbeitung'" class="form-check-input" id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="vorlage"/>
+            <label class="form-check-label" for="vorlagefalse">Nein</label>
+          </div>
 
-      <button class="btn btn-success float-right mb-5" v-on:click="saveLadeliste()" >Speichern u. Schließen</button>
-      <em v-if="message.error">
-      {{message.error.message}}
-      </em>
+          <div class="form-check form-check-inline">
+            <input v-on:click="status= 'Vorlage'" class="form-check-input" id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="vorlage"/>
+            <label class="form-check-label" for="vorlagetrue">Ja</label>
+          </div>
+        </div>
+
+        <div class="col alert-info">
+          <em v-if="message.error">
+            {{message.error.message}}
+          </em>
+        </div>
+
+        <div class="col-auto">
+
+        <button class="btn btn-success" v-on:click="saveLadeliste()" >Speichern u. Schließen</button>
+
+      </div>
     </div>
+  </div>
 
 
 

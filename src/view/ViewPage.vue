@@ -716,11 +716,14 @@
 
     </form>
 
-    <div class="container">
-      <div class="row">
 
-        <div class="container col">
 
+
+
+
+    <div class="form-group">
+      <div class="row mx-1">
+        <div class="col">
           <label>Als Vorlage verwenden:</label>
           <div class="form-check form-check-inline">
             <input class="form-check-input" id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="frachtbrief.vorlage" v-on:click="frachtbrief.status= 'in Bearbeitung'" :disabled="frachtbrief.status == 'Abgeschlossen'"/>
@@ -732,14 +735,20 @@
             <label class="form-check-label" for="vorlagetrue">Ja</label>
           </div>
         </div>
-        <button class="btn btn-success mb-1 col-auto" v-on:click="speichern()" :disabled="frachtbrief.status == 'Abgeschlossen'">Speichern</button>
+
+        <div class="col alert-info">
+          <em v-if="nachricht">
+            {{nachricht.text}}
+          </em>
+        </div>
+
+        <div class="col-auto">
+          <button class="btn btn-success" v-on:click="speichern()" :disabled="frachtbrief.status == 'Abgeschlossen'">Zwischenspeichern</button>
+        </div>
       </div>
     </div>
 
 
-    <em v-if="nachricht">
-      {{nachricht.text}}
-    </em>
 
 
     <div class="card mb-2">
@@ -1156,7 +1165,7 @@ if(this.frachtbrief.frachtbriefdata.evu2.short!='' && this.frachtbrief.frachtbri
     this.frachtbrief.frachtbriefdata.kommerziellebedingungen = teil1 + '\n' + teil2 + '\n' + teil3 + '\n' + teil4 + '\n' + teil5 + '\n' + teil6
 
 }
-    
+
 
 },
 

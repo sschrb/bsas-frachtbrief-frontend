@@ -715,28 +715,44 @@
     </em>
 
       <div class="form-group">
-        <button class="btn btn-success float-right mb-5" v-on:click="saveFrachtbrief()" >Speichern u. Schließen</button>
-        <div v-if="submitted && errors.has('Referenz')">{{ errors.first('Referenz') }}</div>
-        <em v-if="message.error">
-          {{message.error.message}}
 
-        </em>
+
 
       </div>
 
     </form>
 
 
-    <label>Als Vorlage verwenden:</label>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="vorlage"/>
-      <label class="form-check-label" for="vorlagefalse">Nein</label>
+
+
+
+    <div class="form-group">
+      <div class="row mx-1">
+        <div class="col">
+          <label>Als Vorlage verwenden:</label>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="vorlage"/>
+            <label class="form-check-label" for="vorlagefalse">Nein</label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="vorlage"/>
+            <label class="form-check-label" for="vorlagetrue">Ja</label>
+          </div>
+        </div>
+        <div class="col alert-info">
+          <div v-if="submitted && errors.has('Referenz')">{{ errors.first('Referenz') }}</div>
+          <em v-if="message.error">
+            {{message.error.message}}
+          </em>
+        </div>
+
+        <div class="col-auto">
+          <button class="btn btn-success" v-on:click="saveFrachtbrief()" >Speichern u. Schließen</button>
+        </div>
+      </div>
     </div>
 
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="vorlage"/>
-      <label class="form-check-label" for="vorlagetrue">Ja</label>
-    </div>
 
 
 

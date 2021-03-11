@@ -202,28 +202,30 @@
       </em>
     </div>
 
-
-<label>Als Vorlage verwenden:</label>
-    <div class="form-check form-check-inline">
-      <input v-on:click="ladeliste.status= 'in Bearbeitung'" class="form-check-input" id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="ladeliste.vorlage"/>
-      <label class="form-check-label" for="vorlagefalse">Nein</label>
-    </div>
-
-    <div class="form-check form-check-inline">
-      <input v-on:click="ladeliste.status= 'Vorlage'" class="form-check-input" id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="ladeliste.vorlage"/>
-      <label class="form-check-label" for="vorlagetrue">Ja</label>
-    </div>
-
-
     <div class="form-group">
-      <div class="row">
-        <div class="container">
-      <em v-if="nachricht">
-        {{nachricht.text}}
-      </em>
-      <button class="btn btn-success col-auto float-right" v-on:click="speichern()" >Zwischenspeichern</button>
+      <div class="row mx-1">
+        <div class="col">
+          <label>Als Vorlage verwenden:</label>
+          <div class="form-check form-check-inline">
+            <input v-on:click="ladeliste.status= 'in Bearbeitung'" class="form-check-input" id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="ladeliste.vorlage"/>
+            <label class="form-check-label" for="vorlagefalse">Nein</label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input v-on:click="ladeliste.status= 'Vorlage'" class="form-check-input" id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="ladeliste.vorlage"/>
+            <label class="form-check-label" for="vorlagetrue">Ja</label>
+          </div>
+        </div>
+        <div class="col alert-info">
+          <em v-if="nachricht">
+            {{nachricht.text}}
+          </em>
+        </div>
+
+        <div class="col-auto">
+          <button class="btn btn-success" v-on:click="speichern()" >Zwischenspeichern</button>
+        </div>
       </div>
-    </div>
     </div>
 
 
@@ -387,7 +389,7 @@ if(this.ladeliste.vorlage=='true'){
 this.update(data);
 
 
-          
+
 
 
         },
