@@ -203,6 +203,16 @@
     </div>
 
 
+<label>Als Vorlage verwenden:</label>
+    <div class="form-check form-check-inline">
+      <input v-on:click="ladeliste.status= 'in Bearbeitung'" class="form-check-input" id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="ladeliste.vorlage"/>
+      <label class="form-check-label" for="vorlagefalse">Nein</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+      <input v-on:click="ladeliste.status= 'Vorlage'" class="form-check-input" id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="ladeliste.vorlage"/>
+      <label class="form-check-label" for="vorlagetrue">Ja</label>
+    </div>
 
 
     <div class="form-group">
@@ -363,7 +373,21 @@ this.clearErrorMessages(),
 
 
             console.log("handlesub")
-            this.update(this.ladeliste);
+
+if(this.ladeliste.vorlage=='true'){
+              console.log(true)
+              this.ladeliste.status = 'Vorlage'
+            }
+            let data = this.ladeliste;
+
+
+
+
+
+this.update(data);
+
+
+          
 
 
         },
@@ -518,9 +542,11 @@ this.ladeliste.status = s;
 };
 
 
+
 </script>
 
 <style>
 @import '/node_modules/vue-datetime/dist/vue-datetime.css';
+
 
 </style>

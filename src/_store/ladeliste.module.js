@@ -8,6 +8,7 @@ const state = {
     nachricht: false,
     pdf: {test: 'test'},
     status: '',
+    vorlagen: {}
     
 };
 
@@ -73,6 +74,16 @@ const actions = {
             );
     },
 
+    getAllVorlagen({ commit }) {
+        commit('getAllRequest');
+
+        ladelisteService.getAllVorlagen()
+            .then(
+                frachtbrief => commit('getAllVorlagenSuccess', frachtbrief),
+                error => commit('getAllFailure', error)
+            );
+    },
+
     getAllStatus({ commit }, status) {
         commit('getAllRequest');
 
@@ -134,6 +145,11 @@ const mutations = {
         console.log('getAllSuccess');
         console.log(ladeliste)
         state.all = { items: ladeliste };
+    },
+    getAllVorlagenSuccess(state, ladeliste) {
+        
+        console.log(ladeliste)
+        state.vorlagen = { items: ladeliste };
     },
     updateSuccess(state, ladeliste) {
        

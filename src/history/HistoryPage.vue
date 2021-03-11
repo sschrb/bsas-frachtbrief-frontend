@@ -2,7 +2,7 @@
   <div>
     <div class="card mb-2">
       <div class="card-header">
-        <h3>Frachtbriefe</h3></a>
+        <h3>Frachtbriefe</h3>
         <div class="row">
           <div class="col">
             <label class="mr-2">Statusfilter:</label>
@@ -154,7 +154,7 @@
 
     <div class="card mb-2">
       <div class="card-header">
-        <h3>Vorlagen</h3>
+        <h3>Frachtbrief Vorlagen</h3>
       </div>
 
       <div class="card-body">
@@ -193,6 +193,49 @@
       </div>
     </div>
 
+
+
+        <div class="card mb-2">
+      <div class="card-header">
+        <h3>Ladeliste Vorlagen</h3>
+      </div>
+
+      <div class="card-body">
+        <em v-if="users.loading">Loading...</em>
+        <span v-if="users.error" class="text-danger">ERROR: {{users.error}}</span>
+        <!--<ul v-if="vorlagen.items">
+          <li v-for="fbrief in vorlagen.items" :key="fbrief.id">
+            {{fbrief.createdAt.slice(0, 10).split('-').reverse().join('.') + ' ' + fbrief.frachtbriefdata.refnr}}
+
+            <span v-if="fbrief.deleting"><em> - Deleting...</em></span>
+            <span v-else-if="fbrief.deleteError" class="text-danger"> - ERROR: {{fbrief.deleteError}}</span>
+            <span v-else> - <a class="text-danger"><router-link v-bind:to="'/frachtbrief/' + fbrief.id">Anzeigen</router-link></a></span>
+          </li>
+        </ul>-->
+
+
+        <table class="table table-striped table-sm">
+          <thead class="thead">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Erstellt am</th>
+              <th scope="col">Aktion</th>
+            </tr>
+          </thead>
+          <tbody v-if="vorlagenLadeliste.items">
+            <tr v-for="liste in vorlagenLadeliste.items" :key="liste.id">
+              <td scope="row">{{liste.ladelistedata.refnr}}</td>
+              <td>{{liste.createdAt.slice(0, 10).split('-').reverse().join('.')}}</td>
+              <td><span v-if="liste.deleting"><em> - Deleting...</em></span>
+              <span v-else-if="liste.deleteError" class="text-danger"> - ERROR: {{liste.deleteError}}</span>
+              <span v-else><a class="text-danger"><router-link v-bind:to="'/ladeliste/' + liste.id">Anzeigen</router-link></a></span></td>
+              </tr>
+            </tbody>
+          </table>
+
+      </div>
+    </div>
+
   </div>
 </template>
 <script>
@@ -206,6 +249,7 @@ export default {
             users: state => state.users.all,
             frachtbrief: state => state.frachtbrief.all,
             vorlagen: state => state.frachtbrief.vorlagen,
+            vorlagenLadeliste: state => state.ladeliste.vorlagen,
             ladeliste: state => state.ladeliste.all
         })
     },
@@ -215,7 +259,8 @@ export default {
         //this.getAllLadeliste();
         this.getAllLadelisteStatus("in Bearbeitung");
         this.getAllFrachtbriefStatus("in Bearbeitung");
-        this.getAllVorlagen();
+        this.getAllVorlagenFrachtbrief();
+        this.getAllVorlagenLadeliste();
     },
     methods: {
         ...mapActions('users', {
@@ -226,13 +271,14 @@ export default {
 
        ...mapActions( 'frachtbrief', {
             getAllFrachtbrief: 'getAll',
-            getAllVorlagen: 'getAllVorlagen',
+            getAllVorlagenFrachtbrief: 'getAllVorlagen',
             getAllFrachtbriefStatus: 'getAllStatus',
             deleteFrachtbrief: 'delete'
         }),
 
         ...mapActions( 'ladeliste', {
             getAllLadeliste: 'getAll',
+            getAllVorlagenLadeliste: 'getAllVorlagen',
             getAllLadelisteStatus: 'getAllStatus'
 
         })

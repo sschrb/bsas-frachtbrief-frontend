@@ -29,7 +29,7 @@
           </ul>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#"><router-link to="/anleitung">Anleitung</router-link></a>
+              <a class="nav-link" href="https://tim-langhoff.de/projekte/cim-frachtbrief/index.html" target="_blank">Anleitung</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#"><router-link to="/login">Abmelden</router-link></a>

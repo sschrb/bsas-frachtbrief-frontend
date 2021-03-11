@@ -214,6 +214,16 @@
       </div>
     </div>
 
+<label>Als Vorlage verwenden:</label>
+    <div class="form-check form-check-inline">
+      <input v-on:click="status= 'in Bearbeitung'" class="form-check-input" id="vorlagefalse" type="radio" name="vorlage" value="false" v-model="vorlage"/>
+      <label class="form-check-label" for="vorlagefalse">Nein</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+      <input v-on:click="status= 'Vorlage'" class="form-check-input" id="vorlagetrue" type="radio" name="vorlage" value="true" v-model="vorlage"/>
+      <label class="form-check-label" for="vorlagetrue">Ja</label>
+    </div>
 
 
     <div class="form-group">
@@ -260,6 +270,7 @@ export default {
 submitted: false,
 ladegut_def: '',
 vorlagedata: [],
+vorlage: 'false',
           ladelistedata: {
 
 
@@ -345,7 +356,7 @@ computed: {
             ladegueter: state => state.ladegut.all.items,
             wagendatens: state => state.wagendaten.all.items,
             message: state => state.ladeliste.all,
-            ladelisten: state => state.ladeliste.all.items,
+            ladelisten: state => state.ladeliste.vorlagen.items,
 
 
         }),
@@ -354,7 +365,7 @@ computed: {
 
 this.getAllWagendaten(),
 this.getAllLadegut(),
-this.getAllLadeliste();
+this.getAllVorlagenLadeliste();
         console.log('mount')
     },
     methods: {
@@ -375,6 +386,7 @@ this.getAllLadeliste();
         ...mapActions('ladeliste', {createLadeliste: 'create'}),
         ...mapActions( 'ladeliste', {
             getAllLadeliste: 'getAll',
+            getAllVorlagenLadeliste: 'getAllVorlagen',
             getAllLadelisteStatus: 'getAllStatus'
 
         }),

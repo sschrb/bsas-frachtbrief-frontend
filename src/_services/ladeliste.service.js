@@ -8,7 +8,7 @@ export const ladelisteService = {
     createPDF,
     getAll,
     getById,
-    
+    getAllVorlagen,
     getPdfById,
     update,
     delete: _delete
@@ -45,6 +45,15 @@ function getAllStatus(status) {
     };
 
     return fetch(`${config.apiUrl}/ladeliste/status/${status}`, requestOptions).then(handleResponse);
+}
+
+function getAllVorlagen() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`${config.apiUrl}/ladeliste/vorlagen`, requestOptions).then(handleResponse);
 }
 
 function getAll() {

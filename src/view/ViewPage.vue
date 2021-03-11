@@ -749,7 +749,7 @@
 
       <div class="card-body">
 
-        <label>PDF-Vorschau</label>
+        <label>PDF-Vorschau (ohne Ladeliste)</label>
         <div class="form-group">
           <button class="btn btn-secondary mx-1" v-on:click="generatePdfButton" :disabled="frachtbrief.status == 'Abgeschlossen'">PDF-Vorschau generieren</button>
 
@@ -758,7 +758,7 @@
           </em>
         </div>
 
-        <label>PDF-Frachtbrief</label>
+        <label>PDF-Frachtbrief (mit Ladeliste)</label>
         <div class="form-group">
           <em v-if="frachtbrief.status == 'freigegeben' || frachtbrief.status == 'Abgeschlossen'">
             <div class="form-group">
@@ -1042,7 +1042,122 @@ let data = this.frachtbrief;
     },
 
 kommerzBedingVorschlag(){
-this.frachtbrief.frachtbriefdata.kommerziellebedingungen = '('+this.frachtbrief.frachtbriefdata.bahnhof1.name+' - '+this.frachtbrief.frachtbriefdata.bahnhof7.name +') ' + this.frachtbrief.frachtbriefdata.evu1.short + ' ' + this.frachtbrief.frachtbriefdata.evu1.code
+//this.frachtbrief.frachtbriefdata.kommerziellebedingungen = '('+this.frachtbrief.frachtbriefdata.bahnhof1.name+' - '+this.frachtbrief.frachtbriefdata.bahnhof7.name +') ' + this.frachtbrief.frachtbriefdata.evu1.short + ' ' + this.frachtbrief.frachtbriefdata.evu1.code
+
+if(this.frachtbrief.frachtbriefdata.evu2.short==''){
+    var name1=this.frachtbrief.frachtbriefdata.evu1.short +  ' ' + this.frachtbrief.frachtbriefdata.evu1.code;
+    var strecke1=this.frachtbrief.frachtbriefdata.bahnhof1.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof7.name;
+    var teil1 = '('+name1 +') ' + strecke1
+
+    this.frachtbrief.frachtbriefdata.kommerziellebedingungen = teil1
+
+}
+
+if(this.frachtbrief.frachtbriefdata.evu2.short!='' && this.frachtbrief.frachtbriefdata.evu3.short==''){
+    var name1=this.frachtbrief.frachtbriefdata.evu1.short +  ' ' + this.frachtbrief.frachtbriefdata.evu1.code;
+    var strecke1=this.frachtbrief.frachtbriefdata.bahnhof1.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof2.name;
+    var teil1 = '('+name1 +') ' + strecke1
+
+    var name2=this.frachtbrief.frachtbriefdata.evu2.short +  ' ' + this.frachtbrief.frachtbriefdata.evu2.code;
+    var strecke2=this.frachtbrief.frachtbriefdata.bahnhof2.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof7.name;
+    var teil2 = '('+name2 +') ' + strecke2
+
+this.frachtbrief.frachtbriefdata.kommerziellebedingungen = teil1 + '\n' + teil2
+
+}
+
+if(this.frachtbrief.frachtbriefdata.evu2.short!='' && this.frachtbrief.frachtbriefdata.evu3.short!='' && this.frachtbrief.frachtbriefdata.evu4.short==''){
+    var name1=this.frachtbrief.frachtbriefdata.evu1.short +  ' ' + this.frachtbrief.frachtbriefdata.evu1.code;
+    var strecke1=this.frachtbrief.frachtbriefdata.bahnhof1.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof2.name;
+    var teil1 = '('+name1 +') ' + strecke1
+
+    var name2=this.frachtbrief.frachtbriefdata.evu2.short +  ' ' + this.frachtbrief.frachtbriefdata.evu2.code;
+    var strecke2=this.frachtbrief.frachtbriefdata.bahnhof2.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof3.name;
+    var teil2 = '('+name2 +') ' + strecke2
+
+    var name3=this.frachtbrief.frachtbriefdata.evu3.short +  ' ' + this.frachtbrief.frachtbriefdata.evu3.code;
+    var strecke3=this.frachtbrief.frachtbriefdata.bahnhof3.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof7.name;
+    var teil3 = '('+name3 +') ' + strecke3
+
+    this.frachtbrief.frachtbriefdata.kommerziellebedingungen = teil1 + '\n' + teil2 + '\n' + teil3
+
+}
+
+if(this.frachtbrief.frachtbriefdata.evu2.short!='' && this.frachtbrief.frachtbriefdata.evu3.short!='' && this.frachtbrief.frachtbriefdata.evu4.short!='' && this.frachtbrief.frachtbriefdata.evu5.short==''){
+    var name1=this.frachtbrief.frachtbriefdata.evu1.short +  ' ' + this.frachtbrief.frachtbriefdata.evu1.code;
+    var strecke1=this.frachtbrief.frachtbriefdata.bahnhof1.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof2.name;
+    var teil1 = '('+name1 +') ' + strecke1
+
+    var name2=this.frachtbrief.frachtbriefdata.evu2.short +  ' ' + this.frachtbrief.frachtbriefdata.evu2.code;
+    var strecke2=this.frachtbrief.frachtbriefdata.bahnhof2.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof3.name;
+    var teil2 = '('+name2 +') ' + strecke2
+
+    var name3=this.frachtbrief.frachtbriefdata.evu3.short +  ' ' + this.frachtbrief.frachtbriefdata.evu3.code;
+    var strecke3=this.frachtbrief.frachtbriefdata.bahnhof3.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof4.name;
+    var teil3 = '('+name3 +') ' + strecke3
+
+    var name4=this.frachtbrief.frachtbriefdata.evu4.short +  ' ' + this.frachtbrief.frachtbriefdata.evu4.code;
+    var strecke4=this.frachtbrief.frachtbriefdata.bahnhof4.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof7.name;
+    var teil4 = '('+name4 +') ' + strecke4
+
+    this.frachtbrief.frachtbriefdata.kommerziellebedingungen = teil1 + '\n' + teil2 + '\n' + teil3 + '\n' + teil4
+}
+
+if(this.frachtbrief.frachtbriefdata.evu2.short!='' && this.frachtbrief.frachtbriefdata.evu3.short!='' && this.frachtbrief.frachtbriefdata.evu4.short!='' && this.frachtbrief.frachtbriefdata.evu5.short!='' && this.frachtbrief.frachtbriefdata.evu6.short==''){
+    var name1=this.frachtbrief.frachtbriefdata.evu1.short +  ' ' + this.frachtbrief.frachtbriefdata.evu1.code;
+    var strecke1=this.frachtbrief.frachtbriefdata.bahnhof1.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof2.name;
+    var teil1 = '('+name1 +') ' + strecke1
+
+    var name2=this.frachtbrief.frachtbriefdata.evu2.short +  ' ' + this.frachtbrief.frachtbriefdata.evu2.code;
+    var strecke2=this.frachtbrief.frachtbriefdata.bahnhof2.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof3.name;
+    var teil2 = '('+name2 +') ' + strecke2
+
+    var name3=this.frachtbrief.frachtbriefdata.evu3.short +  ' ' + this.frachtbrief.frachtbriefdata.evu3.code;
+    var strecke3=this.frachtbrief.frachtbriefdata.bahnhof3.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof4.name;
+    var teil3 = '('+name3 +') ' + strecke3
+
+    var name4=this.frachtbrief.frachtbriefdata.evu4.short +  ' ' + this.frachtbrief.frachtbriefdata.evu4.code;
+    var strecke4=this.frachtbrief.frachtbriefdata.bahnhof4.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof5.name;
+    var teil4 = '('+name4 +') ' + strecke4
+
+    var name5=this.frachtbrief.frachtbriefdata.evu5.short +  ' ' + this.frachtbrief.frachtbriefdata.evu5.code;
+    var strecke5=this.frachtbrief.frachtbriefdata.bahnhof5.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof7.name;
+    var teil5 = '('+name5 +') ' + strecke5
+
+    this.frachtbrief.frachtbriefdata.kommerziellebedingungen = teil1 + '\n' + teil2 + '\n' + teil3 + '\n' + teil4 + '\n' + teil5
+
+}
+
+if(this.frachtbrief.frachtbriefdata.evu2.short!='' && this.frachtbrief.frachtbriefdata.evu3.short!='' && this.frachtbrief.frachtbriefdata.evu4.short!='' && this.frachtbrief.frachtbriefdata.evu5.short!='' && this.frachtbrief.frachtbriefdata.evu6.short!=''){
+    var name1=this.frachtbrief.frachtbriefdata.evu1.short +  ' ' + this.frachtbrief.frachtbriefdata.evu1.code;
+    var strecke1=this.frachtbrief.frachtbriefdata.bahnhof1.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof2.name;
+    var teil1 = '('+name1 +') ' + strecke1
+
+    var name2=this.frachtbrief.frachtbriefdata.evu2.short +  ' ' + this.frachtbrief.frachtbriefdata.evu2.code;
+    var strecke2=this.frachtbrief.frachtbriefdata.bahnhof2.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof3.name;
+    var teil2 = '('+name2 +') ' + strecke2
+
+    var name3=this.frachtbrief.frachtbriefdata.evu3.short +  ' ' + this.frachtbrief.frachtbriefdata.evu3.code;
+    var strecke3=this.frachtbrief.frachtbriefdata.bahnhof3.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof4.name;
+    var teil3 = '('+name3 +') ' + strecke3
+
+    var name4=this.frachtbrief.frachtbriefdata.evu4.short +  ' ' + this.frachtbrief.frachtbriefdata.evu4.code;
+    var strecke4=this.frachtbrief.frachtbriefdata.bahnhof4.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof5.name;
+    var teil4 = '('+name4 +') ' + strecke4
+
+    var name5=this.frachtbrief.frachtbriefdata.evu5.short +  ' ' + this.frachtbrief.frachtbriefdata.evu5.code;
+    var strecke5=this.frachtbrief.frachtbriefdata.bahnhof5.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof6.name;
+    var teil5 = '('+name5 +') ' + strecke5
+
+    var name6=this.frachtbrief.frachtbriefdata.evu6.short +  ' ' + this.frachtbrief.frachtbriefdata.evu6.code;
+    var strecke6=this.frachtbrief.frachtbriefdata.bahnhof6.name + ' - ' + this.frachtbrief.frachtbriefdata.bahnhof7.name;
+    var teil6 = '('+name6 +') ' + strecke6
+
+    this.frachtbrief.frachtbriefdata.kommerziellebedingungen = teil1 + '\n' + teil2 + '\n' + teil3 + '\n' + teil4 + '\n' + teil5 + '\n' + teil6
+
+}
+    
+
 },
 
 bezeichnungGutVorschlag(){

@@ -1104,7 +1104,120 @@ setTimeout(() => this.$router.push('/history') , 3000);
 },
 
 kommerzBedingVorschlag(){
-this.kommerziellebedingungen = '('+this.bahnhof1.name+' - '+this.bahnhof7.name +') ' + this.evu1.short + ' ' + this.evu1.code
+
+if(this.evu2.short==''){
+    var name1=this.evu1.short +  ' ' + this.evu1.code;
+    var strecke1=this.bahnhof1.name + ' - ' + this.bahnhof7.name;
+    var teil1 = '('+name1 +') ' + strecke1
+
+    this.kommerziellebedingungen = teil1
+
+}
+
+if(this.evu2.short!='' && this.evu3.short==''){
+    var name1=this.evu1.short +  ' ' + this.evu1.code;
+    var strecke1=this.bahnhof1.name + ' - ' + this.bahnhof2.name;
+    var teil1 = '('+name1 +') ' + strecke1
+
+    var name2=this.evu2.short +  ' ' + this.evu2.code;
+    var strecke2=this.bahnhof2.name + ' - ' + this.bahnhof7.name;
+    var teil2 = '('+name2 +') ' + strecke2
+
+this.kommerziellebedingungen = teil1 + '\n' + teil2
+
+}
+
+if(this.evu2.short!='' && this.evu3.short!='' && this.evu4.short==''){
+    var name1=this.evu1.short +  ' ' + this.evu1.code;
+    var strecke1=this.bahnhof1.name + ' - ' + this.bahnhof2.name;
+    var teil1 = '('+name1 +') ' + strecke1
+
+    var name2=this.evu2.short +  ' ' + this.evu2.code;
+    var strecke2=this.bahnhof2.name + ' - ' + this.bahnhof3.name;
+    var teil2 = '('+name2 +') ' + strecke2
+
+    var name3=this.evu3.short +  ' ' + this.evu3.code;
+    var strecke3=this.bahnhof3.name + ' - ' + this.bahnhof7.name;
+    var teil3 = '('+name3 +') ' + strecke3
+
+    this.kommerziellebedingungen = teil1 + '\n' + teil2 + '\n' + teil3
+
+}
+
+if(this.evu2.short!='' && this.evu3.short!='' && this.evu4.short!='' && this.evu5.short==''){
+    var name1=this.evu1.short +  ' ' + this.evu1.code;
+    var strecke1=this.bahnhof1.name + ' - ' + this.bahnhof2.name;
+    var teil1 = '('+name1 +') ' + strecke1
+
+    var name2=this.evu2.short +  ' ' + this.evu2.code;
+    var strecke2=this.bahnhof2.name + ' - ' + this.bahnhof3.name;
+    var teil2 = '('+name2 +') ' + strecke2
+
+    var name3=this.evu3.short +  ' ' + this.evu3.code;
+    var strecke3=this.bahnhof3.name + ' - ' + this.bahnhof4.name;
+    var teil3 = '('+name3 +') ' + strecke3
+
+    var name4=this.evu4.short +  ' ' + this.evu4.code;
+    var strecke4=this.bahnhof4.name + ' - ' + this.bahnhof7.name;
+    var teil4 = '('+name4 +') ' + strecke4
+
+    this.kommerziellebedingungen = teil1 + '\n' + teil2 + '\n' + teil3 + '\n' + teil4
+}
+
+if(this.evu2.short!='' && this.evu3.short!='' && this.evu4.short!='' && this.evu5.short!='' && this.evu6.short==''){
+    var name1=this.evu1.short +  ' ' + this.evu1.code;
+    var strecke1=this.bahnhof1.name + ' - ' + this.bahnhof2.name;
+    var teil1 = '('+name1 +') ' + strecke1
+
+    var name2=this.evu2.short +  ' ' + this.evu2.code;
+    var strecke2=this.bahnhof2.name + ' - ' + this.bahnhof3.name;
+    var teil2 = '('+name2 +') ' + strecke2
+
+    var name3=this.evu3.short +  ' ' + this.evu3.code;
+    var strecke3=this.bahnhof3.name + ' - ' + this.bahnhof4.name;
+    var teil3 = '('+name3 +') ' + strecke3
+
+    var name4=this.evu4.short +  ' ' + this.evu4.code;
+    var strecke4=this.bahnhof4.name + ' - ' + this.bahnhof5.name;
+    var teil4 = '('+name4 +') ' + strecke4
+
+    var name5=this.evu5.short +  ' ' + this.evu5.code;
+    var strecke5=this.bahnhof5.name + ' - ' + this.bahnhof7.name;
+    var teil5 = '('+name5 +') ' + strecke5
+
+    this.kommerziellebedingungen = teil1 + '\n' + teil2 + '\n' + teil3 + '\n' + teil4 + '\n' + teil5
+
+}
+
+if(this.evu2.short!='' && this.evu3.short!='' && this.evu4.short!='' && this.evu5.short!='' && this.evu6.short!=''){
+    var name1=this.evu1.short +  ' ' + this.evu1.code;
+    var strecke1=this.bahnhof1.name + ' - ' + this.bahnhof2.name;
+    var teil1 = '('+name1 +') ' + strecke1
+
+    var name2=this.evu2.short +  ' ' + this.evu2.code;
+    var strecke2=this.bahnhof2.name + ' - ' + this.bahnhof3.name;
+    var teil2 = '('+name2 +') ' + strecke2
+
+    var name3=this.evu3.short +  ' ' + this.evu3.code;
+    var strecke3=this.bahnhof3.name + ' - ' + this.bahnhof4.name;
+    var teil3 = '('+name3 +') ' + strecke3
+
+    var name4=this.evu4.short +  ' ' + this.evu4.code;
+    var strecke4=this.bahnhof4.name + ' - ' + this.bahnhof5.name;
+    var teil4 = '('+name4 +') ' + strecke4
+
+    var name5=this.evu5.short +  ' ' + this.evu5.code;
+    var strecke5=this.bahnhof5.name + ' - ' + this.bahnhof6.name;
+    var teil5 = '('+name5 +') ' + strecke5
+
+    var name6=this.evu6.short +  ' ' + this.evu6.code;
+    var strecke6=this.bahnhof6.name + ' - ' + this.bahnhof7.name;
+    var teil6 = '('+name6 +') ' + strecke6
+
+    this.kommerziellebedingungen = teil1 + '\n' + teil2 + '\n' + teil3 + '\n' + teil4 + '\n' + teil5 + '\n' + teil6
+
+}
+
 },
 
 bezeichnungGutVorschlag(){

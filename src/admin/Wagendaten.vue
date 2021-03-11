@@ -105,6 +105,7 @@ var luhnChk = (function (arr) {
             val = parseInt(ccNum.charAt(--len), 10);
             sum += (bit ^= 1) ? arr[val] : val;
         }
+        if (ccNum.length != 12) return false
 
         return sum && sum % 10 === 0;
     };
