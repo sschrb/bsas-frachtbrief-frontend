@@ -3,7 +3,7 @@
     <h3>Frachtbrief bearbeiten</h3>
     <div class="card mb-2">
       <div class="card-body">
-        <div class="form-group"> <!-- Pflichtfeld für spätere Bezeichnung des Frachtbriefes -->
+        <div class="form-group"> <!-- Hallo Tim -->
           <label for="">Referenz Nummer (Name des Frachtbriefes)</label>
           <input :disabled="frachtbrief.status == 'Abgeschlossen' || frachtbrief.status == 'freigegeben' || frachtbrief.status == 'storniert'" type="text" v-model="frachtbrief.frachtbriefdata.refnr" name="Referenz" v-validate="{ required: true}" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Referenz') }"/>
                 <div v-if="submitted && errors.has('Referenz')" class="invalid-feedback">{{ errors.first('Referenz') }}</div>
